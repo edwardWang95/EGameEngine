@@ -34,7 +34,7 @@ public class SkyClimberGame extends Game{
     private final int MINUS = 1;
     private final int NEUTRAL = 2;
     //Use time factor to either speed up or slow down movement
-    private final double timeFactor = .4;
+    private final double timeFactor = .2;
 
     //Map Size in terms of ePixels
     private final int numOfEPixelsWidth = 7;
@@ -43,7 +43,7 @@ public class SkyClimberGame extends Game{
     private final float ePixelPerMeter = .5f;    // % ePixel = # meters --> inverse to movementSpeed
     //Player 1 Constants
     private final double movementSpeedX = 0;
-    private final double movementSpeedY = 8;
+    private final double movementSpeedY = 10;
     //Platform update position speed
     private final int updatePlatformSpeed = 1;
 

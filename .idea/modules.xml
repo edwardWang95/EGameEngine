@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BouncingBall.iml" filepath="$PROJECT_DIR$/BouncingBall.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EGameEngine.iml" filepath="$PROJECT_DIR$/EGameEngine.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

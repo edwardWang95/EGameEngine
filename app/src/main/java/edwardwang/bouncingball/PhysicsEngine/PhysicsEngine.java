@@ -73,7 +73,6 @@ public class PhysicsEngine {
                 sprite.setIsOnGround(false);
                 sprite.getRigidBody().resetVelocity();
                 sprite.getRigidBody().setDirectionY(Direction.UP);
-                resetTimeElapsed();
                 break;
             case WALK:
                 sprite.setIsOnGround(true);
@@ -103,7 +102,9 @@ public class PhysicsEngine {
         Vector2DDouble netAccel = rigidBody.getNetAccel();
         Vector2DDouble velocity = rigidBody.getVelocity();
         Vector2DInt deltaDistance = rigidBody.getDeltaDistance();
+        //Directions
         Vector2DDirection direction = rigidBody.getDirection();
+        Direction previousDirectY = direction.getY();
         //update sprite onGround status
         if(deltaTime != 0){
             timeElapsed += (deltaTime * timeFactor);
@@ -116,6 +117,12 @@ public class PhysicsEngine {
             */
             updateDeltaDistanceAndDirection(deltaDistance, direction, velocity, timeElapsed,
                     ePixelPerMeter, eMap.getePixelWidth(), eMap.getePixelHeight());
+
+            //if direction change is updated, reset deltaTime
+            if(!direction.getY().equals(previousDirectY)){
+                resetTimeElapsed();
+            }
+
             sprite.updatePosition();
         }
     }
@@ -157,7 +164,7 @@ public class PhysicsEngine {
         double x, y;
         x = (velocity.getX() * deltaTime) * ePixelPerMeter * frameWidth;
         y = (velocity.getY() * deltaTime) * ePixelPerMeter * frameHeight;
-        updateDirectionAndVelocity(direction, velocity, x, y);
+        updateDirection(direction, x, y);
         deltaDistance.setX((int) x);
         deltaDistance.setY((int) y);
         //InfoLog.getInstance().debugValue(className, "Time: " + deltaTime);
@@ -172,8 +179,7 @@ public class PhysicsEngine {
      * @param x
      * @param y
      */
-    private void updateDirectionAndVelocity(Vector2DDirection direction, Vector2DDouble velocity,
-                                            double x, double y){
+    private void updateDirection(Vector2DDirection direction, double x, double y){
         //X axis
         if(x > 0){
             direction.setX(Direction.RIGHT);
@@ -187,8 +193,6 @@ public class PhysicsEngine {
             direction.setY(Direction.UP);
         } else if(y < 0){
             direction.setY(Direction.DOWN);
-            //Reset the time when going back down
-            resetTimeElapsed();
         }else if(y == 0 ){
             direction.setY(Direction.STATIC);
         }
