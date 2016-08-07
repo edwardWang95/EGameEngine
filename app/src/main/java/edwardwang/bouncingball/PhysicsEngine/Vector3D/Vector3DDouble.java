@@ -1,14 +1,15 @@
-package edwardwang.bouncingball.PhysicsEngine.Vector2D;
+package edwardwang.bouncingball.PhysicsEngine.Vector3D;
 
 /**
  * Created by edwardwang on 8/4/16.
  */
-public class Vector2DDouble {
-    double x, y;
+public class Vector3DDouble {
+    double x, y, z;
 
-    public Vector2DDouble() {
+    public Vector3DDouble() {
         x = 0;
         y = 0;
+        z = 0;
     }
 
     public double getX() {
@@ -19,11 +20,19 @@ public class Vector2DDouble {
         return y;
     }
 
+    public double getZ() {
+        return z;
+    }
+
     public void setX(double x) {
         this.x = x;
     }
 
     public void setY(double y) {
         this.y = y;
+    }
+
+    public void setZ(double z) {
+        this.z = z;
     }
 }

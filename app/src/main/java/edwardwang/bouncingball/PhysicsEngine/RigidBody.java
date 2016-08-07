@@ -1,9 +1,8 @@
 package edwardwang.bouncingball.PhysicsEngine;
 
-import edwardwang.bouncingball.PhysicsEngine.Vector2D.Direction;
-import edwardwang.bouncingball.PhysicsEngine.Vector2D.Vector2DDouble;
-import edwardwang.bouncingball.PhysicsEngine.Vector2D.Vector2DInt;
-import edwardwang.bouncingball.PhysicsEngine.Vector2D.Vector2DDirection;
+import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDouble;
+import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
+import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDirection;
 
 /**
  * Created by edwardwang on 8/2/16.
@@ -18,17 +17,17 @@ public class RigidBody {
     //Used for calculations in physicsEngine
     //TODO: may not need movement speed or initial/final, just one velocity object
 
-    private Vector2DDouble velocityInitial;
-    private Vector2DDouble velocityFinal;
+    private Vector3DDouble velocityInitial;
+    private Vector3DDouble velocityFinal;
 
-    private Vector2DDouble netForce;
+    private Vector3DDouble netForce;
 
     //TODO:Keep
-    private Vector2DDouble netAccel;
-    private Vector2DDouble velocity;   //velocity
-    private Vector2DDouble movementSpeed;
-    private Vector2DInt deltaDistance;
-    private Vector2DDirection direction;
+    private Vector3DDouble netAccel;
+    private Vector3DDouble velocity;   //velocity
+    private Vector3DDouble movementSpeed;
+    private Vector3DInt deltaDistance;
+    private Vector3DDirection direction;
 
     public RigidBody() {
         mass = 10;
@@ -36,14 +35,14 @@ public class RigidBody {
         angularVelocity = 0;
         torque = 0;
         runSpeedMultiplier = 1.5;
-        velocityInitial = new Vector2DDouble();
-        velocityFinal = new Vector2DDouble();
-        netForce = new Vector2DDouble();
-        netAccel = new Vector2DDouble();
-        velocity = new Vector2DDouble();
-        movementSpeed = new Vector2DDouble();
-        deltaDistance = new Vector2DInt();
-        direction = new Vector2DDirection();
+        velocityInitial = new Vector3DDouble();
+        velocityFinal = new Vector3DDouble();
+        netForce = new Vector3DDouble();
+        netAccel = new Vector3DDouble();
+        velocity = new Vector3DDouble();
+        movementSpeed = new Vector3DDouble();
+        deltaDistance = new Vector3DInt();
+        direction = new Vector3DDirection();
     }
 
     public void setMovementSpeed(double movementSpeedX, double movementSpeedY){
@@ -107,19 +106,19 @@ public class RigidBody {
         return mass * PhysicsEngine.NORMAL;
     }
 
-    public Vector2DDouble getVelocityInitial() {
+    public Vector3DDouble getVelocityInitial() {
         return velocityInitial;
     }
 
-    public Vector2DDouble getVelocityFinal() {
+    public Vector3DDouble getVelocityFinal() {
         return velocityFinal;
     }
 
-    public Vector2DDouble getNetForce() {
+    public Vector3DDouble getNetForce() {
         return netForce;
     }
 
-    public Vector2DDouble getNetAccel(){
+    public Vector3DDouble getNetAccel(){
         return netAccel;
     }
 
@@ -143,7 +142,7 @@ public class RigidBody {
         return runSpeedMultiplier;
     }
 
-    public Vector2DDouble getVelocity() {
+    public Vector3DDouble getVelocity() {
         return velocity;
     }
 
@@ -161,15 +160,15 @@ public class RigidBody {
         return velocity.getX() * runSpeedMultiplier;
     }
 
-    public Vector2DInt getDeltaDistance() {
+    public Vector3DInt getDeltaDistance() {
         return deltaDistance;
     }
 
-    public Vector2DDouble getMovementSpeed() {
+    public Vector3DDouble getMovementSpeed() {
         return movementSpeed;
     }
 
-    public Vector2DDirection getDirection() {
+    public Vector3DDirection getDirection() {
         return direction;
     }
 

@@ -5,9 +5,8 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.Queue;
 
-import edwardwang.bouncingball.Info.InfoLog;
 import edwardwang.bouncingball.Info.PhoneInfo;
-import edwardwang.bouncingball.PhysicsEngine.Vector2D.Vector2DInt;
+import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
 import edwardwang.bouncingball.Sprite.SkyClimberSprite.SkyClimberPlatformSprite;
 import edwardwang.bouncingball.Sprite.Sprite;
 import edwardwang.bouncingball.Sprite.SpriteType;
@@ -117,7 +116,7 @@ public class EMap {
         borderRight = (mapOffSetWidth/2) + (ePixelWidth * numOfEPixelsWidth);
     }
 
-    public boolean isPositionWithinMapConstraints(Vector2DInt position){
+    public boolean isPositionWithinMapConstraints(Vector3DInt position){
         int x = position.getX();
         int y = position.getY();
         return (x >= borderLeft && x <= borderRight && y >= borderTop && y <= borderBottom);

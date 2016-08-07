@@ -1,14 +1,17 @@
-package edwardwang.bouncingball.PhysicsEngine.Vector2D;
+package edwardwang.bouncingball.PhysicsEngine.Vector3D;
+
+import edwardwang.bouncingball.PhysicsEngine.Direction;
 
 /**
  * Created by edwardwang on 8/5/16.
  */
-public class Vector2DDirection {
-    Direction x,y;
+public class Vector3DDirection {
+    Direction x,y, z;
 
-    public Vector2DDirection() {
+    public Vector3DDirection() {
         x = Direction.STATIC;
         y = Direction.STATIC;
+        z = Direction.STATIC;
     }
 
     public Direction getX() {
@@ -19,11 +22,19 @@ public class Vector2DDirection {
         return y;
     }
 
+    public Direction getZ() {
+        return z;
+    }
+
     public void setX(Direction x) {
         this.x = x;
     }
 
     public void setY(Direction y) {
         this.y = y;
+    }
+
+    public void setZ(Direction z) {
+        this.z = z;
     }
 }

@@ -4,10 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import edwardwang.bouncingball.Info.InfoLog;
 import edwardwang.bouncingball.Info.PhoneInfo;
 import edwardwang.bouncingball.PhysicsEngine.RigidBody;
-import edwardwang.bouncingball.PhysicsEngine.Vector2D.Vector2DInt;
+import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
 
 /**
  * http://obviam.net/index.php/sprite-animation-with-android/
@@ -46,14 +45,14 @@ public class Sprite {
 
     //Location of sprite on the canvas/display
     private final double  edPixelToMeter = .1;   // % of edPixels that translate to a meter
-    private Vector2DInt position;
+    private Vector3DInt position;
     private boolean isOnGround;
 
     //Physics
     private RigidBody rigidBody;
 
     public Sprite(){
-        position = new Vector2DInt();
+        position = new Vector3DInt();
         position.setX(10);
         position.setY(10);
         rigidBody = new RigidBody();
@@ -208,7 +207,7 @@ public class Sprite {
 
     public SpriteType getSpriteType(){return spriteType;}
 
-    public Vector2DInt getPosition() {
+    public Vector3DInt getPosition() {
         return position;
     }
 

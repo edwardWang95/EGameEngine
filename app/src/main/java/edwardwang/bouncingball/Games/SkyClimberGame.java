@@ -11,8 +11,8 @@ import edwardwang.bouncingball.Map.EMap;
 import edwardwang.bouncingball.Map.EPixel;
 import edwardwang.bouncingball.PhysicsEngine.Action;
 import edwardwang.bouncingball.PhysicsEngine.PhysicsEngine;
-import edwardwang.bouncingball.PhysicsEngine.Vector2D.Direction;
-import edwardwang.bouncingball.PhysicsEngine.Vector2D.Vector2DInt;
+import edwardwang.bouncingball.PhysicsEngine.Direction;
+import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
 import edwardwang.bouncingball.Sprite.Player1Sprite;
 import edwardwang.bouncingball.Sprite.Sprite;
 import edwardwang.bouncingball.Sprite.SpriteHitBox;
@@ -44,8 +44,6 @@ public class SkyClimberGame extends Game{
     //Player 1 Constants
     private final double movementSpeedX = 0;
     private final double movementSpeedY = 10;
-    //Platform update position speed
-    private final int updatePlatformSpeed = 1;
 
     //EPixel frame size
     private final SpriteType spriteType = SpriteType.PLATFORM_SKYCLIMBER;
@@ -74,6 +72,9 @@ public class SkyClimberGame extends Game{
     private SpriteHitBox platformHitBox;
     private int screenHalfwayHeight;
     private int heightAdjustmant;
+    //TODO:May include this variable in Game class
+    //The height
+    private Vector3DInt updatePlatformSpeed = new Vector3DInt();
 
     public SkyClimberGame(Context context, GameView gameView){
         this.context = context;
@@ -169,7 +170,7 @@ public class SkyClimberGame extends Game{
      * of the platforms are updated to provide the illusion that user is going up.
      */
     private void handlePlayerIsAboveScreenHalfway(){
-        Vector2DInt playerPosition = player1Sprite.getPosition();
+        Vector3DInt playerPosition = player1Sprite.getPosition();
 
         //Check if player position is above halfway point
         if(playerPosition.getY() <= screenHalfwayHeight){
@@ -177,6 +178,10 @@ public class SkyClimberGame extends Game{
             setIsBackgroundUpdated(true);
             if(player1Sprite.getRigidBody().getDirection().getY().equals(Direction.DOWN) &&
                     isBackgroundReadyToUpdate()){
+                setUpdatePlatformSpeed(playerPosition.getY());
+
+
+
                 //InfoLog.getInstance().debugValue(className, "ScreenHalfway: " + screenHalfwayHeight);
                 //InfoLog.getInstance().debugValue(className, "PlayerY: " + playerPosition.getY());
 
@@ -208,6 +213,12 @@ public class SkyClimberGame extends Game{
     }
     //////////////////////////////////////////////////////////////////////
 
+    private void setUpdatePlatformSpeed(int playerPositionY){
+        int deltaY = ((screenHalfwayHeight - playerPositionY) - (eMap.getMapOffSetHeight()/2))
+                / eMap.getePixelHeight();
+        updatePlatformSpeed.setY(deltaY);
+    }
+
     /**
      * TODO:Check if i want this to replace the updatePLatformQueue
      *
@@ -230,7 +241,7 @@ public class SkyClimberGame extends Game{
             ePixel = backgroundSpriteArrayList.get(i);
             //Get new platform position at currentY + 1 AND current X position
             currentX = ePixel.getPositionEMapX();
-            newHeight = ePixel.getPositionEMapY() + updatePlatformSpeed;
+            newHeight = ePixel.getPositionEMapY() + updatePlatformSpeed.getY();
             //Set current ePixel visibility to false
             ePixel.getSprite().setIsVisible(false);
             //if newHeight extends beyond the map, remove the item

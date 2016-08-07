@@ -1,7 +1,6 @@
 package edwardwang.bouncingball.Sprite;
 
-import edwardwang.bouncingball.Info.InfoLog;
-import edwardwang.bouncingball.PhysicsEngine.Vector2D.Vector2DInt;
+import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
 
 /**
  * Hitbox will be useful when dealing with player sprites that interact
@@ -20,11 +19,11 @@ public class SpriteHitBox {
     public static final int BOTTOMRIGHT = 3;
 
     private int width, height;
-    private Vector2DInt position;
-    private Vector2DInt topLeft;
-    private Vector2DInt topRight;
-    private Vector2DInt bottomLeft;
-    private Vector2DInt bottomRight;
+    private Vector3DInt position;
+    private Vector3DInt topLeft;
+    private Vector3DInt topRight;
+    private Vector3DInt bottomLeft;
+    private Vector3DInt bottomRight;
     //hit box percentages
     //i.e. widthPerc = .75
     double widthPerc, heightPerc;
@@ -37,11 +36,11 @@ public class SpriteHitBox {
 
     public SpriteHitBox(int width, int height, int positionX, int positionY,
                         double widthPerc, double heightPerc){
-        position = new Vector2DInt();
-        topLeft = new Vector2DInt();
-        topRight = new Vector2DInt();
-        bottomLeft = new Vector2DInt();
-        bottomRight = new Vector2DInt();
+        position = new Vector3DInt();
+        topLeft = new Vector3DInt();
+        topRight = new Vector3DInt();
+        bottomLeft = new Vector3DInt();
+        bottomRight = new Vector3DInt();
 
         this.width = width;
         this.height = height;
@@ -164,23 +163,23 @@ public class SpriteHitBox {
                 hitBox.getBottomRight().getY());
     }
 
-    public Vector2DInt getPosition() {
+    public Vector3DInt getPosition() {
         return position;
     }
 
-    public Vector2DInt getTopLeft() {
+    public Vector3DInt getTopLeft() {
         return topLeft;
     }
 
-    public Vector2DInt getTopRight() {
+    public Vector3DInt getTopRight() {
         return topRight;
     }
 
-    public Vector2DInt getBottomLeft() {
+    public Vector3DInt getBottomLeft() {
         return bottomLeft;
     }
 
-    public Vector2DInt getBottomRight() {
+    public Vector3DInt getBottomRight() {
         return bottomRight;
     }
 }

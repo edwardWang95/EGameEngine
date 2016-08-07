@@ -2,11 +2,10 @@ package edwardwang.bouncingball.PhysicsEngine;
 
 import edwardwang.bouncingball.Info.InfoLog;
 import edwardwang.bouncingball.Map.EMap;
-import edwardwang.bouncingball.PhysicsEngine.Vector2D.Direction;
-import edwardwang.bouncingball.PhysicsEngine.Vector2D.Vector2DDirection;
-import edwardwang.bouncingball.PhysicsEngine.Vector2D.Vector2DDouble;
-import edwardwang.bouncingball.PhysicsEngine.Vector2D.Vector2DFloat;
-import edwardwang.bouncingball.PhysicsEngine.Vector2D.Vector2DInt;
+import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDirection;
+import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDouble;
+import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DFloat;
+import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
 import edwardwang.bouncingball.Sprite.Sprite;
 import edwardwang.bouncingball.Sprite.SpriteHitBox;
 
@@ -45,10 +44,10 @@ public class PhysicsEngine {
                                      float ePixelPerMeter, double maxHeight){
         //setup references
         RigidBody rigidBody = sprite.getRigidBody();
-        Vector2DDouble netAccel = rigidBody.getNetAccel();
-        Vector2DDouble velocity = rigidBody.getVelocity();
-        Vector2DInt deltaDistance = rigidBody.getDeltaDistance();
-        Vector2DDirection direction = rigidBody.getDirection();
+        Vector3DDouble netAccel = rigidBody.getNetAccel();
+        Vector3DDouble velocity = rigidBody.getVelocity();
+        Vector3DInt deltaDistance = rigidBody.getDeltaDistance();
+        Vector3DDirection direction = rigidBody.getDirection();
         //update sprite onGround status
         if(deltaTime != 0){
             timeElapsed += (deltaTime * timeFactor);
@@ -99,11 +98,11 @@ public class PhysicsEngine {
                                      float ePixelPerMeter){
         //setup references
         RigidBody rigidBody = sprite.getRigidBody();
-        Vector2DDouble netAccel = rigidBody.getNetAccel();
-        Vector2DDouble velocity = rigidBody.getVelocity();
-        Vector2DInt deltaDistance = rigidBody.getDeltaDistance();
+        Vector3DDouble netAccel = rigidBody.getNetAccel();
+        Vector3DDouble velocity = rigidBody.getVelocity();
+        Vector3DInt deltaDistance = rigidBody.getDeltaDistance();
         //Directions
-        Vector2DDirection direction = rigidBody.getDirection();
+        Vector3DDirection direction = rigidBody.getDirection();
         Direction previousDirectY = direction.getY();
         //update sprite onGround status
         if(deltaTime != 0){
@@ -132,7 +131,7 @@ public class PhysicsEngine {
      * @param isOnGround
      * @return netAccelleration
      */
-    private void updateNetAccel(Vector2DDouble netAccel, boolean isOnGround){
+    private void updateNetAccel(Vector3DDouble netAccel, boolean isOnGround){
         double accelX = 0;
         double accelY = 0;
         if(isOnGround){
@@ -146,8 +145,8 @@ public class PhysicsEngine {
         netAccel.setY(accelY);
     }
 
-    private void updateVelocity(Vector2DDouble velocity,
-                                Vector2DDouble netAccel, float deltaTime){
+    private void updateVelocity(Vector3DDouble velocity,
+                                Vector3DDouble netAccel, float deltaTime){
         double x, y;
         x = velocity.getX() + (netAccel.getX() * deltaTime);
         velocity.setX(x);
@@ -157,8 +156,8 @@ public class PhysicsEngine {
         //InfoLog.getInstance().debugValue(className, "Velocity: " + y);
     }
 
-    private void updateDeltaDistanceAndDirection(Vector2DInt deltaDistance, Vector2DDirection direction,
-                                                 Vector2DDouble velocity, float deltaTime,
+    private void updateDeltaDistanceAndDirection(Vector3DInt deltaDistance, Vector3DDirection direction,
+                                                 Vector3DDouble velocity, float deltaTime,
                                                  float ePixelPerMeter, int frameWidth,
                                                  int frameHeight){
         double x, y;
@@ -179,7 +178,7 @@ public class PhysicsEngine {
      * @param x
      * @param y
      */
-    private void updateDirection(Vector2DDirection direction, double x, double y){
+    private void updateDirection(Vector3DDirection direction, double x, double y){
         //X axis
         if(x > 0){
             direction.setX(Direction.RIGHT);
@@ -213,7 +212,7 @@ public class PhysicsEngine {
          * Check for platforms using center of player sprite, because normally, the
          * sprite position is the topLeft corner.
          */
-        Vector2DInt playerPosition = new Vector2DInt();
+        Vector3DInt playerPosition = new Vector3DInt();
         playerPosition.setX(sprite.getPosition().getX() + (sprite.getFrameWidth()/2));
         playerPosition.setY(sprite.getPosition().getY() + (sprite.getFrameHeight()/2));
 
@@ -337,8 +336,8 @@ public class PhysicsEngine {
     }
     */
 
-    private boolean isSpriteHitBoxWithinMapConstraintsTest(Vector2DInt topLeft, Vector2DInt topRight,
-                                                       Vector2DInt bottomLeft, Vector2DInt bottomRight){
+    private boolean isSpriteHitBoxWithinMapConstraintsTest(Vector3DInt topLeft, Vector3DInt topRight,
+                                                       Vector3DInt bottomLeft, Vector3DInt bottomRight){
         return (eMap.isPositionWithinMapConstraints(topLeft) &&
                 eMap.isPositionWithinMapConstraints(topRight) &&
                 eMap.isPositionWithinMapConstraints(bottomLeft) &&
@@ -354,8 +353,8 @@ public class PhysicsEngine {
 
 
     private void setSpriteHitBoxCorners(SpriteHitBox hitBox,
-                                        Vector2DInt topLeft, Vector2DInt topRight,
-                                        Vector2DInt bottomLeft, Vector2DInt bottomRight){
+                                        Vector3DInt topLeft, Vector3DInt topRight,
+                                        Vector3DInt bottomLeft, Vector3DInt bottomRight){
         //TopLeft
         topLeft.setX(hitBox.getTopLeft().getX());
         topLeft.setY(hitBox.getTopLeft().getY());
@@ -401,9 +400,9 @@ public class PhysicsEngine {
     public void updateSpriteLocationFromActionTEST(Action action, Sprite sprite,
                                                    float deltaTime, int meterToEPixel){
         this.action = action;
-        Vector2DDouble netAccel = new Vector2DDouble();
-        Vector2DFloat metersTravelled = new Vector2DFloat();
-        Vector2DInt newPosition = new Vector2DInt();
+        Vector3DDouble netAccel = new Vector3DDouble();
+        Vector3DFloat metersTravelled = new Vector3DFloat();
+        Vector3DInt newPosition = new Vector3DInt();
         RigidBody rigidBody = sprite.getRigidBody();
         switch (action){
             case JUMP:

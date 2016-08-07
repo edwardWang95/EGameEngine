@@ -1,14 +1,15 @@
-package edwardwang.bouncingball.PhysicsEngine.Vector2D;
+package edwardwang.bouncingball.PhysicsEngine.Vector3D;
 
 /**
  * Created by edwardwang on 8/4/16.
  */
-public class Vector2DInt {
-    int x, y;
+public class Vector3DInt {
+    int x, y, z;
 
-    public Vector2DInt() {
+    public Vector3DInt() {
         x = 0;
         y = 0;
+        z = 0;
     }
 
     public int getX() {
@@ -19,11 +20,19 @@ public class Vector2DInt {
         return y;
     }
 
+    public int getZ() {
+        return z;
+    }
+
     public void setX(int x) {
         this.x = x;
     }
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public void setZ(int z) {
+        this.z = z;
     }
 }
