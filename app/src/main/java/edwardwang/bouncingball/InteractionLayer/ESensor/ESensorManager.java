@@ -1,4 +1,4 @@
-package edwardwang.bouncingball.InteractionLayer;
+package edwardwang.bouncingball.InteractionLayer.ESensor;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -10,13 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edwardwang.bouncingball.Info.InfoLog;
+import edwardwang.bouncingball.InteractionLayer.InteractionSetup;
 
 /**
- * Adjustable Values:
- * -sensorDelaySpeed (set how fast phone collects sensor updated values)
- * Created by edwardwang on 8/6/16.
+ * Created by edwardwang on 8/8/16.
  */
-public class ESensorManager implements SensorEventListener{
+public class ESensorManager implements InteractionSetup, SensorEventListener {
     private static final String className = ESensorManager.class.getSimpleName();
 
     private SensorManager sensorManager;
@@ -40,10 +39,11 @@ public class ESensorManager implements SensorEventListener{
     public ESensorManager(Context context){
         sensorManager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
         sensorList = new ArrayList<>();
-        setupSensors();
+        setup();
     }
 
-    private void setupSensors(){
+    @Override
+    public void setup() {
         gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         addSensorToList(gyroscope);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -60,7 +60,7 @@ public class ESensorManager implements SensorEventListener{
         }else{
             InfoLog.getInstance().generateLog(className,
                     InfoLog.getInstance().error_SensorNotFound +
-                        sensor.getStringType());
+                            sensor.getStringType());
         }
     }
 

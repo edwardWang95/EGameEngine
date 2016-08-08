@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Random;
 
 import edwardwang.bouncingball.Info.InfoLog;
+import edwardwang.bouncingball.InteractionLayer.InteractionManager;
 import edwardwang.bouncingball.PhysicsEngine.PhysicsEngine;
 import edwardwang.bouncingball.Sprite.SpriteType;
 import edwardwang.bouncingball.View.GameView;
@@ -55,6 +56,9 @@ public class Game implements Serializable, Runnable{
 
     //Background Update status
     private boolean isBackgroundReadyToUpdate = false;
+
+    //InteractionManger
+    private InteractionManager interactionManager = new InteractionManager();
 
     @Override
     public void run() {
@@ -134,6 +138,8 @@ public class Game implements Serializable, Runnable{
 
     public void setupPlayer() {}
 
+    public void setupInteractionManagement(){}
+
     public void updateGame() {}
 
     ////////////////////////////////////////////////////////////////////////////
@@ -200,6 +206,10 @@ public class Game implements Serializable, Runnable{
 
     public boolean isBackgroundReadyToUpdate() {
         return isBackgroundReadyToUpdate;
+    }
+
+    public InteractionManager getInteractionManager() {
+        return interactionManager;
     }
 
     ////////////////////////////////////////////////////////////////////////////

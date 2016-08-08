@@ -1,6 +1,15 @@
 package edwardwang.bouncingball.InteractionLayer;
 
 import android.content.Context;
+import android.view.View;
+
+import java.util.ArrayList;
+
+import edwardwang.bouncingball.InteractionLayer.EButton.EButtonManager;
+import edwardwang.bouncingball.InteractionLayer.EGesture.EGestureManager;
+import edwardwang.bouncingball.InteractionLayer.EScreen.EScreenBlockManager;
+import edwardwang.bouncingball.InteractionLayer.ESensor.ESensorManager;
+import edwardwang.bouncingball.InteractionLayer.ETap.ETapManager;
 
 /**
  * Manages all types of ways user can control/interact with sprites.
@@ -9,16 +18,74 @@ import android.content.Context;
 public class InteractionManager {
     private static final String className = InteractionManager.class.getSimpleName();
 
-    Context context;
+    private Context context;
+    private View view;
 
     //Interaction methods
+    private ArrayList<Interaction> interactionList;
+    private Interaction interaction;
 
-    public InteractionManager(Context context){
+    private EButtonManager buttonManager;
+    private EGestureManager gestureManager;
+    private EScreenBlockManager screenBlockManager;
+    private ESensorManager sensorManager;
+    private ETapManager tapManager;
+
+    public void setupInteractionManager(Context context, View view){
         this.context = context;
+        this.view = view;
     }
 
-    public void setInteractionMethod(){
-
+    public void addInteraction(Interaction interaction){
+        interactionList.add(interaction);
     }
 
+    public void initInteractions(){
+        for(Interaction interaction: interactionList){
+            this.interaction = interaction;
+            switch (interaction){
+                case Sensor:
+                    sensorManager = new ESensorManager(context);
+                    break;
+                case Gesture:
+                    gestureManager = new EGestureManager(context);
+                    break;
+                case ScreenBlocks:
+                    screenBlockManager = new EScreenBlockManager(context, view);
+                    break;
+                case TapScreen:
+                    tapManager = new ETapManager(context, view);
+                    break;
+                case Buttons:
+                    buttonManager = new EButtonManager(context);
+                    break;
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+    //Getter
+    public ArrayList<Interaction> getInteractionList() {
+        return interactionList;
+    }
+
+    public ETapManager getTapManager() {
+        return tapManager;
+    }
+
+    public ESensorManager getSensorManager() {
+        return sensorManager;
+    }
+
+    public EScreenBlockManager getScreenBlockManager() {
+        return screenBlockManager;
+    }
+
+    public EGestureManager getGestureManager() {
+        return gestureManager;
+    }
+
+    public EButtonManager getButtonManager() {
+        return buttonManager;
+    }
 }

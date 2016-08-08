@@ -23,7 +23,7 @@ import edwardwang.bouncingball.Sprite.SpriteType;
  * are generated or updated by the Physics Engine.
  * Created by edwardwang on 7/23/16.
  */
-public class GameView extends SurfaceView implements SurfaceHolder.Callback, GestureDetector.OnGestureListener{
+public class GameView extends SurfaceView{
     private static final String className = GameView.class.getSimpleName();
 
     private Context context;
@@ -247,78 +247,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
         return true;
     }
 */
-    ////////////////////////////////////////////////////////////////////////////////////
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        return false;
-    }
-
-    @Override
-    public boolean onDown(MotionEvent motionEvent) {
-        /*
-        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK){
-            //Player touch screen
-            case MotionEvent.ACTION_DOWN:
-                for(Sprite sprite: spriteList){
-                    sprite.setIsMoving(true);
-                    //InfoLog.getInstance().generateLog(className, InfoLog.getInstance().debug_MotionEventActionDown);
-                }
-                InfoLog.getInstance().generateLog(className, InfoLog.getInstance().debug_MotionEventActionDown);
-                break;
-            //Player removes finger
-            case MotionEvent.ACTION_UP:
-                for(Sprite sprite: spriteList){
-                    sprite.setIsMoving(false);
-                }
-                InfoLog.getInstance().generateLog(className, InfoLog.getInstance().debug_MotionEventActionUp);
-                break;
-        }
-        */
-        return true;
-    }
-
-    @Override
-    public void onShowPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        return false;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
-
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////
-    //Surface Holder Callback methods
-    @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-
-    }
-
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-
-    }
 
     ////////////////////////////////////////////////////////////////////////////////////
     //Getters
     public EMap getEMap() {
         return eMap;
     }
+
+    public SurfaceView getSurfaceView() {
+        return surfaceView;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////
     //Setters
 

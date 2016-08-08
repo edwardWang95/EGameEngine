@@ -5,9 +5,10 @@ package edwardwang.bouncingball.InteractionLayer;
  * their sprite.
  * Created by edwardwang on 8/7/16.
  */
-public enum InteractionType {
+public enum Interaction {
     Sensor,
     Gesture,
-    SplitScreen,
-    TapScreen;
+    ScreenBlocks,
+    TapScreen,
+    Buttons;
 }

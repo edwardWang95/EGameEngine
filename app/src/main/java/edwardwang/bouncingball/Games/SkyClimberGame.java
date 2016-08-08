@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import edwardwang.bouncingball.Info.InfoLog;
 import edwardwang.bouncingball.Info.PhoneInfo;
+import edwardwang.bouncingball.InteractionLayer.Interaction;
+import edwardwang.bouncingball.InteractionLayer.InteractionManager;
 import edwardwang.bouncingball.Map.EMap;
 import edwardwang.bouncingball.Map.EPixel;
 import edwardwang.bouncingball.PhysicsEngine.Action;
@@ -76,6 +78,9 @@ public class SkyClimberGame extends Game{
     //The height
     private Vector3DInt updatePlatformSpeed = new Vector3DInt();
 
+    //InteractionManager
+    private InteractionManager interactionManager;
+
     public SkyClimberGame(Context context, GameView gameView){
         this.context = context;
         setGameName(gameName);
@@ -86,12 +91,16 @@ public class SkyClimberGame extends Game{
         setHitBoxWidthHeightPerc(platformHitBoxPercWidth, platformHitBoxPercHeight);
     }
 
+    ////////////////////////////////////////////////////////////////////////
+    //Superclass override methods
+
     @Override
     public void setupGame() {
         grabGameViewElements();
         setupPhysicsEngine();
         setupBackground();
         setupPlayer();
+        setupInteractionManagement();
         InfoLog.getInstance().generateLog(className, InfoLog.getInstance().debug_SkyClimberSetup);
     }
 
@@ -153,9 +162,21 @@ public class SkyClimberGame extends Game{
     }
 
     @Override
+    public void setupInteractionManagement(){
+        interactionManager = getInteractionManager();
+        interactionManager.setupInteractionManager(context,
+                getGameView().getSurfaceView());
+        interactionManager.addInteraction(Interaction.Sensor);
+        interactionManager.initInteractions();
+    }
+
+    @Override
     public void updateGame() {
         handlePlayerMoving();
     }
+
+    ////////////////////////////////////////////////////////////////////////
+    //Player Management
 
     /**
      * Setup which corners on player sprite hitbox to check for collision
@@ -212,6 +233,7 @@ public class SkyClimberGame extends Game{
 
     }
     //////////////////////////////////////////////////////////////////////
+    //Background Management
 
     private void setUpdatePlatformSpeed(int playerPositionY){
         int deltaY = ((screenHalfwayHeight - playerPositionY) - (eMap.getMapOffSetHeight()/2))
