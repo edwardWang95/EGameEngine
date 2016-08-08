@@ -1,4 +1,4 @@
-package edwardwang.bouncingball.MovementLayer;
+package edwardwang.bouncingball.InteractionLayer;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -25,7 +25,7 @@ public class ESensorManager implements SensorEventListener{
     private int sensorDelaySpeed = SensorManager.SENSOR_DELAY_NORMAL;
     ////////////////////////////////////////////////////////////////////////////////
     //Gyroscope
-    private Sensor gyrsocope;
+    private Sensor gyroscope;
 
     //Accelerometer
     private Sensor accelerometer;
@@ -44,8 +44,8 @@ public class ESensorManager implements SensorEventListener{
     }
 
     private void setupSensors(){
-        gyrsocope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-        addSensorToList(gyrsocope);
+        gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        addSensorToList(gyroscope);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         addSensorToList(accelerometer);
         rotation = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
@@ -86,7 +86,7 @@ public class ESensorManager implements SensorEventListener{
     @Override
     public void onSensorChanged(SensorEvent event) {
         Sensor sensor = event.sensor;
-        if(sensor == gyrsocope){
+        if(sensor == gyroscope){
             updateGyroscope(event);
         }else if(sensor == accelerometer){
             updateAccelerometer(event);
