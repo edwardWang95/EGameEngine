@@ -112,6 +112,7 @@ public class Game implements Serializable, Runnable{
         playing = false;
         try{
             gameThread.join();
+            interactionsPause();
             InfoLog.getInstance().generateLog(className, InfoLog.getInstance().debug_PauseGameThread);
         }catch (InterruptedException e){
             InfoLog.getInstance().generateLog(className, InfoLog.getInstance().error_PauseGameThread);
@@ -122,6 +123,7 @@ public class Game implements Serializable, Runnable{
         playing = true;
         gameThread = new Thread(this);
         gameThread.start();
+        interactionsResume();
         InfoLog.getInstance().generateLog(className, InfoLog.getInstance().debug_ResumeGameThread);
     }
 
@@ -139,6 +141,10 @@ public class Game implements Serializable, Runnable{
     public void setupPlayer() {}
 
     public void setupInteractionManagement(){}
+
+    public void interactionsPause(){}
+
+    public void interactionsResume(){}
 
     public void updateGame() {}
 

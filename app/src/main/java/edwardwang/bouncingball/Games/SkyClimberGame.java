@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import edwardwang.bouncingball.Info.InfoLog;
 import edwardwang.bouncingball.Info.PhoneInfo;
+import edwardwang.bouncingball.InteractionLayer.ESensor.ESensorManager;
 import edwardwang.bouncingball.InteractionLayer.Interaction;
 import edwardwang.bouncingball.InteractionLayer.InteractionManager;
 import edwardwang.bouncingball.Map.EMap;
@@ -80,6 +81,9 @@ public class SkyClimberGame extends Game{
 
     //InteractionManager
     private InteractionManager interactionManager;
+
+    //SensorManager
+    private ESensorManager sensorManager;
 
     public SkyClimberGame(Context context, GameView gameView){
         this.context = context;
@@ -168,6 +172,18 @@ public class SkyClimberGame extends Game{
                 getGameView().getSurfaceView());
         interactionManager.addInteraction(Interaction.Sensor);
         interactionManager.initInteractions();
+        sensorManager = interactionManager.getSensorManager();
+        sensorManager.setup();
+    }
+
+    @Override
+    public void interactionsPause(){
+        sensorManager.startSensors();
+    }
+
+    @Override
+    public void interactionsResume(){
+        sensorManager.stopSensors();
     }
 
     @Override
