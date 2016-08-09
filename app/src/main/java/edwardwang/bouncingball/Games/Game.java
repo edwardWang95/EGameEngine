@@ -68,20 +68,20 @@ public class Game implements Serializable, Runnable{
 
     //TODO:Choose between milliseconds or nanoseconds
     private void useMilliseconds(){
-        //long milliseconds;
+        long milliseconds;
         while(isPlaying()){
             long startFrameTimeMilli = System.currentTimeMillis();
             //update and draw frame before updating fps
             updateGame();
             gameView.draw();
-            //milliseconds = System.currentTimeMillis() - startFrameTimeMilli;
-            deltaTime = (System.currentTimeMillis() - startFrameTimeMilli) / 1000.f;
+            milliseconds = System.currentTimeMillis() - startFrameTimeMilli;
+            deltaTime = milliseconds / 1000.f;
 
 
             //InfoLog.getInstance().debugValue(className, "time= " + deltaTime);
 
             if(deltaTime >= 1){
-                fps = (1000 / (long) deltaTime);
+                fps = (1000 / milliseconds);
             }
         }
     }

@@ -7,6 +7,4 @@ public enum Action {
     JUMP,
     RUN,    //Run is 2x the movementSpeedX
     WALK,
-    FLOAT_LEFT,
-    FLOAT_RIGHT;
 }

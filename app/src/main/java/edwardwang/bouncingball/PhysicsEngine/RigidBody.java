@@ -45,10 +45,17 @@ public class RigidBody {
         direction = new Vector3DDirection();
     }
 
+    /**
+     * Movement speed is necessary because when resetting velocity,
+     * app needs memory of original speed.
+     * @param movementSpeedX
+     * @param movementSpeedY
+     */
     public void setMovementSpeed(double movementSpeedX, double movementSpeedY){
         movementSpeed.setX(movementSpeedX);
         movementSpeed.setY(movementSpeedY);
         resetVelocityX();
+        resetVelocityY();
     }
 
     public void resetVelocityX(){

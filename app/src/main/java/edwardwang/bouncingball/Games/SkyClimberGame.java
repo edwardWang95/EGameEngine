@@ -16,6 +16,7 @@ import edwardwang.bouncingball.Map.EPixel;
 import edwardwang.bouncingball.PhysicsEngine.Action;
 import edwardwang.bouncingball.PhysicsEngine.PhysicsEngine;
 import edwardwang.bouncingball.PhysicsEngine.Direction;
+import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDirection;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DFloat;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
 import edwardwang.bouncingball.Sprite.Player1Sprite;
@@ -39,7 +40,7 @@ public class SkyClimberGame extends Game{
     private final int MINUS = 1;
     private final int NEUTRAL = 2;
     //Use time factor to either speed up or slow down movement
-    private final double timeFactor = .2;
+    private final double timeFactor = .08;
 
     //Map Size in terms of ePixels
     private final int numOfEPixelsWidth = 7;
@@ -66,7 +67,10 @@ public class SkyClimberGame extends Game{
     private int playerOffsetY;
     private final double playerHitBoxPercWidth = 1;
     private final double playerHitBoxPercHeight = 1;
+    private final float playerPixelDistancePerSecond = 250;
     private SpriteHitBox playerHitBox;
+    private final double playerVelocityRight = 2;
+    private final double playerVelocityLeft = 2;
 
     //Background
     private int startX, startY;
@@ -164,6 +168,10 @@ public class SkyClimberGame extends Game{
         player1Sprite.setIsOnGround(false);
         //The distance player sprite moves
         setEPixelPerMeter(ePixelPerMeter);
+
+        //Move player at static pace
+        player1Sprite.setPixelDistancePerSecond(playerPixelDistancePerSecond);
+
         //Set the corner checklist in hitBox
         setupPlayerHitBoxCornerCheckList();
     }
@@ -190,8 +198,6 @@ public class SkyClimberGame extends Game{
     @Override
     public void interactionsResume(){
         sensorManager.startSensors();
-        //initiate the previousRotationX value
-        previousRotationX = rotation.getX();
     }
 
     @Override
@@ -240,16 +246,26 @@ public class SkyClimberGame extends Game{
         }
     }
 
+    /**
+     * Unliked moving vertically, the x movement will be handled statically,
+     * without incorporating any velocity related.
+     */
     private void handlePlayerMovingHorizontally(){
         float x = rotation.getX();
+        //InfoLog.getInstance().debugValue(className, "PreviousX: " + previousRotationX);
+        //InfoLog.getInstance().debugValue(className, "OrientationX: " + x);
+        Vector3DDirection direction = player1Sprite.getRigidBody().getDirection();
         if(x < previousRotationX){
             //MOVE RIGHT
-            physicsEngine.setSpriteAction(Action.FLOAT_LEFT, player1Sprite);
-
+            //direction.setX(Direction.RIGHT);
+            player1Sprite.getRigidBody().getVelocity().setX(playerVelocityRight);
         }else if(x > previousRotationX){
             //MOVE LEFT
-            physicsEngine.setSpriteAction(Action.FLOAT_RIGHT, player1Sprite);
+            //direction.setX(Direction.LEFT);
+            player1Sprite.getRigidBody().getVelocity().setX(playerVelocityLeft);
         }
+       // physicsEngine.updateSpriteLocationStaticallyX(player1Sprite,
+       //         direction.getX(),getFPS());
     }
 
     /**

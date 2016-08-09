@@ -73,12 +73,6 @@ public class PhysicsEngine {
                 sprite.getRigidBody().resetVelocityY();
                 sprite.getRigidBody().setDirectionY(Direction.UP);
                 break;
-            case FLOAT_LEFT:
-                sprite.setIsOnGround(false);
-                break;
-            case FLOAT_RIGHT:
-                sprite.setIsOnGround(false);
-                break;
             case WALK:
                 sprite.setIsOnGround(true);
                 break;
@@ -116,13 +110,8 @@ public class PhysicsEngine {
             updateNetAccel(netAccel, sprite.isOnGround());
             //updateVelocity(velocity, netAccel, deltaTime);
             updateVelocity(velocity, netAccel, timeElapsed);
-            /*
-            updateDeltaDistanceAndDirection(deltaDistance, velocity, deltaTime,
-                    ePixelPerMeter, sprite.getFrameWidth(), sprite.getFrameHeight());
-            */
             updateDeltaDistanceAndDirection(deltaDistance, direction, velocity, timeElapsed,
                     ePixelPerMeter, eMap.getePixelWidth(), eMap.getePixelHeight());
-
             //if direction change is updated, reset deltaTime
             if(!direction.getY().equals(previousDirectY)){
                 resetTimeElapsed();
@@ -173,7 +162,7 @@ public class PhysicsEngine {
         deltaDistance.setX((int) x);
         deltaDistance.setY((int) y);
         //InfoLog.getInstance().debugValue(className, "Time: " + deltaTime);
-        //InfoLog.getInstance().debugValue(className, "DeltaDistance: " + deltaDistance.getY());
+        InfoLog.getInstance().debugValue(className, "DeltaDistance: " + deltaDistance.getX());
     }
 
     /**
@@ -492,21 +481,23 @@ public class PhysicsEngine {
      * @param sprite
      * @param fps
      */
-    public void updateSpriteLocationStatically(Sprite sprite, long fps){
+    public void updateSpriteLocationStaticallyX(Sprite sprite, Direction direction, long fps){
         //InfoLog.getInstance().debugValue("Is Moving",String.valueOf(sprite.isMoving()));
 
         if(sprite.isMoving() && sprite.isWithinScreen()){
             tempX = sprite.getPosition().getX();
-            tempY = sprite.getPosition().getY();
-
-            tempY += (int) (sprite.getPixelDistancePerSecond()/fps);
-
-            tempY += (int) (sprite.getPixelDistancePerSecond()/fps);
-
-            sprite.getPosition().setY(tempY);
-            tempX += (int) (sprite.getPixelDistancePerSecond()/fps);
-            sprite.getPosition().setX(tempX);
-            InfoLog.getInstance().debugValue("PositionXY", String.valueOf(tempX) + String.valueOf(tempY));
+            switch (direction){
+                case LEFT:
+                    tempX -= (int) (sprite.getPixelDistancePerSecond()/fps);
+                    break;
+                case RIGHT:
+                    tempX += (int) (sprite.getPixelDistancePerSecond()/fps);
+                    break;
+            }
+            if(!isSpriteHitBoxWithinMapConstraints(sprite.getSpriteHitBox())){
+                sprite.getPosition().setX(tempX);
+            }
+            //InfoLog.getInstance().debugValue("PositionX", String.valueOf(tempX) + String.valueOf(tempY));
         }
     }
 

@@ -1,10 +1,12 @@
 package edwardwang.bouncingball.Map;
 
 import android.content.Context;
+import android.content.Intent;
 
 import java.util.ArrayList;
 import java.util.Queue;
 
+import edwardwang.bouncingball.Activity.StartScreenActivity;
 import edwardwang.bouncingball.Info.PhoneInfo;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
 import edwardwang.bouncingball.Sprite.SkyClimberSprite.SkyClimberPlatformSprite;
@@ -139,22 +141,30 @@ public class EMap {
     }
 
     public EPixel getEPixelFromCanvasPosition(int positionX, int positionY){
-        int x = (positionX + (mapOffSetWidth/2)) / ePixelWidth;
-        int y = (positionY + (mapOffSetHeight/2)) / ePixelHeight;
-        if(x >= numOfEPixelsWidth){
-            x -= 1;
-        }else if(x < 0){
-            x = 0;
-        }
-        if(y >= numOfEPixelsHeight){
-            y -= 1;
-        }else if(y < 0){
-            //TODO: GAME OVER
-            y = 0;
-        }
-        //InfoLog.getInstance().debugValue(className, "PlatformX: "+x + " PlatformY: "+y);
+        EPixel ePixel = new EPixel();
+        try{
+            int x = (positionX + (mapOffSetWidth/2)) / ePixelWidth;
+            int y = (positionY + (mapOffSetHeight/2)) / ePixelHeight;
+            if(x >= numOfEPixelsWidth){
+                x -= 1;
+            }else if(x < 0){
+                x = 0;
+            }
+            if(y >= numOfEPixelsHeight){
+                y -= 1;
+            }else if(y < 0){
+                //TODO: GAME OVER
+                y = 0;
+            }
+            //InfoLog.getInstance().debugValue(className, "PlatformX: "+x + " PlatformY: "+y);
+            ePixel = map[x][y];
 
-        return map[x][y];
+        }catch(ArrayIndexOutOfBoundsException e){
+            //TODO:Setup the game over
+            Intent intent = new Intent(context, StartScreenActivity.class);
+            context.getApplicationContext().startActivity(intent);
+        }
+        return ePixel;
     }
 
     //////////////////////////////////////////////////////////////////////

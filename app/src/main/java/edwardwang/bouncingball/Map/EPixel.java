@@ -22,6 +22,8 @@ public class EPixel {
     private boolean isEmpty;
     private Sprite sprite;
 
+    public EPixel() {}
+
     public EPixel(int width, int height, int positionCanvasX, int positionCanvasY,
                   int positionEMapX, int positionEMapY){
         this.width = width;
