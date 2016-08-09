@@ -80,7 +80,7 @@ public class Game implements Serializable, Runnable{
 
             //InfoLog.getInstance().debugValue(className, "time= " + deltaTime);
 
-            if(deltaTime >= 1){
+            if(milliseconds >= 1){
                 fps = (1000 / milliseconds);
             }
         }

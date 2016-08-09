@@ -58,6 +58,8 @@ public class ESensorManager implements InteractionSetup, SensorEventListener {
 
     //Rotation - measures orientation of device
     private Sensor rotationSensor;
+    private final int rotationLEFT = 30;
+    private final int rotationRIGHT = -30;
     private Vector3DFloat rotation;
         //need a 4x4 rotation matrix
     private float[] rotationMatrix = new float[16];
@@ -215,18 +217,30 @@ public class ESensorManager implements InteractionSetup, SensorEventListener {
         return sensorDelaySpeed;
     }
 
+    //Gyroscope
     public Vector3DInt getGryoscope() {
         return gyroscope;
     }
 
+    //Accelerometer
     public Vector3DDouble getAccelerometer() {
         return accelerometer;
     }
 
+    //Rotation
     public Vector3DFloat getRotation() {
         return rotation;
     }
 
+    public int getRotationLEFT() {
+        return rotationLEFT;
+    }
+
+    public int getRotationRIGHT() {
+        return rotationRIGHT;
+    }
+
+    //Gravity
     public Vector3DDouble getGravity() {
         return gravity;
     }

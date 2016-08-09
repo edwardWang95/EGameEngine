@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
+import edwardwang.bouncingball.Info.InfoLog;
 import edwardwang.bouncingball.Info.PhoneInfo;
+import edwardwang.bouncingball.PhysicsEngine.Axis;
 import edwardwang.bouncingball.PhysicsEngine.RigidBody;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
 
@@ -146,25 +148,29 @@ public class Sprite {
      * Updates the position from the rigid body's delta distance. Method is
      * usually called after running physics engine.
      */
-    public void updatePosition() {
+    public void updatePosition(Axis axis) {
         int newX, newY;
-        int deltaDistanceX = rigidBody.getDeltaDistance().getX();
-        int deltaDistanceY = rigidBody.getDeltaDistance().getY();
+        int deltaDistanceX, deltaDistanceY;
 
+        switch (axis){
+            case X:
+                deltaDistanceX = rigidBody.getDeltaDistance().getX();
+                //InfoLog.getInstance().generateLog(className, "DeltaX:" + deltaDistanceX);
+                newX = position.getX() + deltaDistanceX;
+                position.setX(newX);
+                break;
+            case Y:
+                deltaDistanceY = rigidBody.getDeltaDistance().getY();
+                newY = position.getY() - deltaDistanceY;
+                position.setY(newY);
+                break;
+            case Z:
+                break;
+        }
 
         //InfoLog.getInstance().debugValue(className, "DeltaDistanceY: " + deltaDistanceY);
 
         //InfoLog.getInstance().debugValue(className, "PositionY: " + position.getY());
-
-        if (deltaDistanceX > 0) {
-            newX = position.getX() + deltaDistanceX;
-        } else {
-            newX = position.getX() - deltaDistanceX;
-        }
-        newY = position.getY() - deltaDistanceY;
-
-        position.setX(newX);
-        position.setY(newY);
     }
         /*
         if(deltaDistanceY > 0){

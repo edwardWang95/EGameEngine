@@ -7,8 +7,10 @@ import java.util.ArrayList;
 
 import edwardwang.bouncingball.Interaction.EButton.EButtonManager;
 import edwardwang.bouncingball.Interaction.EGesture.EGestureManager;
-import edwardwang.bouncingball.Interaction.EScreen.EScreenBlockManager;
+import edwardwang.bouncingball.Interaction.EScreenBlock.EScreenBlockManager;
 import edwardwang.bouncingball.Interaction.ESensor.ESensorManager;
+import edwardwang.bouncingball.Interaction.ESplitScreen.ESplitScreen;
+import edwardwang.bouncingball.Interaction.ESplitScreen.ESplitScreenManager;
 import edwardwang.bouncingball.Interaction.ETap.ETapManager;
 
 /**
@@ -30,6 +32,7 @@ public class InteractionManager {
     private EScreenBlockManager screenBlockManager;
     private ESensorManager sensorManager;
     private ETapManager tapManager;
+    private ESplitScreenManager splitScreenManager;
 
     public void setupInteractionManager(Context context, View view){
         this.context = context;
@@ -59,6 +62,9 @@ public class InteractionManager {
                 case Buttons:
                     buttonManager = new EButtonManager(context);
                     break;
+                case SplitScreen:
+                    splitScreenManager = new ESplitScreenManager(context, view);
+                    break;
             }
         }
     }
@@ -70,22 +76,32 @@ public class InteractionManager {
     }
 
     public ETapManager getTapManager() {
+        tapManager.setup();
         return tapManager;
     }
 
     public ESensorManager getSensorManager() {
+        sensorManager.setup();
         return sensorManager;
     }
 
     public EScreenBlockManager getScreenBlockManager() {
+        screenBlockManager.setup();
         return screenBlockManager;
     }
 
     public EGestureManager getGestureManager() {
+        gestureManager.setup();
         return gestureManager;
     }
 
     public EButtonManager getButtonManager() {
+        buttonManager.setup();
         return buttonManager;
+    }
+
+    public ESplitScreenManager getSplitScreenManager() {
+        splitScreenManager.setup();
+        return splitScreenManager;
     }
 }

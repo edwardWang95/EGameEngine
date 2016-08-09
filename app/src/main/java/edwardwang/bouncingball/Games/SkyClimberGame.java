@@ -9,11 +9,13 @@ import edwardwang.bouncingball.Info.InfoLog;
 import edwardwang.bouncingball.Info.PhoneInfo;
 import edwardwang.bouncingball.Interaction.ESensor.ESensor;
 import edwardwang.bouncingball.Interaction.ESensor.ESensorManager;
+import edwardwang.bouncingball.Interaction.ESplitScreen.ESplitScreenManager;
 import edwardwang.bouncingball.Interaction.Interaction;
 import edwardwang.bouncingball.Interaction.InteractionManager;
 import edwardwang.bouncingball.Map.EMap;
 import edwardwang.bouncingball.Map.EPixel;
 import edwardwang.bouncingball.PhysicsEngine.Action;
+import edwardwang.bouncingball.PhysicsEngine.Axis;
 import edwardwang.bouncingball.PhysicsEngine.PhysicsEngine;
 import edwardwang.bouncingball.PhysicsEngine.Direction;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDirection;
@@ -87,10 +89,7 @@ public class SkyClimberGame extends Game{
 
     //InteractionManager
     private InteractionManager interactionManager;
-        //SensorManager
-    private ESensorManager sensorManager;
-    private Vector3DFloat rotation;
-    private float previousRotationX;
+    private ESplitScreenManager splitScreenManager;
 
     public SkyClimberGame(Context context, GameView gameView){
         this.context = context;
@@ -181,29 +180,23 @@ public class SkyClimberGame extends Game{
         interactionManager = getInteractionManager();
         interactionManager.setupInteractionManager(context,
                 getGameView().getSurfaceView());
-        interactionManager.addInteraction(Interaction.Sensor);
+        interactionManager.addInteraction(Interaction.SplitScreen);
         interactionManager.initInteractions();
-        //Setting up sensorManager
-        sensorManager = interactionManager.getSensorManager();
-        sensorManager.addESensorToList(ESensor.Rotation);
-        sensorManager.setup();
-        rotation = sensorManager.getRotation();
+        splitScreenManager = interactionManager.getSplitScreenManager();
     }
 
     @Override
     public void interactionsPause(){
-        sensorManager.stopSensors();
     }
 
     @Override
     public void interactionsResume(){
-        sensorManager.startSensors();
     }
 
     @Override
     public void updateGame(){
-        handlePlayerMovingHorizontally();
         handlePlayerMovingVertically();
+        handlePlayerMovingHorizontally();
     }
 
     ////////////////////////////////////////////////////////////////////////
@@ -251,21 +244,29 @@ public class SkyClimberGame extends Game{
      * without incorporating any velocity related.
      */
     private void handlePlayerMovingHorizontally(){
-        float x = rotation.getX();
         //InfoLog.getInstance().debugValue(className, "PreviousX: " + previousRotationX);
         //InfoLog.getInstance().debugValue(className, "OrientationX: " + x);
         Vector3DDirection direction = player1Sprite.getRigidBody().getDirection();
-        if(x < previousRotationX){
-            //MOVE RIGHT
-            //direction.setX(Direction.RIGHT);
-            player1Sprite.getRigidBody().getVelocity().setX(playerVelocityRight);
-        }else if(x > previousRotationX){
-            //MOVE LEFT
-            //direction.setX(Direction.LEFT);
-            player1Sprite.getRigidBody().getVelocity().setX(playerVelocityLeft);
+
+        if(splitScreenManager.isScreenTouched()){
+            direction.setX(splitScreenManager.getDirection());
+            physicsEngine.updateSpriteLocationStaticallyX(player1Sprite,
+                    direction.getX(),getFPS());
         }
-       // physicsEngine.updateSpriteLocationStaticallyX(player1Sprite,
-       //         direction.getX(),getFPS());
+
+        /*
+        if(x < sensorManager.getRotationRIGHT()){
+            //MOVE RIGHT
+            direction.setX(Direction.RIGHT);
+            //player1Sprite.getRigidBody().getVelocity().setX(playerVelocityRight);
+        }else if(x > sensorManager.getRotationLEFT()){
+            //MOVE LEFT
+            direction.setX(Direction.LEFT);
+            //player1Sprite.getRigidBody().getVelocity().setX(playerVelocityLeft);
+        }
+        physicsEngine.updateSpriteLocationStaticallyX(player1Sprite,
+                direction.getX(),getFPS());
+        */
     }
 
     /**
@@ -281,7 +282,7 @@ public class SkyClimberGame extends Game{
 
             //InfoLog.getInstance().debugValue(className, "COLLIDING");
         }
-        physicsEngine.updateSpriteLocation(player1Sprite, getDeltaTime(),
+        physicsEngine.updateSpriteLocation(player1Sprite, Axis.Y, getDeltaTime(),
                 getTimeFactor(), ePixelPerMeter);
 
     }

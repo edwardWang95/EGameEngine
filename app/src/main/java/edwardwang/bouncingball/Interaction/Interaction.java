@@ -10,5 +10,6 @@ public enum Interaction {
     Gesture,
     ScreenBlocks,
     TapScreen,
-    Buttons;
+    Buttons,
+    SplitScreen;
 }

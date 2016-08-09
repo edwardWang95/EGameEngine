@@ -1,4 +1,4 @@
-package edwardwang.bouncingball.Interaction.EScreen;
+package edwardwang.bouncingball.Interaction.EScreenBlock;
 
 import android.content.Context;
 import android.view.View;
@@ -9,6 +9,8 @@ import edwardwang.bouncingball.Interaction.InteractionSetup;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
 
 /**
+ * Before any further development, find if this would be valuable for devs
+ *
  * Set the number of screen blocks before calling setup. By default
  * there will always be one screen block.
  * Created by edwardwang on 8/8/16.
@@ -18,8 +20,9 @@ public class EScreenBlockManager implements InteractionSetup {
     private Context context;
     private View view;
 
-    private ArrayList<EScreenBlock> screenBlockList;
-    private int numOfScreenBlocks = 1;
+    private int[][] screenBlockList;
+    private int numOfScreenBlocksWidth = 1;
+    private int numOfScreenBlocksHeight = 1;
 
     //ScreenBlock settings
     private int screenWidth;
@@ -32,8 +35,11 @@ public class EScreenBlockManager implements InteractionSetup {
         this.view = view;
     }
 
-    public void setNumOfScreenBlocks(int numOfScreenBlocks){
-        this.numOfScreenBlocks = numOfScreenBlocks;
+    public void setNumOfScreenBlocks(int numOfScreenBlocksWidth,
+                                     int numOfScreenBlocksHeight){
+        this.numOfScreenBlocksWidth = numOfScreenBlocksWidth;
+        this.numOfScreenBlocksHeight = numOfScreenBlocksHeight;
+        screenBlockList = new int[numOfScreenBlocksWidth][numOfScreenBlocksHeight];
     }
 
     @Override
@@ -47,8 +53,4 @@ public class EScreenBlockManager implements InteractionSetup {
 
     //////////////////////////////////////////////////////////////////
     //Getter
-
-    public ArrayList<EScreenBlock> getScreenBlockList() {
-        return screenBlockList;
-    }
 }
