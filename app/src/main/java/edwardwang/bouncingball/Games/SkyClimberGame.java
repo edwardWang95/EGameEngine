@@ -76,7 +76,7 @@ public class SkyClimberGame extends Game{
 
     //Background
     private int startX, startY;
-    private final int platformSpawnDistance = 3;
+    private final int platformSpawnDistance = 2;
     //The % of ePixel/platform that can be interactable with player sprite
     private final double platformHitBoxPercWidth = 1;
     private final double platformHitBoxPercHeight = 1;

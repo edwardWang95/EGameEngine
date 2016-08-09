@@ -312,7 +312,7 @@ public class PhysicsEngine {
 
 
 
-        if(sprite.isMoving() && sprite.isWithinScreen()){
+       // if(sprite.isMoving() && sprite.isWithinScreen()){
             /*
             tempX = sprite.getPosition().getX();
             switch (direction){
@@ -329,6 +329,6 @@ public class PhysicsEngine {
             */
             //InfoLog.getInstance().debugValue("PositionX", String.valueOf(tempX) + String.valueOf(tempY));
 
-        }
+        //}
     }
 }
