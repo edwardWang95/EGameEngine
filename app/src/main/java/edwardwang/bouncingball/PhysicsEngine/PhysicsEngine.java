@@ -294,19 +294,18 @@ public class PhysicsEngine {
                 break;
         }
         */
-        int deltaX = (int) (sprite.getPixelDistancePerSecond()/fps);
-        switch (direction){
-            case LEFT:
-                deltaX *= -1 ;
-                break;
-            case RIGHT:
-                break;
-        }
-
-        //InfoLog.getInstance().debugValue(className, "DeltaX: " + deltaX);
-
-        sprite.getRigidBody().getDeltaDistance().setX(deltaX);
         if(isSpriteHitBoxWithinMapConstraints(sprite.getSpriteHitBox())){
+            int deltaX = (int) (sprite.getPixelDistancePerSecond()/fps);
+            switch (direction){
+                case LEFT:
+                    deltaX *= -1 ;
+                    break;
+                case RIGHT:
+                    break;
+            }
+
+            //InfoLog.getInstance().debugValue(className, "DeltaX: " + deltaX);
+            sprite.getRigidBody().getDeltaDistance().setX(deltaX);
             sprite.updatePosition(Axis.X);
         }
 

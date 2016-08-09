@@ -45,7 +45,7 @@ public class SkyClimberGame extends Game{
     private final double timeFactor = .08;
 
     //Map Size in terms of ePixels
-    private final int numOfEPixelsWidth = 10;
+    private final int numOfEPixelsWidth = 12;
     private final int numOfEPixelsHeight = 12;
     //Sprite movement size
     private final float ePixelPerMeter = .5f;    // % ePixel = # meters --> inverse to movementSpeed
@@ -226,11 +226,16 @@ public class SkyClimberGame extends Game{
         if(playerPosition.getY() <= screenHalfwayHeight){
             //signal that it is time to update the background
             setIsBackgroundUpdated(true);
+            /*
             if(player1Sprite.getRigidBody().getDirection().getY().equals(Direction.DOWN) &&
                     isBackgroundReadyToUpdate()){
+
+            //TODO:check if down direction is necessary
+
+            }
+            */
+            if(isBackgroundReadyToUpdate()){
                 setUpdatePlatformSpeed(playerPosition.getY());
-
-
 
                 //InfoLog.getInstance().debugValue(className, "ScreenHalfway: " + screenHalfwayHeight);
                 //InfoLog.getInstance().debugValue(className, "PlayerY: " + playerPosition.getY());
@@ -316,12 +321,18 @@ public class SkyClimberGame extends Game{
      */
     private void updatePreviousPlatformPositionY(){
         int currentX;
+        int currentY;
         int newHeight;
         EPixel ePixel;
         for(int i=0;i< backgroundSpriteArrayList.size();i++){
             ePixel = backgroundSpriteArrayList.get(i);
             //Get new platform position at currentY + 1 AND current X position
             currentX = ePixel.getPositionEMapX();
+
+
+            InfoLog.getInstance().debugValue(className, "UpdatePlatformSpeed: "+
+            updatePlatformSpeed.getY());
+
             newHeight = ePixel.getPositionEMapY() + updatePlatformSpeed.getY();
             //Set current ePixel visibility to false
             ePixel.getSprite().setIsVisible(false);
@@ -333,17 +344,6 @@ public class SkyClimberGame extends Game{
                 ePixel.getSprite().setIsVisible(true);
                 backgroundSpriteArrayList.set(i, ePixel);
             }
-
-            /*
-            //Update the platform positions by the amount of height moved
-            newHeight = ePixel.getPositionCanvasY() - 1;
-            if(newHeight > 0){
-                ePixel.getSprite().getPosition().setY(newHeight);
-            }else{
-                //remove this ePixel
-                backgroundSpriteArrayList.remove(i);
-            }
-            */
         }
     }
 
