@@ -70,8 +70,14 @@ public class PhysicsEngine {
         switch (action){
             case JUMP:
                 sprite.setIsOnGround(false);
-                sprite.getRigidBody().resetVelocity();
+                sprite.getRigidBody().resetVelocityY();
                 sprite.getRigidBody().setDirectionY(Direction.UP);
+                break;
+            case FLOAT_LEFT:
+                sprite.setIsOnGround(false);
+                break;
+            case FLOAT_RIGHT:
+                sprite.setIsOnGround(false);
                 break;
             case WALK:
                 sprite.setIsOnGround(true);

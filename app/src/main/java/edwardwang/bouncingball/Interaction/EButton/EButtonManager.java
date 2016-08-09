@@ -1,10 +1,10 @@
-package edwardwang.bouncingball.InteractionLayer.EButton;
+package edwardwang.bouncingball.Interaction.EButton;
 
 import android.content.Context;
 
 import java.util.ArrayList;
 
-import edwardwang.bouncingball.InteractionLayer.InteractionSetup;
+import edwardwang.bouncingball.Interaction.InteractionSetup;
 
 /**
  * Created by edwardwang on 8/8/16.

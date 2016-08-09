@@ -1,4 +1,4 @@
-package edwardwang.bouncingball.InteractionLayer.ESensor;
+package edwardwang.bouncingball.Interaction.ESensor;
 
 /**
  * Created by edwardwang on 8/8/16.

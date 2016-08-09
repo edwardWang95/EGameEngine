@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Random;
 
 import edwardwang.bouncingball.Info.InfoLog;
-import edwardwang.bouncingball.InteractionLayer.InteractionManager;
+import edwardwang.bouncingball.Interaction.InteractionManager;
 import edwardwang.bouncingball.PhysicsEngine.PhysicsEngine;
 import edwardwang.bouncingball.Sprite.SpriteType;
 import edwardwang.bouncingball.View.GameView;

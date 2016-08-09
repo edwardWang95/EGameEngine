@@ -48,11 +48,14 @@ public class RigidBody {
     public void setMovementSpeed(double movementSpeedX, double movementSpeedY){
         movementSpeed.setX(movementSpeedX);
         movementSpeed.setY(movementSpeedY);
-        resetVelocity();
+        resetVelocityX();
     }
 
-    public void resetVelocity(){
+    public void resetVelocityX(){
         velocity.setX(movementSpeed.getX());
+    }
+
+    public void resetVelocityY(){
         velocity.setY(movementSpeed.getY());
     }
 

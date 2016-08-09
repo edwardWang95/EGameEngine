@@ -1,4 +1,4 @@
-package edwardwang.bouncingball.InteractionLayer.ESensor;
+package edwardwang.bouncingball.Interaction.ESensor;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -7,15 +7,18 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import edwardwang.bouncingball.Info.InfoLog;
-import edwardwang.bouncingball.InteractionLayer.InteractionSetup;
+import edwardwang.bouncingball.Interaction.InteractionSetup;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDouble;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DFloat;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
 
 /**
+ * Orientation of the phone
+ * -https://developer.android.com/guide/topics/sensors/sensors_overview.html
+ *
+ *
  * Accelerometer
  * -Acceleration along 3 axes in m/s^2
  *
@@ -26,6 +29,9 @@ import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
  * Rotation
  * -Orientation of device as a combination of an angle around an axis
  * -http://stackoverflow.com/questions/14740808/android-problems-calculating-the-orientation-of-the-device
+ * -X: + when turning LEFT             === - when turning RIGHT
+ * -Y: + when turning phone AWAY from user  === - when turning phone TOWARD user
+ * -Z: + when moving DOWNWARDS the ground === - when moving UPWARDS to the sky
  *
  * Gravity
  * -Acceleration due to gravity on 3 axes.
@@ -44,7 +50,7 @@ public class ESensorManager implements InteractionSetup, SensorEventListener {
     ////////////////////////////////////////////////////////////////////////////////
     //Gyroscope
     private Sensor gyroscopeSensor;
-    private Vector3DInt gryoscope;
+    private Vector3DInt gyroscope;
 
     //Accelerometer
     private Sensor accelerometerSensor;
@@ -105,6 +111,7 @@ public class ESensorManager implements InteractionSetup, SensorEventListener {
     }
     private void setupRotation(){
         rotationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        rotation = new Vector3DFloat();
         addSensorToList(rotationSensor);
         rotationMatrix[0] = 1;
         rotationMatrix[4] = 1;
@@ -188,10 +195,6 @@ public class ESensorManager implements InteractionSetup, SensorEventListener {
         rotation.setX(convertRadiansToDegrees(orientationVals[0]));
         rotation.setY(convertRadiansToDegrees(orientationVals[1]));
         rotation.setZ(convertRadiansToDegrees(orientationVals[2]));
-
-        InfoLog.getInstance().debugValue(className, "OrientationX: "+rotation.getX());
-        InfoLog.getInstance().debugValue(className, "OrientationY: "+rotation.getY());
-        InfoLog.getInstance().debugValue(className, "OrientationZ: "+rotation.getZ());
     }
 
     private float convertRadiansToDegrees(float radians){
@@ -212,10 +215,49 @@ public class ESensorManager implements InteractionSetup, SensorEventListener {
         return sensorDelaySpeed;
     }
 
+    public Vector3DInt getGryoscope() {
+        return gyroscope;
+    }
+
+    public Vector3DDouble getAccelerometer() {
+        return accelerometer;
+    }
+
+    public Vector3DFloat getRotation() {
+        return rotation;
+    }
+
+    public Vector3DDouble getGravity() {
+        return gravity;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////
     //Setter
-
     public void setSensorDelaySpeed(int sensorDelaySpeed) {
         this.sensorDelaySpeed = sensorDelaySpeed;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //Info Log - debug sensor information is being updated
+    private void debugGyroscope(){
+        InfoLog.getInstance().debugValue(className, "GyroscopeX: "+gyroscope.getX());
+        InfoLog.getInstance().debugValue(className, "GyroscopeY: "+gyroscope.getY());
+        InfoLog.getInstance().debugValue(className, "GyroscopeZ: "+gyroscope.getZ());
+    }
+    private void debugAccelerometer(){
+        InfoLog.getInstance().debugValue(className, "AccelerometerX: "+accelerometer.getX());
+        InfoLog.getInstance().debugValue(className, "AccelerometerY: "+accelerometer.getY());
+        InfoLog.getInstance().debugValue(className, "AccelerometerZ: "+accelerometer.getZ());
+    }
+    private void debugRotation(){
+        InfoLog.getInstance().debugValue(className, "OrientationX: "+rotation.getX());
+        InfoLog.getInstance().debugValue(className, "OrientationY: "+rotation.getY());
+        InfoLog.getInstance().debugValue(className, "OrientationZ: "+rotation.getZ());
+    }
+
+    private void debugGravity(){
+        InfoLog.getInstance().debugValue(className, "GravityX: "+gravity.getX());
+        InfoLog.getInstance().debugValue(className, "GravityY: "+gravity.getY());
+        InfoLog.getInstance().debugValue(className, "GravityZ: "+gravity.getZ());
     }
 }

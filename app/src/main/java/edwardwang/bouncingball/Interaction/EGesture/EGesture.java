@@ -1,4 +1,4 @@
-package edwardwang.bouncingball.InteractionLayer.EGesture;
+package edwardwang.bouncingball.Interaction.EGesture;
 
 /**
  * Created by edwardwang on 8/8/16.

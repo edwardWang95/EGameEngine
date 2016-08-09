@@ -1,15 +1,15 @@
-package edwardwang.bouncingball.InteractionLayer;
+package edwardwang.bouncingball.Interaction;
 
 import android.content.Context;
 import android.view.View;
 
 import java.util.ArrayList;
 
-import edwardwang.bouncingball.InteractionLayer.EButton.EButtonManager;
-import edwardwang.bouncingball.InteractionLayer.EGesture.EGestureManager;
-import edwardwang.bouncingball.InteractionLayer.EScreen.EScreenBlockManager;
-import edwardwang.bouncingball.InteractionLayer.ESensor.ESensorManager;
-import edwardwang.bouncingball.InteractionLayer.ETap.ETapManager;
+import edwardwang.bouncingball.Interaction.EButton.EButtonManager;
+import edwardwang.bouncingball.Interaction.EGesture.EGestureManager;
+import edwardwang.bouncingball.Interaction.EScreen.EScreenBlockManager;
+import edwardwang.bouncingball.Interaction.ESensor.ESensorManager;
+import edwardwang.bouncingball.Interaction.ETap.ETapManager;
 
 /**
  * Manages all types of ways user can control/interact with sprites.
@@ -22,7 +22,7 @@ public class InteractionManager {
     private View view;
 
     //Interaction methods
-    private ArrayList<Interaction> interactionList;
+    private ArrayList<Interaction> interactionList = new ArrayList<>();
     private Interaction interaction;
 
     private EButtonManager buttonManager;

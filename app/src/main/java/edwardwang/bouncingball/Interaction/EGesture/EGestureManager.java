@@ -1,11 +1,11 @@
-package edwardwang.bouncingball.InteractionLayer.EGesture;
+package edwardwang.bouncingball.Interaction.EGesture;
 
 import android.content.Context;
 import android.support.v4.view.GestureDetectorCompat;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
-import edwardwang.bouncingball.InteractionLayer.InteractionSetup;
+import edwardwang.bouncingball.Interaction.InteractionSetup;
 
 /**
  * Created by edwardwang on 8/8/16.

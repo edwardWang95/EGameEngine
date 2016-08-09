@@ -1,10 +1,10 @@
-package edwardwang.bouncingball.InteractionLayer.ETap;
+package edwardwang.bouncingball.Interaction.ETap;
 
 import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 
-import edwardwang.bouncingball.InteractionLayer.InteractionSetup;
+import edwardwang.bouncingball.Interaction.InteractionSetup;
 
 /**
  * Created by edwardwang on 8/8/16.

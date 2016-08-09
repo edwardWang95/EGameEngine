@@ -1,4 +1,4 @@
-package edwardwang.bouncingball.InteractionLayer.EButton;
+package edwardwang.bouncingball.Interaction.EButton;
 
 import android.content.Context;
 import android.util.AttributeSet;

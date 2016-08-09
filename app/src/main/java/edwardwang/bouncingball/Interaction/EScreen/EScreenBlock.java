@@ -1,4 +1,4 @@
-package edwardwang.bouncingball.InteractionLayer.EScreen;
+package edwardwang.bouncingball.Interaction.EScreen;
 
 import android.content.Context;
 import android.util.AttributeSet;

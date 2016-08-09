@@ -1,4 +1,4 @@
-package edwardwang.bouncingball.InteractionLayer.ETap;
+package edwardwang.bouncingball.Interaction.ETap;
 
 /**
  * This is different than EGestures because:

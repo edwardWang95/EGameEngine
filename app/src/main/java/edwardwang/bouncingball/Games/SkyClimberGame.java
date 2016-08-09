@@ -7,15 +7,16 @@ import java.util.ArrayList;
 
 import edwardwang.bouncingball.Info.InfoLog;
 import edwardwang.bouncingball.Info.PhoneInfo;
-import edwardwang.bouncingball.InteractionLayer.ESensor.ESensor;
-import edwardwang.bouncingball.InteractionLayer.ESensor.ESensorManager;
-import edwardwang.bouncingball.InteractionLayer.Interaction;
-import edwardwang.bouncingball.InteractionLayer.InteractionManager;
+import edwardwang.bouncingball.Interaction.ESensor.ESensor;
+import edwardwang.bouncingball.Interaction.ESensor.ESensorManager;
+import edwardwang.bouncingball.Interaction.Interaction;
+import edwardwang.bouncingball.Interaction.InteractionManager;
 import edwardwang.bouncingball.Map.EMap;
 import edwardwang.bouncingball.Map.EPixel;
 import edwardwang.bouncingball.PhysicsEngine.Action;
 import edwardwang.bouncingball.PhysicsEngine.PhysicsEngine;
 import edwardwang.bouncingball.PhysicsEngine.Direction;
+import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DFloat;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
 import edwardwang.bouncingball.Sprite.Player1Sprite;
 import edwardwang.bouncingball.Sprite.Sprite;
@@ -82,9 +83,10 @@ public class SkyClimberGame extends Game{
 
     //InteractionManager
     private InteractionManager interactionManager;
-
-    //SensorManager
+        //SensorManager
     private ESensorManager sensorManager;
+    private Vector3DFloat rotation;
+    private float previousRotationX;
 
     public SkyClimberGame(Context context, GameView gameView){
         this.context = context;
@@ -177,21 +179,25 @@ public class SkyClimberGame extends Game{
         sensorManager = interactionManager.getSensorManager();
         sensorManager.addESensorToList(ESensor.Rotation);
         sensorManager.setup();
+        rotation = sensorManager.getRotation();
     }
 
     @Override
     public void interactionsPause(){
-        sensorManager.startSensors();
-    }
-
-    @Override
-    public void interactionsResume(){
         sensorManager.stopSensors();
     }
 
     @Override
-    public void updateGame() {
-        handlePlayerMoving();
+    public void interactionsResume(){
+        sensorManager.startSensors();
+        //initiate the previousRotationX value
+        previousRotationX = rotation.getX();
+    }
+
+    @Override
+    public void updateGame(){
+        handlePlayerMovingHorizontally();
+        handlePlayerMovingVertically();
     }
 
     ////////////////////////////////////////////////////////////////////////
@@ -234,11 +240,23 @@ public class SkyClimberGame extends Game{
         }
     }
 
+    private void handlePlayerMovingHorizontally(){
+        float x = rotation.getX();
+        if(x < previousRotationX){
+            //MOVE RIGHT
+            physicsEngine.setSpriteAction(Action.FLOAT_LEFT, player1Sprite);
+
+        }else if(x > previousRotationX){
+            //MOVE LEFT
+            physicsEngine.setSpriteAction(Action.FLOAT_RIGHT, player1Sprite);
+        }
+    }
+
     /**
      * Use physics engine to find next canvas location of player sprite.
      * Using the returned result, check and handle if player hits a platform.
      */
-    private void handlePlayerMoving(){
+    private void handlePlayerMovingVertically(){
         //check if player is hitting a platform
         if(player1Sprite.getRigidBody().getDirection().getY().equals(Direction.DOWN) &&
                 physicsEngine.isSpriteColliding(player1Sprite)){

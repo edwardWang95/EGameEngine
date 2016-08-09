@@ -1,4 +1,4 @@
-package edwardwang.bouncingball.InteractionLayer;
+package edwardwang.bouncingball.Interaction;
 
 /**
  * Enums of interactions users can choose what want when interacting/moving

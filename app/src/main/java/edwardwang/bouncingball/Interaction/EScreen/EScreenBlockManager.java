@@ -1,11 +1,11 @@
-package edwardwang.bouncingball.InteractionLayer.EScreen;
+package edwardwang.bouncingball.Interaction.EScreen;
 
 import android.content.Context;
 import android.view.View;
 
 import java.util.ArrayList;
 
-import edwardwang.bouncingball.InteractionLayer.InteractionSetup;
+import edwardwang.bouncingball.Interaction.InteractionSetup;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
 
 /**
