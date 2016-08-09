@@ -25,6 +25,11 @@ public class InfoLog {
     public final String debug_GameResume = "GameScreenActivity resumed.";
 
     ////////////////////////////////////////////////////////////////////////////////
+    //GameOverScreenActivity
+    public final String debug_PlayAgainButton = "Play again button pressed.";
+    public final String debug_BackToGameListButton = "Start game button pressed.";
+
+    ////////////////////////////////////////////////////////////////////////////////
     //PhoneInfo
     public final String debug_ScreenWidth = "Screen Width: ";
     public final String debug_ScreenHeight = "Screen Height: ";

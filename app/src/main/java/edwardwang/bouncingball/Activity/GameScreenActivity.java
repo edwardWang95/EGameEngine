@@ -19,6 +19,7 @@ public class GameScreenActivity extends AppCompatActivity{
     private GameView gameView;
     private SurfaceView surfaceView;
     private Game game;
+    private Intent gameOverIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +27,16 @@ public class GameScreenActivity extends AppCompatActivity{
         setContentView(R.layout.activity_game_screen);
         surfaceView = (SurfaceView)findViewById(R.id.gameScreen);
         gameView = new GameView(this.getApplicationContext());
+        setupGameOverIntent();
         grabIntentExtra(gameView);
         gameView.setupGameView(surfaceView, game.getNumOfEPixelsWidth(), game.getNumOfEPixelsHeight(),
-                game.getHitBoxWidthPerc(),game.getHitBoxHeightPerc(), game.getSpriteType());
+                game.getHitBoxWidthPerc(), game.getHitBoxHeightPerc(), game.getSpriteType());
         game.setupGame();
+    }
+
+    private void setupGameOverIntent(){
+        gameOverIntent = new Intent(this, GameOverActivity.class);
+        gameOverIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
     private void grabIntentExtra(GameView gameView){
@@ -37,9 +44,11 @@ public class GameScreenActivity extends AppCompatActivity{
         String gameName = intent.getStringExtra(Game.intentPassString);
         if(gameName.equals(SkyClimberGame.gameName)){
             game = new SkyClimberGame(getApplicationContext(), gameView);
+            gameOverIntent.putExtra(String.valueOf(Game.intentPassString), SkyClimberGame.gameName);
         }else{
             //no other game added yet
         }
+        game.setGameOverIntent(gameOverIntent);
     }
 
 

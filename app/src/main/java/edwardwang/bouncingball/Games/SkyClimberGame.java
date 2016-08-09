@@ -1,6 +1,7 @@
 package edwardwang.bouncingball.Games;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 
 import java.util.ArrayList;
@@ -33,7 +34,6 @@ import edwardwang.bouncingball.View.GameView;
 public class SkyClimberGame extends Game{
     private static final String className = SkyClimberGame.class.getSimpleName();
     public static final String gameName = "Sky Climber";
-    private Context context;
 
     //Constants
     private final int backgroundColor = Color.LTGRAY;
@@ -45,7 +45,7 @@ public class SkyClimberGame extends Game{
     private final double timeFactor = .08;
 
     //Map Size in terms of ePixels
-    private final int numOfEPixelsWidth = 7;
+    private final int numOfEPixelsWidth = 10;
     private final int numOfEPixelsHeight = 12;
     //Sprite movement size
     private final float ePixelPerMeter = .5f;    // % ePixel = # meters --> inverse to movementSpeed
@@ -69,14 +69,14 @@ public class SkyClimberGame extends Game{
     private int playerOffsetY;
     private final double playerHitBoxPercWidth = 1;
     private final double playerHitBoxPercHeight = 1;
-    private final float playerPixelDistancePerSecond = 250;
+    private final float playerPixelDistancePerSecond = 500;
     private SpriteHitBox playerHitBox;
     private final double playerVelocityRight = 2;
     private final double playerVelocityLeft = 2;
 
     //Background
     private int startX, startY;
-    private final int platformSpawnDistance = 2;
+    private final int platformSpawnDistance = 3;
     //The % of ePixel/platform that can be interactable with player sprite
     private final double platformHitBoxPercWidth = 1;
     private final double platformHitBoxPercHeight = 1;
@@ -92,7 +92,7 @@ public class SkyClimberGame extends Game{
     private ESplitScreenManager splitScreenManager;
 
     public SkyClimberGame(Context context, GameView gameView){
-        this.context = context;
+        setContext(context);
         setGameName(gameName);
         setGameView(gameView);
         setSpriteType(spriteType);
@@ -154,7 +154,7 @@ public class SkyClimberGame extends Game{
         int playerStartX = eMap.getEPixel(startX,startY).getPositionCanvasX();
         int playerStartY = eMap.getEPixel(startX,startY).getPositionCanvasY() -
                 playerOffsetY;
-        player1Sprite = new Player1Sprite(context, playerStartX, playerStartY,
+        player1Sprite = new Player1Sprite(getContext(), playerStartX, playerStartY,
                 eMap.getePixelWidth(), eMap.getePixelHeight(),
                 playerHitBoxPercWidth, playerHitBoxPercHeight);
         playerHitBox = player1Sprite.getSpriteHitBox();
@@ -178,7 +178,7 @@ public class SkyClimberGame extends Game{
     @Override
     public void setupInteractionManager(){
         interactionManager = getInteractionManager();
-        interactionManager.setupInteractionManager(context,
+        interactionManager.setupInteractionManager(getContext(),
                 getGameView().getSurfaceView());
         interactionManager.addInteraction(Interaction.SplitScreen);
         interactionManager.initInteractions();
@@ -195,8 +195,13 @@ public class SkyClimberGame extends Game{
 
     @Override
     public void updateGame(){
-        handlePlayerMovingVertically();
-        handlePlayerMovingHorizontally();
+        try{
+            handlePlayerMovingVertically();
+            handlePlayerMovingHorizontally();
+        }catch(ArrayIndexOutOfBoundsException e){
+            //Game Over
+            throwGameOver();
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////

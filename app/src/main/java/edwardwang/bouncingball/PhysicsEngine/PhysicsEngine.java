@@ -1,5 +1,6 @@
 package edwardwang.bouncingball.PhysicsEngine;
 
+import edwardwang.bouncingball.Games.Game;
 import edwardwang.bouncingball.Info.InfoLog;
 import edwardwang.bouncingball.Map.EMap;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDirection;
@@ -219,7 +220,7 @@ public class PhysicsEngine {
     //Collision Detection
 
     /**
-     * Checks if sprite is currently colliding with background/static object
+     * Checks if sprite is currently colliding with background/static object.
      * @param sprite
      * @return
      */

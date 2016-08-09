@@ -2,12 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edwardwang.bouncingball">
 
-
-    <!--Sensors-->
-    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true"/>
-    <uses-feature android:name="android.hardware.sensor.gyroscope" android:required="true"/>
-    <uses-feature android:name="android.hardware.sensor.rotation" android:required="true"/>
-    <uses-feature android:name="android.hardware.sensor.gravity" android:required="true"/>
+    <!-- Sensors -->
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.sensor.gyroscope"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.sensor.rotation"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.sensor.gravity"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -33,8 +40,11 @@
         <activity
             android:name=".Activity.StartScreenActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".Activity.GameOverActivity"
+            android:label="@string/title_activity_game_over"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

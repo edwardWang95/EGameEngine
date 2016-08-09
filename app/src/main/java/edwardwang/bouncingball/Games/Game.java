@@ -1,8 +1,12 @@
 package edwardwang.bouncingball.Games;
 
+import android.content.Context;
+import android.content.Intent;
+
 import java.io.Serializable;
 import java.util.Random;
 
+import edwardwang.bouncingball.Activity.GameOverActivity;
 import edwardwang.bouncingball.Info.InfoLog;
 import edwardwang.bouncingball.Interaction.InteractionManager;
 import edwardwang.bouncingball.PhysicsEngine.PhysicsEngine;
@@ -21,6 +25,8 @@ import edwardwang.bouncingball.View.GameView;
 public class Game implements Serializable, Runnable{
     private static final String className = GameView.class.getSimpleName();
     public static final String intentPassString = "Game";
+    private Intent gameOverIntent;
+    private Context context;
 
     private String gameName;
     //TODO:setup bitmap for background instead of color
@@ -49,7 +55,7 @@ public class Game implements Serializable, Runnable{
     //Game Elements
     private Random randomNumGenerator = new Random();
     private Thread gameThread = null;
-    private volatile boolean playing = false;
+    private volatile boolean isPlaying = false;
     private long fps = 0;
     private float deltaTime = 0f; //use to calc fps &&  dT
     private PhysicsEngine physicsEngine = new PhysicsEngine();
@@ -109,7 +115,7 @@ public class Game implements Serializable, Runnable{
     }
 
     public void pause(){
-        playing = false;
+        isPlaying = false;
         try{
             gameThread.join();
             interactionsPause();
@@ -120,11 +126,15 @@ public class Game implements Serializable, Runnable{
     }
 
     public void resume(){
-        playing = true;
+        isPlaying = true;
         gameThread = new Thread(this);
         gameThread.start();
         interactionsResume();
         InfoLog.getInstance().generateLog(className, InfoLog.getInstance().debug_ResumeGameThread);
+    }
+
+    public void throwGameOver(){
+        context.startActivity(gameOverIntent);
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -150,6 +160,11 @@ public class Game implements Serializable, Runnable{
 
     ////////////////////////////////////////////////////////////////////////////
     //Getter
+
+    public Context getContext() {
+        return context;
+    }
+
     public String getGameName() {
         return gameName;
     }
@@ -179,7 +194,7 @@ public class Game implements Serializable, Runnable{
     }
 
     public boolean isPlaying() {
-        return playing;
+        return isPlaying;
     }
 
     public long getFPS() {
@@ -220,6 +235,15 @@ public class Game implements Serializable, Runnable{
 
     ////////////////////////////////////////////////////////////////////////////
     //Setter
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public void setGameOverIntent(Intent gameOverIntent) {
+        this.gameOverIntent = gameOverIntent;
+    }
+
     public void setNumOfEPixelsWidthHeight(int numOfEPixelsWidth, int numOfEPixelsHeight){
         this.numOfEPixelsWidth = numOfEPixelsWidth;
         this.numOfEPixelsHeight = numOfEPixelsHeight;
@@ -246,9 +270,10 @@ public class Game implements Serializable, Runnable{
         this.spriteType = spriteType;
     }
 
-    public void setPlaying(boolean playing) {
-        this.playing = playing;
+    public void setIsPlaying(boolean isPlaying) {
+        this.isPlaying = isPlaying;
     }
+
 
     public void setFPS(long fps) {
         this.fps = fps;

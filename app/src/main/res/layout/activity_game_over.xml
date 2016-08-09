@@ -7,24 +7,31 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="edwardwang.bouncingball.Activity.MainActivity">
-
+    tools:context="edwardwang.bouncingball.Activity.GameOverActivity"
+    android:id="@+id/gameOverScreenLayout">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="EGameEngine"
-        android:id="@+id/textView"
+        android:text="Set Chosen Game Name"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/gameOverScreenGameName" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sky Climber"
-        android:id="@+id/skyClimberButton"
+        android:text="Play Again"
+        android:id="@+id/playAgainButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="108dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back To Game List"
+        android:id="@+id/backToGameListButton"
+        android:layout_marginTop="29dp"
+        android:layout_below="@+id/playAgainButton"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

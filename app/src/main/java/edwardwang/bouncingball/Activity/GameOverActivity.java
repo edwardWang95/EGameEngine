@@ -1,11 +1,8 @@
 package edwardwang.bouncingball.Activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -16,34 +13,40 @@ import edwardwang.bouncingball.Games.SkyClimberGame;
 import edwardwang.bouncingball.Info.InfoLog;
 import edwardwang.bouncingball.R;
 
-/**
- * http://gamecodeschool.com/android/coding-android-sprite-sheet-animations/
- * Read this website for info on how this project is done
- */
-public class StartScreenActivity extends AppCompatActivity {
-    private static final String className = StartScreenActivity.class.getSimpleName();
+public class GameOverActivity extends AppCompatActivity {
+    private static final String className = GameOverActivity.class.getSimpleName();
     private RelativeLayout relativeLayout;
-    private Button startGameButton;
-    private TextView startScreenGameName;
-
+    private Button playAgainButton;
+    private Button backToGameListButton;
+    private TextView gameOverScreenGameName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start_screen);
-        relativeLayout = (RelativeLayout)findViewById(R.id.startScreenLayout);
-        startGameButton = (Button)findViewById(R.id.startGameButton);
-        startScreenGameName = (TextView)findViewById(R.id.startScreenGameName);
+        setContentView(R.layout.activity_game_over);
+        relativeLayout = (RelativeLayout)findViewById(R.id.gameOverScreenLayout);
+        playAgainButton = (Button)findViewById(R.id.playAgainButton);
+        backToGameListButton = (Button)findViewById(R.id.backToGameListButton);
+        gameOverScreenGameName = (TextView)findViewById(R.id.gameOverScreenGameName);
         //grab game from last activity and update layout to reflect game
         grabGameIntentAndUpdateLayout();
-        startGameButton.setOnClickListener(new View.OnClickListener() {
+        playAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO: update & reformat this code
-                Intent intent = new Intent(StartScreenActivity.this, GameScreenActivity.class);
+                Intent intent = new Intent(GameOverActivity.this, GameScreenActivity.class);
                 intent.putExtra(String.valueOf(Game.intentPassString), SkyClimberGame.gameName);
                 startActivity(intent);
                 InfoLog.getInstance().generateLog(className,
-                        InfoLog.getInstance().debug_StartGameButton);
+                        InfoLog.getInstance().debug_PlayAgainButton);
+            }
+        });
+        backToGameListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GameOverActivity.this, MainActivity.class);
+                startActivity(intent);
+                InfoLog.getInstance().generateLog(className,
+                        InfoLog.getInstance().debug_BackToGameListButton);
             }
         });
     }
@@ -64,31 +67,8 @@ public class StartScreenActivity extends AppCompatActivity {
     }
 
     private void updateBackgroundAndName(String gameName, int color){
-        startScreenGameName.setText(gameName);
+        gameOverScreenGameName.setText(gameName);
         relativeLayout.setBackgroundColor(color);
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
