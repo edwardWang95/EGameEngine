@@ -140,7 +140,7 @@ public class Game implements Serializable, Runnable{
 
     public void setupPlayer() {}
 
-    public void setupInteractionManagement(){}
+    public void setupInteractionManager(){}
 
     public void interactionsPause(){}
 

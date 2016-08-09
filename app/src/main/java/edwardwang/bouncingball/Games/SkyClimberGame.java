@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import edwardwang.bouncingball.Info.InfoLog;
 import edwardwang.bouncingball.Info.PhoneInfo;
+import edwardwang.bouncingball.InteractionLayer.ESensor.ESensor;
 import edwardwang.bouncingball.InteractionLayer.ESensor.ESensorManager;
 import edwardwang.bouncingball.InteractionLayer.Interaction;
 import edwardwang.bouncingball.InteractionLayer.InteractionManager;
@@ -104,7 +105,7 @@ public class SkyClimberGame extends Game{
         setupPhysicsEngine();
         setupBackground();
         setupPlayer();
-        setupInteractionManagement();
+        setupInteractionManager();
         InfoLog.getInstance().generateLog(className, InfoLog.getInstance().debug_SkyClimberSetup);
     }
 
@@ -166,13 +167,15 @@ public class SkyClimberGame extends Game{
     }
 
     @Override
-    public void setupInteractionManagement(){
+    public void setupInteractionManager(){
         interactionManager = getInteractionManager();
         interactionManager.setupInteractionManager(context,
                 getGameView().getSurfaceView());
         interactionManager.addInteraction(Interaction.Sensor);
         interactionManager.initInteractions();
+        //Setting up sensorManager
         sensorManager = interactionManager.getSensorManager();
+        sensorManager.addESensorToList(ESensor.Rotation);
         sensorManager.setup();
     }
 
@@ -438,4 +441,8 @@ public class SkyClimberGame extends Game{
         }
         return updateValue;
     }
+
+    ////////////////////////////////////////////////////////////////////////
+    //InteractionMethod
+
 }
