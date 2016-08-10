@@ -41,7 +41,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 intent = new Intent(MainActivity.this, StartScreenActivity.class);
-                intent.putExtra(String.valueOf(Game.intentPassString), SkyClimberGame.gameName);
+                intent.putExtra(String.valueOf(Game.gameIntentPassString), SkyClimberGame.gameName);
                 startActivity(intent);
             }
         });

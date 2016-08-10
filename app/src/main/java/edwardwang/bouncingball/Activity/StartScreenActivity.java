@@ -1,7 +1,6 @@
 package edwardwang.bouncingball.Activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -40,7 +39,7 @@ public class StartScreenActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //TODO: update & reformat this code
                 Intent intent = new Intent(StartScreenActivity.this, GameScreenActivity.class);
-                intent.putExtra(String.valueOf(Game.intentPassString), SkyClimberGame.gameName);
+                intent.putExtra(String.valueOf(Game.gameIntentPassString), SkyClimberGame.gameName);
                 startActivity(intent);
                 InfoLog.getInstance().generateLog(className,
                         InfoLog.getInstance().debug_StartGameButton);
@@ -54,7 +53,7 @@ public class StartScreenActivity extends AppCompatActivity {
      */
     private void grabGameIntentAndUpdateLayout(){
         Intent intent = getIntent();
-        String gameName = intent.getStringExtra(Game.intentPassString);
+        String gameName = intent.getStringExtra(Game.gameIntentPassString);
         if(gameName.equals(SkyClimberGame.gameName)){
             updateBackgroundAndName(SkyClimberGame.gameName, R.color.SkyClimberGameBackground);
             InfoLog.getInstance().generateLog(className,InfoLog.getInstance().debug_SkyClimber);

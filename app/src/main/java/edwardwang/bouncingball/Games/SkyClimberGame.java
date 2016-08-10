@@ -20,6 +20,7 @@ import edwardwang.bouncingball.PhysicsEngine.Axis;
 import edwardwang.bouncingball.PhysicsEngine.PhysicsEngine;
 import edwardwang.bouncingball.PhysicsEngine.Direction;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDirection;
+import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDouble;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DFloat;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
 import edwardwang.bouncingball.Sprite.Player1Sprite;
@@ -194,10 +195,16 @@ public class SkyClimberGame extends Game{
     }
 
     @Override
+    public void updateCurrentScore(){
+
+    }
+
+    @Override
     public void updateGame(){
         try{
             handlePlayerMovingVertically();
             handlePlayerMovingHorizontally();
+            updateCurrentScore();
         }catch(ArrayIndexOutOfBoundsException e){
             //Game Over
             throwGameOver();
@@ -265,7 +272,6 @@ public class SkyClimberGame extends Game{
         //Check if player position is above halfway point
         if(playerPosition.getY() <= screenHalfwayHeight){
             //signal that it is time to update the background
-
             setUpdatePlatformSpeed(playerPosition.getY());
 
             //InfoLog.getInstance().debugValue(className, "ScreenHalfway: " + screenHalfwayHeight);
@@ -273,21 +279,7 @@ public class SkyClimberGame extends Game{
 
             updatePreviousPlatformPositionY();
             fillMissingPlatforms();
-
-            /*
-            if(isBackgroundReadyToUpdate()){
-                setUpdatePlatformSpeed(playerPosition.getY());
-
-                //InfoLog.getInstance().debugValue(className, "ScreenHalfway: " + screenHalfwayHeight);
-                //InfoLog.getInstance().debugValue(className, "PlayerY: " + playerPosition.getY());
-
-                updatePreviousPlatformPositionY();
-                fillMissingPlatforms();
-
-                //reset background update flag
-                setIsBackgroundUpdated(false);
-            }
-            */
+            updatePlayerPositionY();
         }
     }
 
@@ -305,6 +297,15 @@ public class SkyClimberGame extends Game{
         int deltaY = ((screenHalfwayHeight - playerPositionY) - (eMap.getMapOffSetHeight()/2))
                 / eMap.getePixelHeight();
         updatePlatformSpeed.setY(deltaY);
+    }
+
+    /**
+     * Update player position alongside the platforms
+     */
+    private void updatePlayerPositionY(){
+        int newY = player1Sprite.getPosition().getY() +
+                (updatePlatformSpeed.getY() * player1Sprite.getFrameHeight());
+        player1Sprite.getPosition().setY(newY);
     }
 
     /**

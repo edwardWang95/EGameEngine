@@ -15,10 +15,14 @@ import edwardwang.bouncingball.R;
 
 public class GameOverActivity extends AppCompatActivity {
     private static final String className = GameOverActivity.class.getSimpleName();
+    public static final String gameOverNameIntentPassString = "Game over name";
+    public static final String gameOverScoreIntentPassString = "Game over score";
+
     private RelativeLayout relativeLayout;
     private Button playAgainButton;
     private Button backToGameListButton;
     private TextView gameOverScreenGameName;
+    private TextView gameOverScore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +31,8 @@ public class GameOverActivity extends AppCompatActivity {
         playAgainButton = (Button)findViewById(R.id.playAgainButton);
         backToGameListButton = (Button)findViewById(R.id.backToGameListButton);
         gameOverScreenGameName = (TextView)findViewById(R.id.gameOverScreenGameName);
+        gameOverScore = (TextView)findViewById(R.id.gameOverScoreTextView);
+
         //grab game from last activity and update layout to reflect game
         grabGameIntentAndUpdateLayout();
         playAgainButton.setOnClickListener(new View.OnClickListener() {
@@ -34,7 +40,7 @@ public class GameOverActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //TODO: update & reformat this code
                 Intent intent = new Intent(GameOverActivity.this, GameScreenActivity.class);
-                intent.putExtra(String.valueOf(Game.intentPassString), SkyClimberGame.gameName);
+                intent.putExtra(String.valueOf(Game.gameIntentPassString), SkyClimberGame.gameName);
                 startActivity(intent);
                 InfoLog.getInstance().generateLog(className,
                         InfoLog.getInstance().debug_PlayAgainButton);
@@ -57,13 +63,15 @@ public class GameOverActivity extends AppCompatActivity {
      */
     private void grabGameIntentAndUpdateLayout(){
         Intent intent = getIntent();
-        String gameName = intent.getStringExtra(Game.intentPassString);
+        String gameName = intent.getStringExtra(gameOverNameIntentPassString);
+        String currentScore = intent.getStringExtra(gameOverScoreIntentPassString);
         if(gameName.equals(SkyClimberGame.gameName)){
             updateBackgroundAndName(SkyClimberGame.gameName, R.color.SkyClimberGameBackground);
             InfoLog.getInstance().generateLog(className,InfoLog.getInstance().debug_SkyClimber);
         }else{
             InfoLog.getInstance().generateLog(className,InfoLog.getInstance().error_GameNotSet);
         }
+        gameOverScore.setText(currentScore);
     }
 
     private void updateBackgroundAndName(String gameName, int color){

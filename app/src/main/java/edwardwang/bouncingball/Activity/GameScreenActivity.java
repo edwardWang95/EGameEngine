@@ -41,10 +41,10 @@ public class GameScreenActivity extends AppCompatActivity{
 
     private void grabIntentExtra(GameView gameView){
         Intent intent = getIntent();
-        String gameName = intent.getStringExtra(Game.intentPassString);
+        String gameName = intent.getStringExtra(Game.gameIntentPassString);
         if(gameName.equals(SkyClimberGame.gameName)){
             game = new SkyClimberGame(getApplicationContext(), gameView);
-            gameOverIntent.putExtra(String.valueOf(Game.intentPassString), SkyClimberGame.gameName);
+            gameOverIntent.putExtra(GameOverActivity.gameOverNameIntentPassString, SkyClimberGame.gameName);
         }else{
             //no other game added yet
         }

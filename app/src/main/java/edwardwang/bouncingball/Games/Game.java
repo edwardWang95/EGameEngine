@@ -10,6 +10,7 @@ import edwardwang.bouncingball.Activity.GameOverActivity;
 import edwardwang.bouncingball.Info.InfoLog;
 import edwardwang.bouncingball.Interaction.InteractionManager;
 import edwardwang.bouncingball.PhysicsEngine.PhysicsEngine;
+import edwardwang.bouncingball.R;
 import edwardwang.bouncingball.Sprite.SpriteType;
 import edwardwang.bouncingball.View.GameView;
 
@@ -24,7 +25,7 @@ import edwardwang.bouncingball.View.GameView;
  */
 public class Game implements Serializable, Runnable{
     private static final String className = GameView.class.getSimpleName();
-    public static final String intentPassString = "Game";
+    public static final String gameIntentPassString = "Game";
     private Intent gameOverIntent;
     private Context context;
 
@@ -57,6 +58,11 @@ public class Game implements Serializable, Runnable{
     private Thread gameThread = null;
     private volatile boolean isPlaying = false;
     private long fps = 0;
+
+    //Game Keeping
+    private float currentScore = 0;
+
+    //Physics
     private float deltaTime = 0f; //use to calc fps &&  dT
     private PhysicsEngine physicsEngine = new PhysicsEngine();
 
@@ -135,6 +141,8 @@ public class Game implements Serializable, Runnable{
     }
 
     public void throwGameOver(){
+        gameOverIntent.putExtra(GameOverActivity.gameOverScoreIntentPassString,
+                R.string.current_score + currentScore);
         context.startActivity(gameOverIntent);
     }
 
@@ -156,6 +164,8 @@ public class Game implements Serializable, Runnable{
     public void interactionsPause(){}
 
     public void interactionsResume(){}
+
+    public void updateCurrentScore(){}
 
     public void updateGame() {}
 
@@ -234,6 +244,10 @@ public class Game implements Serializable, Runnable{
         return interactionManager;
     }
 
+    public float getCurrentScore() {
+        return currentScore;
+    }
+
     ////////////////////////////////////////////////////////////////////////////
     //Setter
 
@@ -294,5 +308,9 @@ public class Game implements Serializable, Runnable{
 
     public void setIsBackgroundUpdated(boolean isBackgroundUpdated) {
         this.isBackgroundReadyToUpdate = isBackgroundUpdated;
+    }
+
+    public void setCurrentScore(float currentScore) {
+        this.currentScore = currentScore;
     }
 }
