@@ -147,9 +147,13 @@ public class Sprite {
     /**
      * Updates the position from the rigid body's delta distance. Method is
      * usually called after running physics engine.
+     *
+     * TODO:clean up this hacky way and incorporate the Vector objects into PhoneInfo
      */
     public void updatePosition(Axis axis) {
-        int newX, newY;
+        int newX = 0, newY = 0;
+        int mapOffSetWidth = PhoneInfo.getInstance().geteMapOffSets().getX();
+        int mapOffSetHeight = PhoneInfo.getInstance().geteMapOffSets().getY();
         int deltaDistanceX, deltaDistanceY;
 
         switch (axis){
@@ -157,6 +161,11 @@ public class Sprite {
                 deltaDistanceX = rigidBody.getDeltaDistance().getX();
                 //InfoLog.getInstance().generateLog(className, "DeltaX:" + deltaDistanceX);
                 newX = position.getX() + deltaDistanceX;
+                if(newX < mapOffSetWidth){
+                    newX = mapOffSetWidth;
+                }else if(newX > (PhoneInfo.getInstance().getScreenWidth() - mapOffSetWidth)){
+                    newX = (PhoneInfo.getInstance().getScreenWidth() - mapOffSetWidth);
+                }
                 position.setX(newX);
                 break;
             case Y:

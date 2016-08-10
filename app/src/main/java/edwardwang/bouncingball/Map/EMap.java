@@ -85,6 +85,7 @@ public class EMap {
                 numOfEPixelsWidth;
         mapOffSetHeight = PhoneInfo.getInstance().getScreenHeight() %
                 numOfEPixelsHeight;
+        PhoneInfo.getInstance().seteMapOffSets(mapOffSetWidth, mapOffSetHeight, 0);
     }
 
     /**

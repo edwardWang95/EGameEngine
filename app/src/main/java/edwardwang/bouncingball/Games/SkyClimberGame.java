@@ -208,48 +208,6 @@ public class SkyClimberGame extends Game{
     //Player Management
 
     /**
-     * Setup which corners on player sprite hitbox to check for collision
-     */
-    private void setupPlayerHitBoxCornerCheckList(){
-        player1Sprite.getSpriteHitBox().setCornerCheckListStatus(SpriteHitBox.BOTTOMLEFT);
-        player1Sprite.getSpriteHitBox().setCornerCheckListStatus(SpriteHitBox.BOTTOMRIGHT);
-    }
-
-    /**
-     * Check if player is above the halfway point of screen. If so, the placements
-     * of the platforms are updated to provide the illusion that user is going up.
-     */
-    private void handlePlayerIsAboveScreenHalfway(){
-        Vector3DInt playerPosition = player1Sprite.getPosition();
-
-        //Check if player position is above halfway point
-        if(playerPosition.getY() <= screenHalfwayHeight){
-            //signal that it is time to update the background
-            setIsBackgroundUpdated(true);
-            /*
-            if(player1Sprite.getRigidBody().getDirection().getY().equals(Direction.DOWN) &&
-                    isBackgroundReadyToUpdate()){
-
-            //TODO:check if down direction is necessary
-
-            }
-            */
-            if(isBackgroundReadyToUpdate()){
-                setUpdatePlatformSpeed(playerPosition.getY());
-
-                //InfoLog.getInstance().debugValue(className, "ScreenHalfway: " + screenHalfwayHeight);
-                //InfoLog.getInstance().debugValue(className, "PlayerY: " + playerPosition.getY());
-
-                updatePreviousPlatformPositionY();
-                fillMissingPlatforms();
-
-                //reset background update flag
-                setIsBackgroundUpdated(false);
-            }
-        }
-    }
-
-    /**
      * Unliked moving vertically, the x movement will be handled statically,
      * without incorporating any velocity related.
      */
@@ -296,6 +254,50 @@ public class SkyClimberGame extends Game{
                 getTimeFactor(), ePixelPerMeter);
 
     }
+
+    /**
+     * Check if player is above the halfway point of screen. If so, the placements
+     * of the platforms are updated to provide the illusion that user is going up.
+     */
+    private void handlePlayerIsAboveScreenHalfway(){
+        Vector3DInt playerPosition = player1Sprite.getPosition();
+
+        //Check if player position is above halfway point
+        if(playerPosition.getY() <= screenHalfwayHeight){
+            //signal that it is time to update the background
+
+            setUpdatePlatformSpeed(playerPosition.getY());
+
+            //InfoLog.getInstance().debugValue(className, "ScreenHalfway: " + screenHalfwayHeight);
+            //InfoLog.getInstance().debugValue(className, "PlayerY: " + playerPosition.getY());
+
+            updatePreviousPlatformPositionY();
+            fillMissingPlatforms();
+
+            /*
+            if(isBackgroundReadyToUpdate()){
+                setUpdatePlatformSpeed(playerPosition.getY());
+
+                //InfoLog.getInstance().debugValue(className, "ScreenHalfway: " + screenHalfwayHeight);
+                //InfoLog.getInstance().debugValue(className, "PlayerY: " + playerPosition.getY());
+
+                updatePreviousPlatformPositionY();
+                fillMissingPlatforms();
+
+                //reset background update flag
+                setIsBackgroundUpdated(false);
+            }
+            */
+        }
+    }
+
+    /**
+     * Setup which corners on player sprite hitbox to check for collision
+     */
+    private void setupPlayerHitBoxCornerCheckList(){
+        player1Sprite.getSpriteHitBox().setCornerCheckListStatus(SpriteHitBox.BOTTOMLEFT);
+        player1Sprite.getSpriteHitBox().setCornerCheckListStatus(SpriteHitBox.BOTTOMRIGHT);
+    }
     //////////////////////////////////////////////////////////////////////
     //Background Management
 
@@ -324,8 +326,10 @@ public class SkyClimberGame extends Game{
         int currentY;
         int newHeight;
         EPixel ePixel;
-        for(int i=0;i< backgroundSpriteArrayList.size();i++){
-            ePixel = backgroundSpriteArrayList.get(i);
+        int counter = 0;
+        //for(int i=0;i< backgroundSpriteArrayList.size();i++){
+        while(counter < backgroundSpriteArrayList.size()){
+            ePixel = backgroundSpriteArrayList.get(counter);
             //Get new platform position at currentY + 1 AND current X position
             currentX = ePixel.getPositionEMapX();
 
@@ -338,11 +342,12 @@ public class SkyClimberGame extends Game{
             ePixel.getSprite().setIsVisible(false);
             //if newHeight extends beyond the map, remove the item
             if(newHeight >= eMap.getNumOfEPixelsHeight()){
-                backgroundSpriteArrayList.remove(i);
+                backgroundSpriteArrayList.remove(counter);
             }else{
                 ePixel = eMap.getEPixel(currentX, newHeight);
                 ePixel.getSprite().setIsVisible(true);
-                backgroundSpriteArrayList.set(i, ePixel);
+                backgroundSpriteArrayList.set(counter, ePixel);
+                counter++;
             }
         }
     }
@@ -354,35 +359,44 @@ public class SkyClimberGame extends Game{
      * Problem: if the y is updated by 2, then the total spots that
      */
     private void fillMissingPlatforms() {
-        int newX = 0;
-        int newY = 0;
-        int previousX = 0;
-        int previousY = 0;
+        Vector3DInt newPosition = new Vector3DInt();
+        Vector3DInt previousPosition = new Vector3DInt();
         //int currentY = startY;
-        int counter = 0;
         EPixel previousPlatform;
 
-        do{
+        do {
             previousPlatform = backgroundSpriteArrayList.get(backgroundSpriteArrayList.size() - 1);
             //previousPlatform = backgroundSpriteArrayList.get(counter);
-            previousX = previousPlatform.getPositionEMapX();
-            previousY = previousPlatform.getPositionEMapY();
+            previousPosition.setX(previousPlatform.getPositionEMapX());
+            previousPosition.setY(previousPlatform.getPositionEMapY());
             //get new position at set spawn distances away, including original positionX only
-            newX = generateNewX(previousX);
-            newY = generateNewY(previousY);
+            newPosition.setX(generateNewX(previousPosition.getX()));
+            newPosition.setY(generateNewY(previousPosition.getY()));
+            if (eMap.isEPositionWithinBounds(newPosition.getX(), newPosition.getY())) {
+                eMap.setEPixelVisible(newPosition.getX(), newPosition.getY());
+                backgroundSpriteArrayList.add(eMap.getEPixel(newPosition.getX(), newPosition.getY()));
+            }
+        } while (backgroundSpriteArrayList.size() < numOfEPixelsHeight);
+    }
+
+
 
             //InfoLog.getInstance().debugValue("SpriteLocation",
             //        newX + ", " + newY + " = " + eMap.isEPositionWithinBounds(newX, newY));
 
+            /*
             if(newY > -1 && newY < numOfEPixelsHeight && newX < numOfEPixelsWidth && newX > -1){
                 eMap.setEPixelVisible(newX, newY);
                 backgroundSpriteArrayList.add(eMap.getEPixel(newX, newY));
             }
-            counter++;
+
+
+
+
         }while(backgroundSpriteArrayList.size() < numOfEPixelsHeight  &&
                 eMap.isEPositionWithinBounds(newX, newY));
 
-
+*/
 
 
         /*
@@ -409,8 +423,6 @@ public class SkyClimberGame extends Game{
             counter++;
         }
         */
-
-    }
 
         /*
         //fill in the empty spots for the sprite queue

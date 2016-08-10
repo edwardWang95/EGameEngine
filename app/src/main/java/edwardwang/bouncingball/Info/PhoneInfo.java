@@ -1,5 +1,8 @@
 package edwardwang.bouncingball.Info;
 
+import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDouble;
+import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
+
 /**
  * Setup a singleton for accessible and static information regarding phone information, i.e.
  * screen dimension.
@@ -19,6 +22,7 @@ public class PhoneInfo {
     private int screenWidth, screenHeight;
     private int widthBuffer = 20;
     private int heightBuffer = 150 ;
+    private Vector3DInt eMapOffSets = new Vector3DInt();
 
     ////////////////////////////////////////////////////////////////////////////////////
     //Getter
@@ -42,6 +46,12 @@ public class PhoneInfo {
         InfoLog.getInstance().generateLog(className, InfoLog.getInstance().debug_ScreenHeight + screenHeight);
     }
 
+    public void seteMapOffSets(int mapOffSetX, int mapOffSetY, int mapOffSetZ) {
+        eMapOffSets.setX(mapOffSetX);
+        eMapOffSets.setY(mapOffSetY);
+        eMapOffSets.setZ(mapOffSetZ);
+    }
+
     public int getScreenLeft(){
         return 0;
     }
@@ -56,5 +66,9 @@ public class PhoneInfo {
 
     public int getScreenBottom(){
         return (screenHeight - heightBuffer);
+    }
+
+    public Vector3DInt geteMapOffSets() {
+        return eMapOffSets;
     }
 }

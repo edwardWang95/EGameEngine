@@ -61,6 +61,7 @@ public class Game implements Serializable, Runnable{
     private PhysicsEngine physicsEngine = new PhysicsEngine();
 
     //Background Update status
+    //TODO:delete
     private boolean isBackgroundReadyToUpdate = false;
 
     //InteractionManger
