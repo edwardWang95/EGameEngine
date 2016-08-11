@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
+import java.util.ArrayList;
+
 import edwardwang.bouncingball.Info.PhoneInfo;
 import edwardwang.bouncingball.PhysicsEngine.Axis;
 import edwardwang.bouncingball.PhysicsEngine.RigidBody;
@@ -43,6 +45,8 @@ public class Sprite {
 
     //Hitbox
     private SpriteHitBox spriteHitBox;
+    private double hitBoxWidth;
+    private double hitBoxHeight;
 
     //Location of sprite on the canvas/display
     private final double  edPixelToMeter = .1;   // % of edPixels that translate to a meter
@@ -128,23 +132,31 @@ public class Sprite {
     /**
      * Set all elements necessary to draw sprite on EMap
      */
-    public void setupSpriteSettings(Bitmap image, Vector3DInt canvasPosition, Vector3DInt eMapPosition,
-                                    int frameWidth, int frameHeight, boolean isVisible,
-                                    SpriteType spriteType, double hitBoxWidth, double hitBoxHeight){
-        int positionX = canvasPosition.getX();
-        int positionY = canvasPosition.getY();
-
+    public void setupSpriteSettings(Bitmap image,boolean isVisible, SpriteType spriteType){
         this.image = image;
-        this.canvasPosition = canvasPosition;
-        this.eMapPosition = eMapPosition;
-        this.frameWidth = frameWidth;
-        this.frameHeight = frameHeight;
-        this.frameToDraw = new Rect(0, 0, frameWidth, frameHeight);
-        this.whereToDraw = new RectF(positionX, positionY, positionX + frameWidth, positionY + frameHeight);
         this.isVisible = isVisible;
         this.spriteType = spriteType;
-        spriteHitBox = new SpriteHitBox(frameWidth,frameHeight,positionX,positionY,
+
+    }
+
+    public void setupDimensions(int frameWidth, int frameHeight, double hitBoxWidth, double hitBoxHeight){
+        this.frameWidth = frameWidth;
+        this.frameHeight = frameHeight;
+        this.hitBoxWidth = hitBoxWidth;
+        this.hitBoxHeight = hitBoxHeight;
+        spriteHitBox = new SpriteHitBox(frameWidth,frameHeight,canvasPosition.getX(),canvasPosition.getY(),
                 hitBoxWidth, hitBoxHeight);
+    }
+
+    public void setupLocation(Vector3DInt canvasPosition, Vector3DInt eMapPosition){
+        int positionX = canvasPosition.getX();
+        int positionY = canvasPosition.getY();
+        this.canvasPosition = canvasPosition;
+        this.eMapPosition = eMapPosition;
+        this.frameToDraw = new Rect(0, 0, frameWidth, frameHeight);
+        this.whereToDraw = new RectF(positionX, positionY, positionX + frameWidth, positionY + frameHeight);
+        this.frameToDraw = new Rect(0, 0, frameWidth, frameHeight);
+        this.whereToDraw = new RectF(positionX, positionY, positionX + frameWidth, positionY + frameHeight);
     }
 
     /**

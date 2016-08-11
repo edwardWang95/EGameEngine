@@ -85,6 +85,7 @@ public class SkyClimberGame extends Game{
     private ESplitScreenManager splitScreenManager;
 
     //Score Keeping
+    private int platformDifference = 0;
     private int currentEPlatformPosition = 0;
     private int newEPlatformPosition = 0;
 
@@ -167,6 +168,7 @@ public class SkyClimberGame extends Game{
 
 
         currentEPlatformPosition = playerEMap.getY();
+        newEPlatformPosition = currentEPlatformPosition;
         //InfoLog.getInstance().debugValue(className, "Start Position: "+currentEPlatformPosition);
 
 
@@ -214,7 +216,7 @@ public class SkyClimberGame extends Game{
     public void updateCurrentScore(){
         //InfoLog.getInstance().debugValue(className, "Current: "+currentEPlatformPosition);
         //InfoLog.getInstance().debugValue(className, "New: "+newEPlatformPosition);
-        int platformDifference = newEPlatformPosition - currentEPlatformPosition;
+        platformDifference = newEPlatformPosition - currentEPlatformPosition;
         if( platformDifference != 0){
             if(newEPlatformPosition < currentEPlatformPosition){
                 //above previous
@@ -224,9 +226,9 @@ public class SkyClimberGame extends Game{
                 //below previous
                 setCurrentScore((getCurrentScore() - platformDifference ));
             }
-            //InfoLog.getInstance().debugValue(className, "Current Score: "+getCurrentScore());
-            currentEPlatformPosition = newEPlatformPosition;
             updateGameScreenCurrentScore();
+            InfoLog.getInstance().debugValue(className, "Current Score: "+getCurrentScore());
+            currentEPlatformPosition = newEPlatformPosition;
         }
     }
 
@@ -270,11 +272,10 @@ public class SkyClimberGame extends Game{
         //check if player is hitting a platform
         if(player1Sprite.getRigidBody().getDirection().getY().equals(Direction.DOWN) &&
                 physicsEngine.isSpriteColliding(player1Sprite)){
+            newEPlatformPosition = player1Sprite.geteMapPosition().getY();
             handlePlayerIsAboveScreenHalfway();
             physicsEngine.setSpriteAction(Action.JUMP, player1Sprite);
-
             //InfoLog.getInstance().debugValue(className, "COLLIDING");
-            newEPlatformPosition = player1Sprite.geteMapPosition().getY();
         }
         physicsEngine.updateSpriteLocation(player1Sprite, Axis.Y, getDeltaTime(),
                 getTimeFactor(), ePixelPerMeter);

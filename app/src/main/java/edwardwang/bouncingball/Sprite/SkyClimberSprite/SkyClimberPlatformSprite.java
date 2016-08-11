@@ -1,6 +1,7 @@
 package edwardwang.bouncingball.Sprite.SkyClimberSprite;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import edwardwang.bouncingball.Info.InfoLog;
@@ -14,12 +15,19 @@ import edwardwang.bouncingball.Sprite.SpriteType;
  */
 public class SkyClimberPlatformSprite extends Sprite {
     private static final String className = SkyClimberPlatformSprite.class.getSimpleName();
+    private Bitmap image;
+
+    //private int numOfCorners = 4;
+    //private int numOfSides = 4;
+
 
     public SkyClimberPlatformSprite(Context context, Vector3DInt canvasPosition, Vector3DInt eMapPosition,
                          int frameWidth, int frameHeight, double hitBoxWidthPerc, double hitBoxHeightPerc) {
-        setupSpriteSettings(BitmapFactory.decodeResource(context.getResources(),
-                        R.drawable.skyclimber_platform), canvasPosition, eMapPosition, frameWidth, frameHeight,
-                false, SpriteType.PLATFORM_SKYCLIMBER, hitBoxWidthPerc, hitBoxHeightPerc);
+        image = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.player);
+        setImage(image);
+        setupDimensions(frameWidth, frameHeight, hitBoxWidthPerc, hitBoxHeightPerc);
+        setupLocation(canvasPosition, eMapPosition);
         InfoLog.getInstance().generateLog(className,InfoLog.getInstance().debug_SkyClimberCreated);
     }
 }

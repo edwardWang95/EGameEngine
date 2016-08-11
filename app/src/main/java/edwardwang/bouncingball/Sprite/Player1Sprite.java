@@ -1,6 +1,7 @@
 package edwardwang.bouncingball.Sprite;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import edwardwang.bouncingball.Info.InfoLog;
@@ -12,12 +13,19 @@ import edwardwang.bouncingball.R;
  */
 public class Player1Sprite extends Sprite{
     private static final String className = Player1Sprite.class.getSimpleName();
+    private Bitmap image;
+
+    //dimensions
+    //private int numOfCorners = 4;
+    //private int numOfSides = 4;
 
     public Player1Sprite(Context context, Vector3DInt canvasPosition, Vector3DInt eMapPosition,
                          int frameWidth, int frameHeight,  double hitBoxWidthPerc, double hitBoxHeightPerc){
-        setupSpriteSettings(BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.player), canvasPosition, eMapPosition, frameWidth, frameHeight,
-                true, SpriteType.PLAYER, hitBoxWidthPerc, hitBoxHeightPerc);
+        image = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.player);
+        setImage(image);
+        setupDimensions(frameWidth, frameHeight, hitBoxWidthPerc, hitBoxHeightPerc);
+        setupLocation(canvasPosition, eMapPosition);
         InfoLog.getInstance().generateLog(className,InfoLog.getInstance().debug_PlayerCreated);
     }
 }
