@@ -14,3 +14,4 @@ Version 2.0
 -Sprite hitbox emulator on my website  
 -Custom hitbox creation  
 -Further enhanced collision to handle angled hitbox collision 
+-Incorporate center of balance, to have objects fall appropriately in given orientation   
