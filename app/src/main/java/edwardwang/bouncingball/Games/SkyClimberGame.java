@@ -1,15 +1,14 @@
 package edwardwang.bouncingball.Games;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import edwardwang.bouncingball.Activity.GameScreenActivity;
 import edwardwang.bouncingball.Info.InfoLog;
 import edwardwang.bouncingball.Info.PhoneInfo;
-import edwardwang.bouncingball.Interaction.ESensor.ESensor;
-import edwardwang.bouncingball.Interaction.ESensor.ESensorManager;
 import edwardwang.bouncingball.Interaction.ESplitScreen.ESplitScreenManager;
 import edwardwang.bouncingball.Interaction.Interaction;
 import edwardwang.bouncingball.Interaction.InteractionManager;
@@ -20,8 +19,6 @@ import edwardwang.bouncingball.PhysicsEngine.Axis;
 import edwardwang.bouncingball.PhysicsEngine.PhysicsEngine;
 import edwardwang.bouncingball.PhysicsEngine.Direction;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDirection;
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDouble;
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DFloat;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
 import edwardwang.bouncingball.Sprite.Player1Sprite;
 import edwardwang.bouncingball.Sprite.Sprite;
@@ -71,9 +68,6 @@ public class SkyClimberGame extends Game{
     private final double playerHitBoxPercWidth = 1;
     private final double playerHitBoxPercHeight = 1;
     private final float playerPixelDistancePerSecond = 500;
-    private SpriteHitBox playerHitBox;
-    private final double playerVelocityRight = 2;
-    private final double playerVelocityLeft = 2;
 
     //Background
     private int startX, startY;
@@ -81,9 +75,7 @@ public class SkyClimberGame extends Game{
     //The % of ePixel/platform that can be interactable with player sprite
     private final double platformHitBoxPercWidth = 1;
     private final double platformHitBoxPercHeight = 1;
-    private SpriteHitBox platformHitBox;
     private int screenHalfwayHeight;
-    private int heightAdjustmant;
     //TODO:May include this variable in Game class
     //The height
     private Vector3DInt updatePlatformSpeed = new Vector3DInt();
@@ -92,7 +84,11 @@ public class SkyClimberGame extends Game{
     private InteractionManager interactionManager;
     private ESplitScreenManager splitScreenManager;
 
-    public SkyClimberGame(Context context, GameView gameView){
+    //Score Keeping
+    private int currentEPlatformPosition = 0;
+    private int newEPlatformPosition = 0;
+
+    public SkyClimberGame(Context context, GameView gameView, GameScreenActivity gameScreenActivity){
         setContext(context);
         setGameName(gameName);
         setGameView(gameView);
@@ -100,6 +96,7 @@ public class SkyClimberGame extends Game{
         setGameBackground(backgroundColor);
         setNumOfEPixelsWidthHeight(numOfEPixelsWidth, numOfEPixelsHeight);
         setHitBoxWidthHeightPerc(platformHitBoxPercWidth, platformHitBoxPercHeight);
+        setGameScreenActivity(gameScreenActivity);
     }
 
     ////////////////////////////////////////////////////////////////////////
@@ -152,13 +149,31 @@ public class SkyClimberGame extends Game{
     @Override
     public void setupPlayer() {
         playerOffsetY = eMap.getePixelHeight() / 5;
-        int playerStartX = eMap.getEPixel(startX,startY).getPositionCanvasX();
-        int playerStartY = eMap.getEPixel(startX,startY).getPositionCanvasY() -
+        EPixel playerEMapPosition = eMap.getEPixel(startX, startY);
+        /*
+        int playerEMapX = playerEMapPosition.getPositionEMapX();
+        int playerEMapY = playerEMapPosition.getPositionEMapY();
+        int playerCanvasX = playerEMapPosition.getPositionCanvasX();
+        int playerCanvasY = playerEMapPosition.getPositionCanvasY() -
                 playerOffsetY;
-        player1Sprite = new Player1Sprite(getContext(), playerStartX, playerStartY,
+        */
+        Vector3DInt playerEMap = new Vector3DInt();
+        Vector3DInt playerCanvas = new Vector3DInt();
+        playerEMap.setX(playerEMapPosition.getPositionEMapX());
+        playerEMap.setY(playerEMapPosition.getPositionEMapY());
+        playerCanvas.setX(playerEMapPosition.getPositionCanvasX());
+        playerCanvas.setY(playerEMapPosition.getPositionCanvasY() -
+                playerOffsetY);
+
+
+        currentEPlatformPosition = playerEMap.getY();
+        //InfoLog.getInstance().debugValue(className, "Start Position: "+currentEPlatformPosition);
+
+
+        //eMapPosition
+        player1Sprite = new Player1Sprite(getContext(), playerCanvas, playerEMap,
                 eMap.getePixelWidth(), eMap.getePixelHeight(),
                 playerHitBoxPercWidth, playerHitBoxPercHeight);
-        playerHitBox = player1Sprite.getSpriteHitBox();
         playerSpriteArrayList.add(player1Sprite);
         //playerSpeed
         player1Sprite.getRigidBody().setMovementSpeed(movementSpeedX, movementSpeedY);
@@ -170,6 +185,7 @@ public class SkyClimberGame extends Game{
         setEPixelPerMeter(ePixelPerMeter);
 
         //Move player at static pace
+        player1Sprite.setPixelDistancePerSecond(playerPixelDistancePerSecond);
         player1Sprite.setPixelDistancePerSecond(playerPixelDistancePerSecond);
 
         //Set the corner checklist in hitBox
@@ -196,7 +212,22 @@ public class SkyClimberGame extends Game{
 
     @Override
     public void updateCurrentScore(){
+        //InfoLog.getInstance().debugValue(className, "Current: "+currentEPlatformPosition);
+        //InfoLog.getInstance().debugValue(className, "New: "+newEPlatformPosition);
+        int platformDifference = newEPlatformPosition - currentEPlatformPosition;
+        if( platformDifference != 0){
+            if(newEPlatformPosition < currentEPlatformPosition){
+                //above previous
+                setCurrentScore((getCurrentScore() + platformDifference));
 
+            }else if(newEPlatformPosition > currentEPlatformPosition){
+                //below previous
+                setCurrentScore((getCurrentScore() - platformDifference ));
+            }
+            //InfoLog.getInstance().debugValue(className, "Current Score: "+getCurrentScore());
+            currentEPlatformPosition = newEPlatformPosition;
+            updateGameScreenCurrentScore();
+        }
     }
 
     @Override
@@ -229,19 +260,6 @@ public class SkyClimberGame extends Game{
                     direction.getX(),getFPS());
         }
 
-        /*
-        if(x < sensorManager.getRotationRIGHT()){
-            //MOVE RIGHT
-            direction.setX(Direction.RIGHT);
-            //player1Sprite.getRigidBody().getVelocity().setX(playerVelocityRight);
-        }else if(x > sensorManager.getRotationLEFT()){
-            //MOVE LEFT
-            direction.setX(Direction.LEFT);
-            //player1Sprite.getRigidBody().getVelocity().setX(playerVelocityLeft);
-        }
-        physicsEngine.updateSpriteLocationStaticallyX(player1Sprite,
-                direction.getX(),getFPS());
-        */
     }
 
     /**
@@ -256,10 +274,10 @@ public class SkyClimberGame extends Game{
             physicsEngine.setSpriteAction(Action.JUMP, player1Sprite);
 
             //InfoLog.getInstance().debugValue(className, "COLLIDING");
+            newEPlatformPosition = player1Sprite.geteMapPosition().getY();
         }
         physicsEngine.updateSpriteLocation(player1Sprite, Axis.Y, getDeltaTime(),
                 getTimeFactor(), ePixelPerMeter);
-
     }
 
     /**
@@ -267,7 +285,7 @@ public class SkyClimberGame extends Game{
      * of the platforms are updated to provide the illusion that user is going up.
      */
     private void handlePlayerIsAboveScreenHalfway(){
-        Vector3DInt playerPosition = player1Sprite.getPosition();
+        Vector3DInt playerPosition = player1Sprite.getCanvasPosition();
 
         //Check if player position is above halfway point
         if(playerPosition.getY() <= screenHalfwayHeight){
@@ -280,6 +298,7 @@ public class SkyClimberGame extends Game{
             updatePreviousPlatformPositionY();
             fillMissingPlatforms();
             updatePlayerPositionY();
+            newEPlatformPosition += updatePlatformSpeed.getY();
         }
     }
 
@@ -303,9 +322,9 @@ public class SkyClimberGame extends Game{
      * Update player position alongside the platforms
      */
     private void updatePlayerPositionY(){
-        int newY = player1Sprite.getPosition().getY() +
+        int newY = player1Sprite.getCanvasPosition().getY() +
                 (updatePlatformSpeed.getY() * player1Sprite.getFrameHeight());
-        player1Sprite.getPosition().setY(newY);
+        player1Sprite.getCanvasPosition().setY(newY);
     }
 
     /**
@@ -335,8 +354,8 @@ public class SkyClimberGame extends Game{
             currentX = ePixel.getPositionEMapX();
 
 
-            InfoLog.getInstance().debugValue(className, "UpdatePlatformSpeed: "+
-            updatePlatformSpeed.getY());
+            //InfoLog.getInstance().debugValue(className, "UpdatePlatformSpeed: "+
+            //updatePlatformSpeed.getY());
 
             newHeight = ePixel.getPositionEMapY() + updatePlatformSpeed.getY();
             //Set current ePixel visibility to false

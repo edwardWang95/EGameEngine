@@ -64,14 +64,15 @@ public class GameOverActivity extends AppCompatActivity {
     private void grabGameIntentAndUpdateLayout(){
         Intent intent = getIntent();
         String gameName = intent.getStringExtra(gameOverNameIntentPassString);
-        String currentScore = intent.getStringExtra(gameOverScoreIntentPassString);
+        double currentScore = intent.getDoubleExtra(gameOverScoreIntentPassString, 0);
         if(gameName.equals(SkyClimberGame.gameName)){
             updateBackgroundAndName(SkyClimberGame.gameName, R.color.SkyClimberGameBackground);
             InfoLog.getInstance().generateLog(className,InfoLog.getInstance().debug_SkyClimber);
         }else{
             InfoLog.getInstance().generateLog(className,InfoLog.getInstance().error_GameNotSet);
         }
-        gameOverScore.setText(currentScore);
+        String gameScoreString = "Current Score: " + String.valueOf(currentScore);
+        gameOverScore.setText(gameScoreString);
     }
 
     private void updateBackgroundAndName(String gameName, int color){

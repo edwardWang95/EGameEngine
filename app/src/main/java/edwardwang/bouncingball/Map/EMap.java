@@ -92,14 +92,19 @@ public class EMap {
      * Creates the 2D EMap based on the amount of EPixels for width and height
      */
     public void setupEMap(double hitBoxWidthPerc, double hitBoxHeightPerc){
-        int positionX, positionY;
+        Vector3DInt canvasPosition;
+        Vector3DInt eMapPosition;
         for(int i=0; i<numOfEPixelsWidth; i++){
             for(int j=0; j<numOfEPixelsHeight; j++){
-                positionX = (mapOffSetWidth/2) + (ePixelWidth * i);
-                positionY = (mapOffSetHeight/2) + (ePixelHeight * j);
+                canvasPosition = new Vector3DInt();
+                eMapPosition = new Vector3DInt();
+                canvasPosition.setX((mapOffSetWidth/2) + (ePixelWidth * i));
+                canvasPosition.setY((mapOffSetHeight / 2) + (ePixelHeight * j));
                 map[i][j] = new EPixel(ePixelWidth, ePixelHeight,
-                        positionX, positionY, i, j);
-                fillEMapWithPlatformObjects(map[i][j], positionX, positionY,
+                        canvasPosition.getX(), canvasPosition.getY(), i, j);
+                eMapPosition.setX(i);
+                eMapPosition.setY(j);
+                fillEMapWithPlatformObjects(map[i][j], canvasPosition, eMapPosition,
                         hitBoxWidthPerc, hitBoxHeightPerc);
             }
         }
@@ -128,13 +133,13 @@ public class EMap {
     /**
      * Fills ePixel with a background platform pixels
      */
-    private void fillEMapWithPlatformObjects(EPixel ePixel, int positionX, int positionY,
+    private void fillEMapWithPlatformObjects(EPixel ePixel, Vector3DInt canvasPosition, Vector3DInt eMapPosition,
                                              double hitBoxWidthPerc, double hitBoxHeightPerc){
         Sprite sprite = null;
         switch (spriteType){
             case PLATFORM_SKYCLIMBER:
                 sprite= new SkyClimberPlatformSprite(context,
-                        positionX, positionY, ePixelWidth, ePixelHeight,
+                        canvasPosition, eMapPosition, ePixelWidth, ePixelHeight,
                         hitBoxWidthPerc, hitBoxHeightPerc);
             break;
         }

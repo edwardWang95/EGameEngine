@@ -5,8 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -153,9 +151,9 @@ public class GameView extends SurfaceView{
      * @param sprite
      */
     private void drawSpriteTEST(Sprite sprite, Paint paint){
-        sprite.getWhereToDraw().set(sprite.getPosition().getX(),
-                sprite.getPosition().getY(), sprite.getPosition().getX() + sprite.getFrameWidth(),
-                sprite.getPosition().getY() + sprite.getFrameHeight());
+        sprite.getWhereToDraw().set(sprite.getCanvasPosition().getX(),
+                sprite.getCanvasPosition().getY(), sprite.getCanvasPosition().getX() + sprite.getFrameWidth(),
+                sprite.getCanvasPosition().getY() + sprite.getFrameHeight());
 
         sprite.getCurrentFrame();
         canvas.drawBitmap(sprite.getImage(), sprite.getFrameToDraw(),
@@ -163,9 +161,9 @@ public class GameView extends SurfaceView{
     }
 
     private void drawSprite(Sprite sprite){
-        sprite.getWhereToDraw().set(sprite.getPosition().getX(),
-                sprite.getPosition().getY(), sprite.getPosition().getX() + sprite.getFrameWidth(),
-                sprite.getPosition().getY() + sprite.getFrameHeight());
+        sprite.getWhereToDraw().set(sprite.getCanvasPosition().getX(),
+                sprite.getCanvasPosition().getY(), sprite.getCanvasPosition().getX() + sprite.getFrameWidth(),
+                sprite.getCanvasPosition().getY() + sprite.getFrameHeight());
 
         sprite.getCurrentFrame();
         canvas.drawBitmap(sprite.getImage(), sprite.getFrameToDraw(),

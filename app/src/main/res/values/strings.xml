@@ -3,5 +3,5 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_game_over">GameOverActivity</string>
-    <string name="current_score">Current Score: </string>
+    <string name="gameover_score">Current Score: </string>
 </resources>

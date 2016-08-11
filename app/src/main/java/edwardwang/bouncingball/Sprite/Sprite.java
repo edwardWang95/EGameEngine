@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import edwardwang.bouncingball.Info.InfoLog;
 import edwardwang.bouncingball.Info.PhoneInfo;
 import edwardwang.bouncingball.PhysicsEngine.Axis;
 import edwardwang.bouncingball.PhysicsEngine.RigidBody;
@@ -47,16 +46,17 @@ public class Sprite {
 
     //Location of sprite on the canvas/display
     private final double  edPixelToMeter = .1;   // % of edPixels that translate to a meter
-    private Vector3DInt position;
+    private Vector3DInt canvasPosition;
+    private Vector3DInt eMapPosition;
     private boolean isOnGround;
 
     //Physics
     private RigidBody rigidBody;
 
     public Sprite(){
-        position = new Vector3DInt();
-        position.setX(10);
-        position.setY(10);
+        canvasPosition = new Vector3DInt();
+        canvasPosition.setX(10);
+        canvasPosition.setY(10);
         rigidBody = new RigidBody();
         pixelDistancePerSecond = 300;
         frameWidth = 100;
@@ -66,8 +66,8 @@ public class Sprite {
         lastFrameChangeTime = 0;
         frameLengthInMilliseconds = 100;
         frameToDraw = new Rect(0,0,frameWidth,frameHeight);
-        whereToDraw = new RectF(position.getX(), position.getY(),
-                position.getX() + frameWidth, position.getY() + frameHeight);
+        whereToDraw = new RectF(canvasPosition.getX(), canvasPosition.getY(),
+                canvasPosition.getX() + frameWidth, canvasPosition.getY() + frameHeight);
         //whereToDraw = new RectF(0, 0, frameWidth, frameHeight);
         isOnGround = true;
     }
@@ -95,11 +95,11 @@ public class Sprite {
                         (PhoneInfo.getInstance().getScreenHeight()));
         */
 
-        return(position.getX() >= PhoneInfo.getInstance().getScreenLeft() &&
-                position.getX() <= PhoneInfo.getInstance().getScreenRight()
+        return(canvasPosition.getX() >= PhoneInfo.getInstance().getScreenLeft() &&
+                canvasPosition.getX() <= PhoneInfo.getInstance().getScreenRight()
                 &&
-                position.getY() >= PhoneInfo.getInstance().getScreenTop() &&
-                position.getY() <= PhoneInfo.getInstance().getScreenBottom());
+                canvasPosition.getY() >= PhoneInfo.getInstance().getScreenTop() &&
+                canvasPosition.getY() <= PhoneInfo.getInstance().getScreenBottom());
 
     }
 
@@ -128,12 +128,15 @@ public class Sprite {
     /**
      * Set all elements necessary to draw sprite on EMap
      */
-    public void setupSpriteSettings(Bitmap image, int positionX, int positionY,
+    public void setupSpriteSettings(Bitmap image, Vector3DInt canvasPosition, Vector3DInt eMapPosition,
                                     int frameWidth, int frameHeight, boolean isVisible,
                                     SpriteType spriteType, double hitBoxWidth, double hitBoxHeight){
+        int positionX = canvasPosition.getX();
+        int positionY = canvasPosition.getY();
+
         this.image = image;
-        this.position.setX(positionX);
-        this.position.setY(positionY);
+        this.canvasPosition = canvasPosition;
+        this.eMapPosition = eMapPosition;
         this.frameWidth = frameWidth;
         this.frameHeight = frameHeight;
         this.frameToDraw = new Rect(0, 0, frameWidth, frameHeight);
@@ -145,12 +148,12 @@ public class Sprite {
     }
 
     /**
-     * Updates the position from the rigid body's delta distance. Method is
+     * Updates the canvas Position from the rigid body's delta distance. Method is
      * usually called after running physics engine.
      *
      * TODO:clean up this hacky way and incorporate the Vector objects into PhoneInfo
      */
-    public void updatePosition(Axis axis) {
+    public void updateCanvasPosition(Axis axis) {
         int newX = 0, newY = 0;
         int mapOffSetWidth = PhoneInfo.getInstance().geteMapOffSets().getX();
         int mapOffSetHeight = PhoneInfo.getInstance().geteMapOffSets().getY();
@@ -160,18 +163,18 @@ public class Sprite {
             case X:
                 deltaDistanceX = rigidBody.getDeltaDistance().getX();
                 //InfoLog.getInstance().generateLog(className, "DeltaX:" + deltaDistanceX);
-                newX = position.getX() + deltaDistanceX;
+                newX = canvasPosition.getX() + deltaDistanceX;
                 if(newX < mapOffSetWidth){
                     newX = mapOffSetWidth;
                 }else if(newX > (PhoneInfo.getInstance().getScreenWidth() - mapOffSetWidth)){
                     newX = (PhoneInfo.getInstance().getScreenWidth() - mapOffSetWidth);
                 }
-                position.setX(newX);
+                canvasPosition.setX(newX);
                 break;
             case Y:
                 deltaDistanceY = rigidBody.getDeltaDistance().getY();
-                newY = position.getY() - deltaDistanceY;
-                position.setY(newY);
+                newY = canvasPosition.getY() - deltaDistanceY;
+                canvasPosition.setY(newY);
                 break;
             case Z:
                 break;
@@ -179,15 +182,15 @@ public class Sprite {
 
         //InfoLog.getInstance().debugValue(className, "DeltaDistanceY: " + deltaDistanceY);
 
-        //InfoLog.getInstance().debugValue(className, "PositionY: " + position.getY());
+        //InfoLog.getInstance().debugValue(className, "PositionY: " + canvasPosition.getY());
     }
         /*
         if(deltaDistanceY > 0){
             InfoLog.getInstance().debugValue(className, "UP");
-            newY = position.getY() - deltaDistanceY;
+            newY = canvasPosition.getY() - deltaDistanceY;
         }else{
             InfoLog.getInstance().debugValue(className, "DOWN");
-            newY = position.getY() - deltaDistanceY;
+            newY = canvasPosition.getY() - deltaDistanceY;
         }
         */
         /*
@@ -222,8 +225,12 @@ public class Sprite {
 
     public SpriteType getSpriteType(){return spriteType;}
 
-    public Vector3DInt getPosition() {
-        return position;
+    public Vector3DInt getCanvasPosition() {
+        return canvasPosition;
+    }
+
+    public Vector3DInt geteMapPosition() {
+        return eMapPosition;
     }
 
     public RigidBody getRigidBody() {

@@ -2,11 +2,13 @@ package edwardwang.bouncingball.Games;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.Random;
 
 import edwardwang.bouncingball.Activity.GameOverActivity;
+import edwardwang.bouncingball.Activity.GameScreenActivity;
 import edwardwang.bouncingball.Info.InfoLog;
 import edwardwang.bouncingball.Interaction.InteractionManager;
 import edwardwang.bouncingball.PhysicsEngine.PhysicsEngine;
@@ -26,6 +28,7 @@ import edwardwang.bouncingball.View.GameView;
 public class Game implements Serializable, Runnable{
     private static final String className = GameView.class.getSimpleName();
     public static final String gameIntentPassString = "Game";
+    private GameScreenActivity gameScreenActivity;
     private Intent gameOverIntent;
     private Context context;
 
@@ -59,8 +62,8 @@ public class Game implements Serializable, Runnable{
     private volatile boolean isPlaying = false;
     private long fps = 0;
 
-    //Game Keeping
-    private float currentScore = 0;
+    //Score Keeping
+    private double currentScore = 0;
 
     //Physics
     private float deltaTime = 0f; //use to calc fps &&  dT
@@ -140,9 +143,17 @@ public class Game implements Serializable, Runnable{
         InfoLog.getInstance().generateLog(className, InfoLog.getInstance().debug_ResumeGameThread);
     }
 
+    public void updateGameScreenCurrentScore(){
+        gameScreenActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                gameScreenActivity.updateCurrentScoreTextView(currentScore);
+            }
+        });
+    }
+
     public void throwGameOver(){
-        gameOverIntent.putExtra(GameOverActivity.gameOverScoreIntentPassString,
-                R.string.current_score + currentScore);
+        gameOverIntent.putExtra(GameOverActivity.gameOverScoreIntentPassString, currentScore);
         context.startActivity(gameOverIntent);
     }
 
@@ -244,8 +255,12 @@ public class Game implements Serializable, Runnable{
         return interactionManager;
     }
 
-    public float getCurrentScore() {
+    public double getCurrentScore() {
         return currentScore;
+    }
+
+    public GameScreenActivity getGameScreenActivity() {
+        return gameScreenActivity;
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -310,7 +325,11 @@ public class Game implements Serializable, Runnable{
         this.isBackgroundReadyToUpdate = isBackgroundUpdated;
     }
 
-    public void setCurrentScore(float currentScore) {
+    public void setCurrentScore(double currentScore) {
         this.currentScore = currentScore;
+    }
+
+    public void setGameScreenActivity(GameScreenActivity gameScreenActivity) {
+        this.gameScreenActivity = gameScreenActivity;
     }
 }

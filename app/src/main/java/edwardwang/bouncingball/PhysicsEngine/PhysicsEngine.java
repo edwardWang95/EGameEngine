@@ -1,11 +1,8 @@
 package edwardwang.bouncingball.PhysicsEngine;
 
-import edwardwang.bouncingball.Games.Game;
-import edwardwang.bouncingball.Info.InfoLog;
 import edwardwang.bouncingball.Map.EMap;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDirection;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDouble;
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DFloat;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
 import edwardwang.bouncingball.Sprite.Sprite;
 import edwardwang.bouncingball.Sprite.SpriteHitBox;
@@ -91,7 +88,7 @@ public class PhysicsEngine {
             if(!direction.getY().equals(previousDirectionY)){
                 resetTimeElapsed();
             }
-            sprite.updatePosition(axis);
+            sprite.updateCanvasPosition(axis);
         }
     }
 
@@ -230,8 +227,8 @@ public class PhysicsEngine {
          * sprite position is the topLeft corner.
          */
         Vector3DInt playerPosition = new Vector3DInt();
-        playerPosition.setX(sprite.getPosition().getX() + (sprite.getFrameWidth()/2));
-        playerPosition.setY(sprite.getPosition().getY() + (sprite.getFrameHeight()/2));
+        playerPosition.setX(sprite.getCanvasPosition().getX() + (sprite.getFrameWidth()/2));
+        playerPosition.setY(sprite.getCanvasPosition().getY() + (sprite.getFrameHeight()/2));
 
         //Grab platform
         Sprite platform = eMap.getEPixelFromCanvasPosition(playerPosition.getX(),
@@ -306,14 +303,14 @@ public class PhysicsEngine {
 
             //InfoLog.getInstance().debugValue(className, "DeltaX: " + deltaX);
             sprite.getRigidBody().getDeltaDistance().setX(deltaX);
-            sprite.updatePosition(Axis.X);
+            sprite.updateCanvasPosition(Axis.X);
         }
 
 
 
        // if(sprite.isMoving() && sprite.isWithinScreen()){
             /*
-            tempX = sprite.getPosition().getX();
+            tempX = sprite.getCanvasPosition().getX();
             switch (direction){
                 case LEFT:
                     tempX -= (int) (sprite.getPixelDistancePerSecond()/fps);
@@ -323,7 +320,7 @@ public class PhysicsEngine {
                     break;
             }
             if(!isSpriteHitBoxWithinMapConstraints(sprite.getSpriteHitBox())){
-                sprite.getPosition().setX(tempX);
+                sprite.getCanvasPosition().setX(tempX);
             }
             */
             //InfoLog.getInstance().debugValue("PositionX", String.valueOf(tempX) + String.valueOf(tempY));
