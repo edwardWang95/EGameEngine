@@ -265,10 +265,10 @@ public class PhysicsEngine {
     }
 
     private boolean isSpriteHitBoxWithinMapConstraints(SpriteHitBox spriteHitBox){
-        return (eMap.isPositionWithinMapConstraints(spriteHitBox.getTopLeft()) &&
-                eMap.isPositionWithinMapConstraints(spriteHitBox.getTopRight()) &&
-                eMap.isPositionWithinMapConstraints(spriteHitBox.getBottomLeft()) &&
-                eMap.isPositionWithinMapConstraints(spriteHitBox.getBottomRight()));
+        return (eMap.isPositionWithinMapConstraints(spriteHitBox.getSpriteCornerList(SpriteHitBox.TOPLEFT).getCorner()) &&
+                eMap.isPositionWithinMapConstraints(spriteHitBox.getSpriteCornerList(SpriteHitBox.TOPRIGHT).getCorner()) &&
+                eMap.isPositionWithinMapConstraints(spriteHitBox.getSpriteCornerList(SpriteHitBox.BOTTOMLEFT).getCorner()) &&
+                eMap.isPositionWithinMapConstraints(spriteHitBox.getSpriteCornerList(SpriteHitBox.BOTTOMRIGHT).getCorner()));
     }
 
     ////////////////////////////////////////////////////////////////////////////////

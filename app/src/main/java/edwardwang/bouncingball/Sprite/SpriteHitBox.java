@@ -1,5 +1,6 @@
 package edwardwang.bouncingball.Sprite;
 
+import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDouble;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
 
 /**
@@ -38,7 +39,7 @@ public class SpriteHitBox {
     private int numOfCorners;
     private int numOfSides;
     private SpriteCorner[] spriteCornerList = new SpriteCorner[4];
-    private SpriteSide[] spriteSideList = new SpriteSide[4];
+    private SpriteEdge[] spriteEdgeList = new SpriteEdge[4];
     private boolean[] cornerCheckList = new boolean[4];
     private boolean[] sidesCheckList  = new boolean[4];
 
@@ -89,19 +90,21 @@ public class SpriteHitBox {
     }
 
     private void setupSides(){
-        spriteSideList[TOP] = new SpriteSide(spriteCornerList[TOPLEFT].getCorner(),
+        spriteEdgeList[TOP] = new SpriteEdge(spriteCornerList[TOPLEFT].getCorner(),
                 spriteCornerList[TOPRIGHT].getCorner());
-        spriteSideList[LEFT] = new SpriteSide(spriteCornerList[TOPLEFT].getCorner(),
+        spriteEdgeList[LEFT] = new SpriteEdge(spriteCornerList[TOPLEFT].getCorner(),
                 spriteCornerList[BOTTOMLEFT].getCorner());
-        spriteSideList[RIGHT] = new SpriteSide(spriteCornerList[TOPRIGHT].getCorner(),
+        spriteEdgeList[RIGHT] = new SpriteEdge(spriteCornerList[TOPRIGHT].getCorner(),
                 spriteCornerList[BOTTOMRIGHT].getCorner());
-        spriteSideList[BOTTOM] = new SpriteSide(spriteCornerList[BOTTOMLEFT].getCorner(),
+        spriteEdgeList[BOTTOM] = new SpriteEdge(spriteCornerList[BOTTOMLEFT].getCorner(),
                 spriteCornerList[BOTTOMRIGHT].getCorner());
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
     /**
+     * Could be useful in 3D perspective. i.e. shooting a bullet into an enemy
+     *
      * Hitbox in parameter is the platform, and we are checking that this
      * sprite's hitbox is WITHIN the hitbox parameters.
      * @param spriteHitBox
@@ -159,36 +162,70 @@ public class SpriteHitBox {
     ////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Seperate to intersecting, because collisions will be handled at edges rather
-     * than allowing objects to intersect with each other.
+     * Version 1.0 collision. Spritebox is static shape of square for now.
      * @param spriteHitBox
      * @return
      */
-    public boolean isCollidingWithHitBox(SpriteHitBox spriteHitBox){
-        SpriteSide spriteSide;
-        for(int i=0;i<sidesCheckList.length;i++){
-            if(sidesCheckList[i]){
-                switch (i){
-                    //Top collides with bottom of sprite hitbox
-                    case TOP:
-                        spriteSide = spriteHitBox.get
-                        break;
-                    //Left collides with right
-                    case LEFT:
-                        positionX = spriteHitBox.getTopRight().getX();
-                        positionY = spriteHitBox.getTopRight().getY();
-                        break;
-                    //Right collides with left
-                    case RIGHT:
-                        positionX = spriteHitBox.getBottomLeft().getX();
-                        positionY = spriteHitBox.getBottomLeft().getY();
-                        break;
-                    //Bottom collides with left
-                    case BOTTOM:
-                        positionX = spriteHitBox.getBottomRight().getX();
-                        positionY = spriteHitBox.getBottomRight().getY();
-                        break;
+    public boolean isCollidingWithObjectHitBox(SpriteHitBox objectHitBox){
+        SpriteEdge spriteEdge = new SpriteEdge();
+        SpriteEdge objectSpriteEdge = new SpriteEdge();
+        for(int i=TOP;i<(BOTTOM + 1);i++){
+            switch (i){
+                case TOP:
+                    spriteEdge = spriteEdgeList[TOP];
+                    objectSpriteEdge = objectHitBox.getSpriteEdgeList(BOTTOM);
+                    break;
+                case LEFT:
+                    spriteEdge = spriteEdgeList[LEFT];
+                    objectSpriteEdge = objectHitBox.getSpriteEdgeList(RIGHT);
+                    break;
+                case RIGHT:
+                    spriteEdge = spriteEdgeList[RIGHT];
+                    objectSpriteEdge = objectHitBox.getSpriteEdgeList(LEFT);
+                    break;
+                case BOTTOM:
+                    spriteEdge = spriteEdgeList[BOTTOM];
+                    objectSpriteEdge = objectHitBox.getSpriteEdgeList(TOP);
+                    break;
+            }
+            if(isCollidingWithSide(spriteEdge, objectSpriteEdge)){
+                return true;
+            }
+        }
+
+        //InfoLog.getInstance().debugValue(className, "Sprite is within platform hitbox");
+
+        return false;
+    }
+
+    private boolean isCollidingWithSide(SpriteEdge spriteEdge, SpriteEdge objectSide){
+        Vector3DDouble spritePosition = new Vector3DDouble();
+        Vector3DDouble objectPosition = new Vector3DDouble();
+        position.setX(spriteEdge.getStartCorner().getX());
+        position.setY(spriteEdge.getStartCorner().getY());
+        for(int i=0;i< spriteEdge.getEdgeLength();i++){
+            position.setX(position.getX() + );
+
+            //setup object side position
+
+            for(int j=0;j<objectSide.getEdgeLength();j++){
+                //update Position
+
+                if(position.getX() == objectPosition.getX() &&
+                        position.getY() == objectPosition.getY()){
+                    return true;
                 }
+            }
+        }
+        return false;
+    }
+
+    /*
+    Version 2.0 implementation
+    public boolean isCollidingWithHitBoxSides(SpriteHitBox spriteHitBox){
+        SpriteEdge spriteEdge;
+        for(int i=0;i<sidesList.length;i++){
+                check each and every side for collisions
                 if(!isCollidingWithHitBox(positionX, positionY)){
                     return false;
                 }
@@ -199,25 +236,7 @@ public class SpriteHitBox {
 
         return true;
     }
-
-    private boolean isCollidingWithSide(int corner, int positionX, int positionY){
-        switch(corner){
-            case TOP:
-                //return (positionX == bottomLeft.getX() && positionY == )
-                break;
-            case LEFT:
-                break;
-            case RIGHT:
-                break;
-            case BOTTOM:
-                break;
-        }
-
-        return (positionX == topLeft.getX() &&
-                positionX == topRight.getX() &&
-                positionY >== topLeft.getY() &&
-                positionY <== bottomLeft.getY());
-    }
+    */
 
     public void setCornerCheckListStatus(int corner){
         cornerCheckList[corner] = true;
@@ -259,8 +278,8 @@ public class SpriteHitBox {
         return position;
     }
 
-    public SpriteSide getSpriteSideList(int side) {
-        return spriteSideList[side];
+    public SpriteEdge getSpriteEdgeList(int side) {
+        return spriteEdgeList[side];
     }
 
     public SpriteCorner getSpriteCornerList(int corner) {

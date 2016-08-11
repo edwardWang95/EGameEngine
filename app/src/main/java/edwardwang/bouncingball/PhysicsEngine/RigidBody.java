@@ -14,15 +14,10 @@ public class RigidBody {
     private float torque;
     private double runSpeedMultiplier;
 
+    //http://hyperphysics.phy-astr.gsu.edu/hbase/cm.html
+    private Vector3DInt centerOfMass;
+
     //Used for calculations in physicsEngine
-    //TODO: may not need movement speed or initial/final, just one velocity object
-
-    private Vector3DDouble velocityInitial;
-    private Vector3DDouble velocityFinal;
-
-    private Vector3DDouble netForce;
-
-    //TODO:Keep
     private Vector3DDouble netAccel;
     private Vector3DDouble velocity;   //velocity
     private Vector3DDouble movementSpeed;
@@ -35,9 +30,6 @@ public class RigidBody {
         angularVelocity = 0;
         torque = 0;
         runSpeedMultiplier = 1.5;
-        velocityInitial = new Vector3DDouble();
-        velocityFinal = new Vector3DDouble();
-        netForce = new Vector3DDouble();
         netAccel = new Vector3DDouble();
         velocity = new Vector3DDouble();
         movementSpeed = new Vector3DDouble();
@@ -68,45 +60,6 @@ public class RigidBody {
 
 
     ////////////////////////////////////////////////////////////////////////
-    //TODO: REMOVE
-
-    public void addAccelX(double appliedForce){
-        netForce.setX(netForce.getX() + (mass * appliedForce));
-    }
-
-    public void addAccelY(double appliedForce){
-        netForce.setY(netForce.getY() + (mass * appliedForce));
-    }
-
-    public void resetNetForce(){
-        netForce.setX(0);
-        netForce.setY(0);
-        netAccel.setX(0);
-        netAccel.setY(0);
-        setupNetForceX();
-        setupNetForceY();
-    }
-
-    /**
-     * Formula used is:
-     * vf = sqrt( vi^2 - 2ad  )
-     * @param distanceX
-     * @param distanceY
-     */
-    public void updateVelocity(double distanceX, double distanceY){
-        double finalX = Math.sqrt((velocityInitial.getX() *
-                        velocityInitial.getX()) + 2 *
-                        (netAccel.getX() * distanceX));
-        velocityFinal.setX(finalX);
-
-        double finalY = Math.sqrt((velocityInitial.getY() *
-                        velocityInitial.getY()) + 2 *
-                        (netAccel.getY() * distanceY));
-        velocityFinal.setY(finalY);
-    }
-
-
-    ////////////////////////////////////////////////////////////////////////
     //Getter
     private double getGravity(){
         return mass * PhysicsEngine.GRAVITY;
@@ -114,18 +67,6 @@ public class RigidBody {
 
     private double getNormal(){
         return mass * PhysicsEngine.NORMAL;
-    }
-
-    public Vector3DDouble getVelocityInitial() {
-        return velocityInitial;
-    }
-
-    public Vector3DDouble getVelocityFinal() {
-        return velocityFinal;
-    }
-
-    public Vector3DDouble getNetForce() {
-        return netForce;
     }
 
     public Vector3DDouble getNetAccel(){
@@ -186,10 +127,6 @@ public class RigidBody {
     //Setter
     private void setupNetForceX(){
         //nothing for now
-    }
-
-    private void setupNetForceY(){
-        netForce.setY(getGravity() + getNormal());
     }
 
     public void setMass(double mass) {
