@@ -8,10 +8,18 @@ Version 1.0
 -Sprite Hitbox Collision   
 -Sprite Hitbox Intersection    
 -EMap/EPixel generation  
+-Smooth Sprite Transitions
 -Example game - SkyClimber  
 
 Version 2.0 
 -Sprite hitbox emulator on my website  
 -Custom hitbox creation  
 -Further enhanced collision to handle angled hitbox collision 
--Incorporate center of balance, to have objects fall appropriately in given orientation   
+-Ads  
+-Social Media  
+-Physics  
+--Center of gravity  
+--Friction  
+--Momentum  
+--Tension  
+--Attraction  
