@@ -215,18 +215,18 @@ public class SkyClimberGame extends Game{
     public void updateCurrentScore(){
         //InfoLog.getInstance().debugValue(className, "Current: "+currentEPlatformPosition);
         //InfoLog.getInstance().debugValue(className, "New: "+newEPlatformPosition);
-        platformDifference = newEPlatformPosition - currentEPlatformPosition;
+        platformDifference = currentEPlatformPosition - newEPlatformPosition;
         if( platformDifference != 0){
-            if(newEPlatformPosition < currentEPlatformPosition){
+            if(platformDifference < 0){
                 //above previous
                 setCurrentScore((getCurrentScore() + platformDifference));
-
-            }else if(newEPlatformPosition > currentEPlatformPosition){
+            }else if(platformDifference > 0){
                 //below previous
                 setCurrentScore((getCurrentScore() - platformDifference ));
             }
             updateGameScreenCurrentScore();
-            InfoLog.getInstance().debugValue(className, "Current Score: "+getCurrentScore());
+            //reset the platforms
+            newEPlatformPosition = player1Sprite.geteMapPosition().getY();
             currentEPlatformPosition = newEPlatformPosition;
         }
     }
