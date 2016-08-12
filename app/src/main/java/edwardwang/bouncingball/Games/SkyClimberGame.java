@@ -42,7 +42,7 @@ public class SkyClimberGame extends Game{
     private final double timeFactor = .08;
 
     //Map Size in terms of ePixels
-    private final int numOfEPixelsWidth = 12;
+    private final int numOfEPixelsWidth = 14;
     private final int numOfEPixelsHeight = 12;
     //Sprite movement size
     private final float ePixelPerMeter = .5f;    // % ePixel = # meters --> inverse to movementSpeed
@@ -274,7 +274,8 @@ public class SkyClimberGame extends Game{
             newEPlatformPosition = player1Sprite.geteMapPosition().getY();
             handlePlayerIsAboveScreenHalfway();
             physicsEngine.setSpriteAction(Action.JUMP, player1Sprite);
-            //InfoLog.getInstance().debugValue(className, "COLLIDING");
+
+            InfoLog.getInstance().debugValue(className, "COLLIDING");
         }
         physicsEngine.updateSpriteLocation(player1Sprite, Axis.Y, getDeltaTime(),
                 getTimeFactor(), ePixelPerMeter);

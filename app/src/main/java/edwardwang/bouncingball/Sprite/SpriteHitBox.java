@@ -1,6 +1,6 @@
 package edwardwang.bouncingball.Sprite;
 
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDouble;
+import edwardwang.bouncingball.Info.InfoLog;
 import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
 
 /**
@@ -12,7 +12,7 @@ import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
  * Created by edwardwang on 7/27/16.
  */
 public class SpriteHitBox {
-    private static final String className = Sprite.class.getSimpleName();
+    private static final String className = SpriteHitBox.class.getSimpleName();
     //Corners of hitbox
     public static final int TOPLEFT = 0;
     public static final int TOPRIGHT = 1;
@@ -122,29 +122,24 @@ public class SpriteHitBox {
      * @return
      */
     public boolean isBeingIntersectedByHitBox(SpriteHitBox spriteHitBox){
-        int positionX = 0;
-        int positionY = 0;
+        Vector3DInt position = new Vector3DInt();
         for(int i=0;i<cornerCheckList.length;i++){
             if(cornerCheckList[i]){
                 switch (i){
                     case TOPLEFT:
-                        positionX = spriteHitBox.getSpriteCornerList(TOPLEFT).getCorner().getX();
-                        positionY = spriteHitBox.getSpriteCornerList(TOPLEFT).getCorner().getY();
+                        position = spriteHitBox.getSpriteCorner(TOPLEFT).getCorner();
                         break;
                     case TOPRIGHT:
-                        positionX = spriteHitBox.getSpriteCornerList(TOPRIGHT).getCorner().getX();
-                        positionY = spriteHitBox.getSpriteCornerList(TOPRIGHT).getCorner().getY();
+                        position = spriteHitBox.getSpriteCorner(TOPRIGHT).getCorner();
                         break;
                     case BOTTOMLEFT:
-                        positionX = spriteHitBox.getSpriteCornerList(BOTTOMLEFT).getCorner().getX();
-                        positionY = spriteHitBox.getSpriteCornerList(BOTTOMLEFT).getCorner().getY();
+                        position = spriteHitBox.getSpriteCorner(BOTTOMLEFT).getCorner();
                         break;
                     case BOTTOMRIGHT:
-                        positionX = spriteHitBox.getSpriteCornerList(BOTTOMRIGHT).getCorner().getX();
-                        positionY = spriteHitBox.getSpriteCornerList(BOTTOMRIGHT).getCorner().getY();
+                        position = spriteHitBox.getSpriteCorner(BOTTOMRIGHT).getCorner();
                         break;
                 }
-                if(!isWithinHitBox(positionX, positionY)){
+                if(!isWithinHitBox(position.getX(), position.getY())){
                     return false;
                 }
             }
@@ -184,22 +179,29 @@ public class SpriteHitBox {
                 switch (i){
                     case TOP:
                         spriteEdge = spriteEdgeList[TOP];
-                        objectEdge = objectHitBox.getSpriteEdgeList(BOTTOM);
+                        objectEdge = objectHitBox.getSpriteEdge(BOTTOM);
                         break;
                     case LEFT:
                         spriteEdge = spriteEdgeList[LEFT];
-                        objectEdge = objectHitBox.getSpriteEdgeList(RIGHT);
+                        objectEdge = objectHitBox.getSpriteEdge(RIGHT);
+
                         break;
                     case RIGHT:
                         spriteEdge = spriteEdgeList[RIGHT];
-                        objectEdge = objectHitBox.getSpriteEdgeList(LEFT);
+                        objectEdge = objectHitBox.getSpriteEdge(LEFT);
                         break;
                     case BOTTOM:
                         spriteEdge = spriteEdgeList[BOTTOM];
-                        objectEdge = objectHitBox.getSpriteEdgeList(TOP);
+                        objectEdge = objectHitBox.getSpriteEdge(TOP);
                         break;
                 }
-                if(isCollidingWithEdge(spriteEdge, objectEdge)){
+                /*
+                InfoLog.getInstance().debugValue(className,"ObjectStart: "+objectEdge.getStartCorner().getX() +
+                        ", "+objectEdge.getStartCorner().getY());
+                InfoLog.getInstance().debugValue(className,"ObjectEnd: "+objectEdge.getEndCorner().getX() +
+                        ", "+objectEdge.getEndCorner().getY());
+                */
+                if(areEdgesColliding(spriteEdge, objectEdge, i)){
                     return true;
                 }
             }
@@ -207,19 +209,21 @@ public class SpriteHitBox {
         return false;
     }
 
-    private boolean isSpriteNearObject(){
-        //checkout ipad for optimization info
-        return false;
-    }
-
-    private boolean isCollidingWithEdge(SpriteEdge spriteEdge, SpriteEdge objectEdge){
+    private boolean areEdgesColliding(SpriteEdge spriteEdge, SpriteEdge objectEdge,
+                                      int edge){
         Vector3DInt objectPosition;
-        for(int i=0;i<objectEdge.getEdgeLength();i++){
+        //InfoLog.getInstance().debugValue(className,"EdgeLength: "+objectEdge.getEdgeLength());
+        for(int i=0;i<=objectEdge.getEdgeLength();i++){
             objectPosition = objectEdge.getPoint(i);
-            if(spriteEdge.containsPoint(objectPosition)){
+            if(spriteEdge.containsPoint(objectPosition, edge)){
                 return true;
             }
         }
+        return false;
+    }
+
+    private boolean isSpriteNearObject(){
+        //checkout ipad for optimization info
         return false;
     }
         /*
@@ -276,34 +280,34 @@ public class SpriteHitBox {
      * @return
      */
     public boolean isTopLeftIntersectingHitBox(SpriteHitBox hitBox){
-        return isWithinHitBox(hitBox.getSpriteCornerList(TOPLEFT).getCorner().getX(),
-                hitBox.getSpriteCornerList(TOPLEFT).getCorner().getY());
+        return isWithinHitBox(hitBox.getSpriteCorner(TOPLEFT).getCorner().getX(),
+                hitBox.getSpriteCorner(TOPLEFT).getCorner().getY());
     }
 
     public boolean isTopRightIntersectingHitBox(SpriteHitBox hitBox){
-        return isWithinHitBox(hitBox.getSpriteCornerList(TOPRIGHT).getCorner().getX(),
-                hitBox.getSpriteCornerList(TOPRIGHT).getCorner().getY());
+        return isWithinHitBox(hitBox.getSpriteCorner(TOPRIGHT).getCorner().getX(),
+                hitBox.getSpriteCorner(TOPRIGHT).getCorner().getY());
     }
 
     public boolean isBottomLeftIntersectingHitBox(SpriteHitBox hitBox){
-        return isWithinHitBox(hitBox.getSpriteCornerList(BOTTOMLEFT).getCorner().getX(),
-                hitBox.getSpriteCornerList(BOTTOMLEFT).getCorner().getY());
+        return isWithinHitBox(hitBox.getSpriteCorner(BOTTOMLEFT).getCorner().getX(),
+                hitBox.getSpriteCorner(BOTTOMLEFT).getCorner().getY());
     }
 
     public boolean isBottomRightIntersectingHitBox(SpriteHitBox hitBox){
-        return isWithinHitBox(hitBox.getSpriteCornerList(BOTTOMRIGHT).getCorner().getX(),
-                hitBox.getSpriteCornerList(BOTTOMRIGHT).getCorner().getY());
+        return isWithinHitBox(hitBox.getSpriteCorner(BOTTOMRIGHT).getCorner().getX(),
+                hitBox.getSpriteCorner(BOTTOMRIGHT).getCorner().getY());
     }
 
     public Vector3DInt getPosition() {
         return position;
     }
 
-    public SpriteEdge getSpriteEdgeList(int side) {
+    public SpriteEdge getSpriteEdge(int side) {
         return spriteEdgeList[side];
     }
 
-    public SpriteCorner getSpriteCornerList(int corner) {
+    public SpriteCorner getSpriteCorner(int corner) {
         return spriteCornerList[corner];
     }
 }

@@ -13,6 +13,11 @@ import edwardwang.bouncingball.Sprite.SpriteHitBox;
  * http://gamedev.stackexchange.com/questions/11262/advice-needed-for-a-physics-engine
  * https://www.niksula.hut.fi/~hkankaan/Homepages/gravity.html
  *
+ * Need to implement
+ * -Center of mass
+ * -Friction
+ * -Momentum
+ * -Reflection
  *
  * Created by edwardwang on 7/23/16.
  */
@@ -226,17 +231,17 @@ public class PhysicsEngine {
          * Check for platforms using center of player sprite, because normally, the
          * sprite position is the topLeft corner.
          */
-        Vector3DInt playerPosition = new Vector3DInt();
-        playerPosition.setX(sprite.getCanvasPosition().getX() + (sprite.getFrameWidth()/2));
-        playerPosition.setY(sprite.getCanvasPosition().getY() + (sprite.getFrameHeight()/2));
+        Vector3DInt spritePosition = new Vector3DInt();
+        spritePosition.setX(sprite.getCanvasPosition().getX() + (sprite.getFrameWidth()/2));
+        spritePosition.setY(sprite.getCanvasPosition().getY() + (sprite.getFrameHeight()/2));
 
-        //Grab platform
-        Sprite platform = eMap.getEPixelFromCanvasPosition(playerPosition.getX(),
-                playerPosition.getY()).getSprite();
+        //Grab background sprite
+        Sprite background = eMap.getEPixelFromCanvasPosition(spritePosition.getX(),
+                spritePosition.getY()).getSprite();
 
         //Setup sprite  hitbox and platform hitBox
         SpriteHitBox spriteHitBox = sprite.getSpriteHitBox();
-        SpriteHitBox platformHitBox = platform.getSpriteHitBox();
+        SpriteHitBox backgroundHitBox = background.getSpriteHitBox();
 
         //check that player hitBox is within border constraints
         if(!isSpriteHitBoxWithinMapConstraints(spriteHitBox)) {
@@ -245,30 +250,24 @@ public class PhysicsEngine {
         }
 
         //make sure platform is visible
-        if(!platform.isVisible()){
+        if(!background.isVisible()){
             //InfoLog.getInstance().debugValue(className, "Platform is invisible");
             return false;
         }
 
-        //Get corners of PlatformHitBox
+        //Check if sprite hitBox collides with platform hitBox
+        return spriteHitBox.isCollidingWithObjectHitBox(backgroundHitBox);
         /*
-        Vector2DInt platformTopLeft = new Vector2DInt();
-        Vector2DInt platformTopRight = new Vector2DInt();
-        Vector2DInt platformBottomLeft = new Vector2DInt();
-        Vector2DInt platformBottomRight = new Vector2DInt();
-        setSpriteHitBoxCorners(platformHitBox, platformTopLeft, platformTopRight,
-                    platformBottomLeft, platformBottomRight);
-        */
-
-        //Check if sprite hitBox intersects with platform hitBox
-        return spriteHitBox.isCollidingWithObjectHitBox(platformHitBox);
+        return (spriteHitBox.isCollidingWithObjectHitBox(platformHitBox) ||
+                spriteHitBox.isBeingIntersectedByHitBox(platformHitBox));
+                */
     }
 
     private boolean isSpriteHitBoxWithinMapConstraints(SpriteHitBox spriteHitBox){
-        return (eMap.isPositionWithinMapConstraints(spriteHitBox.getSpriteCornerList(SpriteHitBox.TOPLEFT).getCorner()) &&
-                eMap.isPositionWithinMapConstraints(spriteHitBox.getSpriteCornerList(SpriteHitBox.TOPRIGHT).getCorner()) &&
-                eMap.isPositionWithinMapConstraints(spriteHitBox.getSpriteCornerList(SpriteHitBox.BOTTOMLEFT).getCorner()) &&
-                eMap.isPositionWithinMapConstraints(spriteHitBox.getSpriteCornerList(SpriteHitBox.BOTTOMRIGHT).getCorner()));
+        return (eMap.isPositionWithinMapConstraints(spriteHitBox.getSpriteCorner(SpriteHitBox.TOPLEFT).getCorner()) &&
+                eMap.isPositionWithinMapConstraints(spriteHitBox.getSpriteCorner(SpriteHitBox.TOPRIGHT).getCorner()) &&
+                eMap.isPositionWithinMapConstraints(spriteHitBox.getSpriteCorner(SpriteHitBox.BOTTOMLEFT).getCorner()) &&
+                eMap.isPositionWithinMapConstraints(spriteHitBox.getSpriteCorner(SpriteHitBox.BOTTOMRIGHT).getCorner()));
     }
 
     ////////////////////////////////////////////////////////////////////////////////
