@@ -227,7 +227,7 @@ public class SkyClimberGame extends Game{
             updateGameScreenCurrentScore();
             //reset the platforms
             newEPlatformPosition = player1Sprite.geteMapPosition().getY();
-            currentEPlatformPosition = newEPlatformPosition;
+            currentEPlatformPosition = newEPlatformPosition; 
         }
     }
 
