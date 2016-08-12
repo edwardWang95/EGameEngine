@@ -2,7 +2,6 @@ package edwardwang.bouncingball.Games;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -190,8 +189,8 @@ public class SkyClimberGame extends Game{
         player1Sprite.setPixelDistancePerSecond(playerPixelDistancePerSecond);
         player1Sprite.setPixelDistancePerSecond(playerPixelDistancePerSecond);
 
-        //Set the corner checklist in hitBox
-        setupPlayerHitBoxCornerCheckList();
+        //Set the edge checklist in hitBox
+        setupPlayerHitBoxEdgeCheckList();
     }
 
     @Override
@@ -306,9 +305,8 @@ public class SkyClimberGame extends Game{
     /**
      * Setup which corners on player sprite hitbox to check for collision
      */
-    private void setupPlayerHitBoxCornerCheckList(){
-        player1Sprite.getSpriteHitBox().setCornerCheckListStatus(SpriteHitBox.BOTTOMLEFT);
-        player1Sprite.getSpriteHitBox().setCornerCheckListStatus(SpriteHitBox.BOTTOMRIGHT);
+    private void setupPlayerHitBoxEdgeCheckList(){
+        player1Sprite.getSpriteHitBox().setEdgeCheckListStatus(SpriteHitBox.BOTTOM);
     }
     //////////////////////////////////////////////////////////////////////
     //Background Management

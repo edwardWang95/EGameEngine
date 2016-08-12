@@ -12,6 +12,18 @@ public class Vector3DLong {
         z = 0;
     }
 
+    public Vector3DLong(long x, long y) {
+        this.x = x;
+        this.y = y;
+        z = 0;
+    }
+
+    public Vector3DLong(long x, long y, long z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
     public long getX() {
         return x;
     }

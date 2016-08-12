@@ -12,6 +12,18 @@ public class Vector3DFloat {
         z = 0f;
     }
 
+    public Vector3DFloat(float x, float y) {
+        this.x = x;
+        this.y = y;
+        z = 0;
+    }
+
+    public Vector3DFloat(float x, float y, float z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
     public float getX() {
         return x;
     }

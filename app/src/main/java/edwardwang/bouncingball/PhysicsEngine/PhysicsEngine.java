@@ -260,8 +260,8 @@ public class PhysicsEngine {
                     platformBottomLeft, platformBottomRight);
         */
 
-        //Check if sprite hitbox instersects with platform hitbox
-        return platformHitBox.isBeingIntersectedByHitBox(spriteHitBox);
+        //Check if sprite hitBox intersects with platform hitBox
+        return spriteHitBox.isCollidingWithObjectHitBox(platformHitBox);
     }
 
     private boolean isSpriteHitBoxWithinMapConstraints(SpriteHitBox spriteHitBox){

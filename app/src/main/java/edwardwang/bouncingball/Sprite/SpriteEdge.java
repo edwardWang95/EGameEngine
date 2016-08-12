@@ -30,13 +30,38 @@ public class SpriteEdge {
     }
 
     public void updateSlope(){
-        slope = ((endCorner.getY()-startCorner.getY())/
-                (endCorner.getX() - startCorner.getX()));
+        try{
+            slope = ((endCorner.getY()-startCorner.getY())/
+                    (endCorner.getX() - startCorner.getX()));
+        }catch(ArithmeticException e){
+            slope = 0;
+        }
     }
 
-    public boolean containsPoint(int x, int y){
-        return(startCorner.getX() <= x && x <= endCorner.getX() &&
-                startCorner.getY() <= y && y <= endCorner.getY());
+    public Vector3DInt getPoint(int counter){
+        int x = 0, y = 0;
+        if(slope < 0){
+            x = startCorner.getX() - (int)(counter * slope);
+        }else if(slope > 0){
+            x = startCorner.getX() + (int)(counter * slope);
+        }else{
+            x = startCorner.getX();
+        }
+        y = ((int)(slope * x) + startCorner.getY());
+        return (new Vector3DInt(x,y));
+    }
+
+    public boolean containsPoint(Vector3DInt edgePosition){
+        int x = edgePosition.getX();
+        int y = edgePosition.getY();
+
+
+        Redo this method
+
+        return(startCorner.getX() <= x &&
+                x <= endCorner.getX() &&
+                startCorner.getY() <= y &&
+                y <= endCorner.getY());
     }
 
     public Vector3DInt getStartCorner() {

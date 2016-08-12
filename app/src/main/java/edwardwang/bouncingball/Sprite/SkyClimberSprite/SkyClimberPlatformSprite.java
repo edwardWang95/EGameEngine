@@ -17,16 +17,16 @@ public class SkyClimberPlatformSprite extends Sprite {
     private static final String className = SkyClimberPlatformSprite.class.getSimpleName();
     private Bitmap image;
 
-    //private int numOfCorners = 4;
-    //private int numOfSides = 4;
+    private int numOfCorners = 4;
+    private int numOfEdges = 4;
 
 
     public SkyClimberPlatformSprite(Context context, Vector3DInt canvasPosition, Vector3DInt eMapPosition,
                          int frameWidth, int frameHeight, double hitBoxWidthPerc, double hitBoxHeightPerc) {
         image = BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.player);
+                R.drawable.skyclimber_platform);
         setImage(image);
-        setupDimensions(frameWidth, frameHeight, hitBoxWidthPerc, hitBoxHeightPerc);
+        setupDimensions(frameWidth, frameHeight, hitBoxWidthPerc, hitBoxHeightPerc, numOfCorners, numOfEdges);
         setupLocation(canvasPosition, eMapPosition);
         InfoLog.getInstance().generateLog(className,InfoLog.getInstance().debug_SkyClimberCreated);
     }

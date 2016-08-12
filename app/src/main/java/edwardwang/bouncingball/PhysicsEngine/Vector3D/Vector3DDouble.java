@@ -12,6 +12,18 @@ public class Vector3DDouble {
         z = 0;
     }
 
+    public Vector3DDouble(double x, double y) {
+        this.x = x;
+        this.y = y;
+        z = 0;
+    }
+
+    public Vector3DDouble(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
     public double getX() {
         return x;
     }

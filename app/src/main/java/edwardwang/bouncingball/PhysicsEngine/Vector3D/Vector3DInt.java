@@ -12,6 +12,18 @@ public class Vector3DInt {
         z = 0;
     }
 
+    public Vector3DInt(int x, int y) {
+        this.x = x;
+        this.y = y;
+        z = 0;
+    }
+
+    public Vector3DInt(int x, int y, int z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
     public int getX() {
         return x;
     }

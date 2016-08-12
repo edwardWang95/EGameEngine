@@ -8,6 +8,9 @@ import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
 public class SpriteCorner {
     private Vector3DInt corner = new Vector3DInt();
 
+    public SpriteCorner() {
+    }
+
     public SpriteCorner(Vector3DInt corner){
         this.corner = corner;
     }

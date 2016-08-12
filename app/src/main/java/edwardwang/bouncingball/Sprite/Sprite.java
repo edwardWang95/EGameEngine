@@ -139,13 +139,14 @@ public class Sprite {
 
     }
 
-    public void setupDimensions(int frameWidth, int frameHeight, double hitBoxWidth, double hitBoxHeight){
+    public void setupDimensions(int frameWidth, int frameHeight, double hitBoxWidth, double hitBoxHeight,
+                                int numOfCorners, int numOfEdges){
         this.frameWidth = frameWidth;
         this.frameHeight = frameHeight;
         this.hitBoxWidth = hitBoxWidth;
         this.hitBoxHeight = hitBoxHeight;
         spriteHitBox = new SpriteHitBox(frameWidth,frameHeight,canvasPosition.getX(),canvasPosition.getY(),
-                hitBoxWidth, hitBoxHeight);
+                hitBoxWidth, hitBoxHeight, numOfCorners, numOfEdges);
     }
 
     public void setupLocation(Vector3DInt canvasPosition, Vector3DInt eMapPosition){

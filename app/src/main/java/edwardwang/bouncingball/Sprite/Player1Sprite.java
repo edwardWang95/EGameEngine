@@ -16,15 +16,15 @@ public class Player1Sprite extends Sprite{
     private Bitmap image;
 
     //dimensions
-    //private int numOfCorners = 4;
-    //private int numOfSides = 4;
+    private int numOfCorners = 4;
+    private int numOfEdges = 4;
 
     public Player1Sprite(Context context, Vector3DInt canvasPosition, Vector3DInt eMapPosition,
                          int frameWidth, int frameHeight,  double hitBoxWidthPerc, double hitBoxHeightPerc){
         image = BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.player);
         setImage(image);
-        setupDimensions(frameWidth, frameHeight, hitBoxWidthPerc, hitBoxHeightPerc);
+        setupDimensions(frameWidth, frameHeight, hitBoxWidthPerc, hitBoxHeightPerc, numOfCorners, numOfEdges);
         setupLocation(canvasPosition, eMapPosition);
         InfoLog.getInstance().generateLog(className,InfoLog.getInstance().debug_PlayerCreated);
     }
