@@ -23,9 +23,13 @@ Version 2.0
 []Further enhanced collision to handle angled hitbox collision 
 []Ads  
 []Social Media  
+[]Achievement Board  
 []Physics  
 -[]Center of gravity  
 -[]Friction  
 -[]Momentum  
 -[]Tension  
--[]Attraction  
+-[]Attraction   
+[]Multiplayer  
+-[]Local  
+-[]Online  
