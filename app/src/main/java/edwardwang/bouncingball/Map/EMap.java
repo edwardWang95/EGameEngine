@@ -39,8 +39,7 @@ public class EMap {
 
     private EPixel[][] map;
     //The dimension of each ePixels
-    private int ePixelWidth;
-    private int ePixelHeight;
+    private int ePixelWidth, ePixelHeight, ePixelDepth;
 
     //borders of eMap
     private int borderTop = 0, borderBottom = 0;    //based on y axis
@@ -221,7 +220,6 @@ public class EMap {
         return map[x][y];
     }
 
-
     public ArrayList<EPixel> getBackgroundSpriteArrayList() {
         return backgroundSpriteArrayList;
     }
@@ -264,9 +262,34 @@ public class EMap {
      * @return eMap position X
      */
     public int getEMapPositionX(int canvasPositionX){
-        return canvasPositionX / ePixelWidth;
+        try{
+            return canvasPositionX / ePixelWidth;
+        }catch (ArithmeticException e){
+            return 0;
+        }
     }
+
     public int getEMapPositionY(int canvasPositionY){
-        return canvasPositionY / ePixelHeight;
+        try{
+            return canvasPositionY / ePixelHeight;
+        }catch (ArithmeticException e){
+            return 0;
+        }
+    }
+
+    public int getEMapPositionZ(int canvasPositionZ){
+        try{
+            return canvasPositionZ / ePixelDepth;
+        }catch (ArithmeticException e){
+            return 0;
+        }
+    }
+
+    public Vector3DInt getEMapPosition(Vector3DInt canvasPosition){
+        Vector3DInt eMapPosition = new Vector3DInt();
+        eMapPosition.setX(getEMapPositionX(canvasPosition.getX()));
+        eMapPosition.setY(getEMapPositionY(canvasPosition.getY()));
+        eMapPosition.setZ(getEMapPositionZ(canvasPosition.getZ()));
+        return eMapPosition;
     }
 }

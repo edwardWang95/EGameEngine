@@ -63,7 +63,7 @@ public class Game implements Serializable, Runnable{
     private long fps = 0;
 
     //Score Keeping
-    private double currentScore = 0;
+    private double currentScore = 0.0;
 
     //Physics
     private float deltaTime = 0f; //use to calc fps &&  dT

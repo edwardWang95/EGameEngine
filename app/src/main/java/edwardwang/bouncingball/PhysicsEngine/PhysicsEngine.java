@@ -93,7 +93,9 @@ public class PhysicsEngine {
             if(!direction.getY().equals(previousDirectionY)){
                 resetTimeElapsed();
             }
+            //update canvas and eMap position for sprite
             sprite.updateCanvasPosition(axis);
+            sprite.seteMapPosition(eMap.getEMapPosition(sprite.getCanvasPosition()));
         }
     }
 

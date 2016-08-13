@@ -197,6 +197,7 @@ public class Sprite {
 
         //InfoLog.getInstance().debugValue(className, "PositionY: " + canvasPosition.getY());
     }
+
         /*
         if(deltaDistanceY > 0){
             InfoLog.getInstance().debugValue(className, "UP");
@@ -347,5 +348,9 @@ public class Sprite {
 
     public void setIsOnGround(boolean isOnGround) {
         this.isOnGround = isOnGround;
+    }
+
+    public void seteMapPosition(Vector3DInt eMapPosition) {
+        this.eMapPosition = eMapPosition;
     }
 }

@@ -165,7 +165,6 @@ public class SkyClimberGame extends Game{
         playerCanvas.setY(playerEMapPosition.getPositionCanvasY() -
                 playerOffsetY);
 
-
         currentEPlatformPosition = playerEMap.getY();
         newEPlatformPosition = currentEPlatformPosition;
         //InfoLog.getInstance().debugValue(className, "Start Position: "+currentEPlatformPosition);
@@ -216,19 +215,20 @@ public class SkyClimberGame extends Game{
         //InfoLog.getInstance().debugValue(className, "Current: "+currentEPlatformPosition);
         //InfoLog.getInstance().debugValue(className, "New: "+newEPlatformPosition);
         platformDifference = currentEPlatformPosition - newEPlatformPosition;
+        //InfoLog.getInstance().debugValue(className, "NewEPlatform: "+newEPlatformPosition);
         if( platformDifference != 0){
             if(platformDifference < 0){
-                //above previous
+                //below previous
                 setCurrentScore((getCurrentScore() - platformDifference));
             }else if(platformDifference > 0){
-                //below previous
+                //above previous
                 setCurrentScore((getCurrentScore() + platformDifference ));
             }
             //reset the platforms
             newEPlatformPosition = player1Sprite.geteMapPosition().getY();
             currentEPlatformPosition = newEPlatformPosition;
+            updateGameScreenCurrentScore();
         }
-        updateGameScreenCurrentScore();
     }
 
     @Override
@@ -271,10 +271,14 @@ public class SkyClimberGame extends Game{
         //check if player is hitting a platform
         if(player1Sprite.getRigidBody().getDirection().getY().equals(Direction.DOWN) &&
                 physicsEngine.isSpriteColliding(player1Sprite)){
-            newEPlatformPosition = player1Sprite.geteMapPosition().getY();
-            handlePlayerIsAboveScreenHalfway();
+            //Check if player position is above halfway point
+            if(player1Sprite.getCanvasPosition().getY() <= screenHalfwayHeight){
+                handlePlayerIsAboveScreenHalfway();
+            }else{
+                newEPlatformPosition = player1Sprite.geteMapPosition().getY();
+            }
             physicsEngine.setSpriteAction(Action.JUMP, player1Sprite);
-            //InfoLog.getInstance().debugValue(className, "COLLIDING");
+            InfoLog.getInstance().debugValue(className, "NewEPlatform: "+newEPlatformPosition);
         }
         physicsEngine.updateSpriteLocation(player1Sprite, Axis.Y, getDeltaTime(),
                 getTimeFactor(), ePixelPerMeter);
@@ -286,20 +290,16 @@ public class SkyClimberGame extends Game{
      */
     private void handlePlayerIsAboveScreenHalfway(){
         Vector3DInt playerPosition = player1Sprite.getCanvasPosition();
+        //signal that it is time to update the background
+        setUpdatePlatformSpeed(playerPosition.getY());
 
-        //Check if player position is above halfway point
-        if(playerPosition.getY() <= screenHalfwayHeight){
-            //signal that it is time to update the background
-            setUpdatePlatformSpeed(playerPosition.getY());
+        //InfoLog.getInstance().debugValue(className, "ScreenHalfway: " + screenHalfwayHeight);
+        //InfoLog.getInstance().debugValue(className, "PlayerY: " + playerPosition.getY());
 
-            //InfoLog.getInstance().debugValue(className, "ScreenHalfway: " + screenHalfwayHeight);
-            //InfoLog.getInstance().debugValue(className, "PlayerY: " + playerPosition.getY());
-
-            updatePreviousPlatformPositionY();
-            fillMissingPlatforms();
-            updatePlayerPositionY();
-            newEPlatformPosition += updatePlatformSpeed.getY();
-        }
+        updatePreviousPlatformPositionY();
+        fillMissingPlatforms();
+        updatePlayerPositionY();
+        newEPlatformPosition += updatePlatformSpeed.getY();
     }
 
     /**
