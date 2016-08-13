@@ -13,9 +13,8 @@ Version 1.0
 [X]Current Score  
 [X]Example game - SkyClimber  
 
-
-Version 2.0 
-[]Sprite hitbox emulator on my website  
+Version 2.0  
+[]Sprite hitbox emulator on my website   
 []Custom hitbox creation  
 []Further enhanced collision to handle angled hitbox collision 
 []Ads  
