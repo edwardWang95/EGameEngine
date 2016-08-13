@@ -11,10 +11,7 @@ Version 1.0
 [X]Sprite movement  
 [X]EMap/EPixel generation  
 [X]Current Score  
-[]Smooth Sprite Transitions  
--[X]Player  
--[]Background  
-[]Example game - SkyClimber  
+[X]Example game - SkyClimber  
 
 
 Version 2.0 
