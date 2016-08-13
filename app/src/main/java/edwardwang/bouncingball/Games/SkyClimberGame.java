@@ -219,16 +219,16 @@ public class SkyClimberGame extends Game{
         if( platformDifference != 0){
             if(platformDifference < 0){
                 //above previous
-                setCurrentScore((getCurrentScore() + platformDifference));
+                setCurrentScore((getCurrentScore() - platformDifference));
             }else if(platformDifference > 0){
                 //below previous
-                setCurrentScore((getCurrentScore() - platformDifference ));
+                setCurrentScore((getCurrentScore() + platformDifference ));
             }
-            updateGameScreenCurrentScore();
             //reset the platforms
             newEPlatformPosition = player1Sprite.geteMapPosition().getY();
             currentEPlatformPosition = newEPlatformPosition;
         }
+        updateGameScreenCurrentScore();
     }
 
     @Override
@@ -274,8 +274,7 @@ public class SkyClimberGame extends Game{
             newEPlatformPosition = player1Sprite.geteMapPosition().getY();
             handlePlayerIsAboveScreenHalfway();
             physicsEngine.setSpriteAction(Action.JUMP, player1Sprite);
-
-            InfoLog.getInstance().debugValue(className, "COLLIDING");
+            //InfoLog.getInstance().debugValue(className, "COLLIDING");
         }
         physicsEngine.updateSpriteLocation(player1Sprite, Axis.Y, getDeltaTime(),
                 getTimeFactor(), ePixelPerMeter);
