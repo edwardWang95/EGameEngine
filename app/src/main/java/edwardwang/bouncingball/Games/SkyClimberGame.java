@@ -227,8 +227,8 @@ public class SkyClimberGame extends Game{
             //reset the platforms
             newEPlatformPosition = player1Sprite.geteMapPosition().getY();
             currentEPlatformPosition = newEPlatformPosition;
-            updateGameScreenCurrentScore();
         }
+        updateGameScreenCurrentScore();
     }
 
     @Override
@@ -398,85 +398,13 @@ public class SkyClimberGame extends Game{
         } while (backgroundSpriteArrayList.size() < numOfEPixelsHeight);
     }
 
+    //TODO:Redo these methods
 
-
-            //InfoLog.getInstance().debugValue("SpriteLocation",
-            //        newX + ", " + newY + " = " + eMap.isEPositionWithinBounds(newX, newY));
-
-            /*
-            if(newY > -1 && newY < numOfEPixelsHeight && newX < numOfEPixelsWidth && newX > -1){
-                eMap.setEPixelVisible(newX, newY);
-                backgroundSpriteArrayList.add(eMap.getEPixel(newX, newY));
-            }
-
-
-
-
-        }while(backgroundSpriteArrayList.size() < numOfEPixelsHeight  &&
-                eMap.isEPositionWithinBounds(newX, newY));
-
-*/
-
-
-        /*
-        while (currentY >= 0) {
-            previousPlatform = backgroundSpriteArrayList.get(counter);
-            previousX = previousPlatform.getPositionEMapX();
-            previousY = previousPlatform.getPositionEMapY();
-
-            //get new position at set spawn distances away, including original positionX only
-            newX = generateNewX(previousX);
-            newY = generateNewY(previousY);
-
-            InfoLog.getInstance().debugValue("SpriteLocation",
-                    newX + ", " + newY + " = " + eMap.isLocationWithinBounds(newX, newY));
-
-            if (eMap.isLocationWithinBounds(newX, newY)) {
-                eMap.setEPixelVisible(newX, newY);
-                backgroundSpriteArrayList.add(eMap.getEPixel(newX, newY));
-            }else{
-                //TODO: review this
-                break;
-            }
-            currentY = newY;
-            counter++;
-        }
-        */
-
-        /*
-        //fill in the empty spots for the sprite queue
-        for(int i=0;i<startY;i++){
-            /*
-            //element() is like peek(), but it throws exception if queue is empty
-            try{
-                //previousX = spriteQueue.element().getCanvasPositionX();
-                //previousY = spriteQueue.element().getCanvasPositionY();
-
-
-            }catch(NoSuchElementException e){
-                e.printStackTrace();
-                InfoLog.getInstance().generateLog(className,InfoLog.getInstance().error_SpriteQueueEmpty);
-            }
-            *
-            previousPlatform = backgroundSpriteArrayList.get(i);
-            previousX = previousPlatform.getPositionEMapX();
-            previousY = previousPlatform.getPositionEMapY();
-
-            //get new position at set spawn distances away, including original positionX only
-            newX = generateNewX(previousX);
-            newY = generateNewY(previousY);
-
-            InfoLog.getInstance().debugValue("SpriteLocation",
-                    newX + ", " + newY + " = " + eMap.isLocationWithinBounds(newX, newY));
-
-            if(eMap.isLocationWithinBounds(newX, newY)){
-                eMap.setEPixelVisible(newX, newY);
-                backgroundSpriteArrayList.add(eMap.getEPixel(newX,newY));
-            }
-        }
-       }
-   */
-
+    /**
+     * BUG: makes sure it generates within eMap constraints.
+     * @param previousX
+     * @return
+     */
     private int generateNewX(int previousX){
         int xUpdate = getRandomNumGenerator().nextInt(platformSpawnDistance);
         int newX = 0;
@@ -490,7 +418,7 @@ public class SkyClimberGame extends Game{
             case NEUTRAL:
                 return previousX;
         }
-        if(newX >= 0 && newX <= numOfEPixelsWidth){
+        if(newX >= 0 && newX < numOfEPixelsWidth){
             return newX;
         }
         generateNewX(previousX);
@@ -498,11 +426,9 @@ public class SkyClimberGame extends Game{
     }
 
     private int generatePlusMinus(){
-        //TODO:check that it only generates between 0 or 1 or 2
         return getRandomNumGenerator().nextInt(3);
     }
 
-    //TODO:Review this for better solution
     private int generateNewY(int previousY){
         int updateValue = getRandomNumGenerator().nextInt(platformSpawnDistance);
         if(updateValue == 0){
@@ -512,8 +438,4 @@ public class SkyClimberGame extends Game{
         }
         return updateValue;
     }
-
-    ////////////////////////////////////////////////////////////////////////
-    //InteractionMethod
-
 }
