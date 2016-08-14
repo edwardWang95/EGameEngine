@@ -12,6 +12,8 @@ Version 1.0
 [X]EMap/EPixel generation  
 [X]Current Score  
 [X]Example game - SkyClimber  
+[]Redo alg for generateX & Y platforms --> Bug:Platform generates outside of eMap, which equals character falling out of map
+-[]look for better random number generator
 
 Version 2.0  
 []Sprite hitbox emulator on my website   
