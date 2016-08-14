@@ -19,15 +19,24 @@ Version 2.0
 []Sprite hitbox emulator on my website   
 []Custom hitbox creation  
 []Further enhanced collision to handle angled hitbox collision 
-[]Ads  
-[]Social Media  
-[]Achievement Board  
+[]Interaction Support
+-[]Sensor Information  
+--[]Gyroscope  
+--[]Accelerometer  
+--[]Gravity  
+-[]Gesture  
+-[]EButtons  
 []Physics  
 -[]Center of gravity  
 -[]Friction  
 -[]Momentum  
 -[]Tension  
 -[]Attraction   
+  
+Version 3.0  
+[]Ads  
+[]Social Media  
+[]Achievement Board  
 []Multiplayer  
 -[]Local  
 -[]Online  
