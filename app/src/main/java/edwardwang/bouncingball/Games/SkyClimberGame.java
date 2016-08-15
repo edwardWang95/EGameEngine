@@ -390,7 +390,7 @@ public class SkyClimberGame extends Game{
             previousPosition.setY(previousPlatform.getPositionEMapY());
             //get new position at set spawn distances away, including original positionX only
             newPosition.setX(generateNewX(previousPosition.getX()));
-            newPosition.setY(generateNewY(previousPosition.getY()));
+            newPosition.setY(previousPosition.getY() - 1);
             if (eMap.isEPositionWithinBounds(newPosition.getX(), newPosition.getY())) {
                 eMap.setEPixelVisible(newPosition.getX(), newPosition.getY());
                 backgroundSpriteArrayList.add(eMap.getEPixel(newPosition.getX(), newPosition.getY()));
@@ -427,15 +427,5 @@ public class SkyClimberGame extends Game{
 
     private int generatePlusMinus(){
         return getRandomNumGenerator().nextInt(3);
-    }
-
-    private int generateNewY(int previousY){
-        int updateValue = getRandomNumGenerator().nextInt(platformSpawnDistance);
-        if(updateValue == 0){
-            updateValue = previousY - 1;
-        }else{
-            updateValue = previousY - updateValue;
-        }
-        return updateValue;
     }
 }
