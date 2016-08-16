@@ -13,19 +13,6 @@ Available Games
 -[]Tension  
 -[]Attraction   
 
-Version 1.0 - [Complete]   
-[X]Game:Skyclimber    
-[X]Gravity physics   
-[X]Sprite Creation  
-[X]Sprite Hitbox Collision   
-[X]Sprite Hitbox Intersection    
-[X]Sprite movement  
-[X]EMap/EPixel generation  
-[X]Current Score  
-[X]Example game - SkyClimber  
-[X]Redo alg for generateX & Y platforms --> Bug:Platform generates outside of eMap, which equals character falling out of map  
--[X]look for better random number generator
-
 Version 2.0  
 []Game:  
 []Orientation Support  
@@ -50,3 +37,18 @@ Version 3.0
 []Multiplayer  
 -[]Local  
 -[]Online  
+
+
+#COMPLTED  
+Version 1.0 - [Complete]   
+[X]Game:Skyclimber    
+[X]Gravity physics   
+[X]Sprite Creation  
+[X]Sprite Hitbox Collision   
+[X]Sprite Hitbox Intersection    
+[X]Sprite movement  
+[X]EMap/EPixel generation  
+[X]Current Score  
+[X]Example game - SkyClimber  
+[X]Redo alg for generateX & Y platforms --> Bug:Platform generates outside of eMap, which equals character falling out of map  
+-[X]look for better random number generator
