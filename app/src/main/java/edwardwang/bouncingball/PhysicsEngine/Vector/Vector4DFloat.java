@@ -25,6 +25,38 @@ public class Vector4DFloat {
     }
 
     ////////////////////////////////////////////////////////////////////////////////
+    //Matrix Mathematics
+    public void multiplyByScalar(float scalar){
+        w *= scalar;
+        x *= scalar;
+        y *= scalar;
+        z *= scalar;
+    }
+
+    public float dotProduct(Vector4DFloat vector4DFloat){
+        return (w * vector4DFloat.getW()) +
+                (x * vector4DFloat.getX()) +
+                (y * vector4DFloat.getY()) +
+                (z * vector4DFloat.getZ());
+    }
+
+    public float[] matrixMultiplcation(Vector4DFloat vector4DFloat){
+        float[] result = new float[9];
+        result[0] = ;
+        result[1]
+        result[2]
+        result[3]
+        result[4]
+        result[5]
+        result[6]
+        result[7]
+        result[8]
+        result[9]
+
+        return result;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
     //Getter
 
     public float getW() {
