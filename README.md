@@ -34,10 +34,10 @@ Version 2.0
 --[]Accelerometer  
 --[]Gravity  
 -[]Gesture  
--[]EButtons 
-[]Sprite hitbox emulator on my website   
-[]Custom hitbox creation  
-[]Further enhanced collision to handle angled hitbox collision  
+-[]EButtons  
+[]Sprite hitbox emulator on my website    
+[]Custom hitbox creation   
+[]Further enhanced collision to handle angled hitbox collision   
   
 Version 3.0  
 []Ads  
