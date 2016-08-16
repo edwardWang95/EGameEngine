@@ -28,11 +28,15 @@ Version 1.0 - [Complete]
 
 Version 2.0  
 []Game:  
-[]Interaction Support  
+[]Orientation Support  
+-[]Calibrated Gyroscope  
 -[]Sensor Information  
---[]Gyroscope  
---[]Accelerometer  
---[]Gravity  
+--[]Gyroscope   
+--[]Accelerometer   
+--[X]Rotation  
+--[]Gravity   
+--[]Magnetic Field  
+[]Interatction Support   
 -[]Gesture  
 -[]EButtons  
 []Sprite hitbox emulator on my website    
