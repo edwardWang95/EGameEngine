@@ -1,4 +1,5 @@
-package edwardwang.bouncingball.Interaction.ESensor;
+package edwardwang.bouncingball.Orientation.ESensor;
+
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -9,15 +10,15 @@ import android.hardware.SensorManager;
 import java.util.ArrayList;
 
 import edwardwang.bouncingball.Info.InfoLog;
-import edwardwang.bouncingball.Interaction.InteractionSetup;
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDouble;
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DFloat;
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
+import edwardwang.bouncingball.PhysicsEngine.Vector.Vector3DDouble;
+import edwardwang.bouncingball.PhysicsEngine.Vector.Vector3DFloat;
+import edwardwang.bouncingball.PhysicsEngine.Vector.Vector3DInt;
 
 /**
+ * The sensor manager will directly update the orientation information
+ *
  * Orientation of the phone
  * -https://developer.android.com/guide/topics/sensors/sensors_overview.html
- *
  *
  * Accelerometer
  * -Acceleration along 3 axes in m/s^2
@@ -36,9 +37,12 @@ import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
  * Gravity
  * -Acceleration due to gravity on 3 axes.
  *
+ * Magnetic Field
+ *
+ *
  * Created by edwardwang on 8/8/16.
  */
-public class ESensorManager implements InteractionSetup, SensorEventListener {
+public class ESensorManager implements SensorEventListener {
     private static final String className = ESensorManager.class.getSimpleName();
 
     private SensorManager sensorManager;
@@ -61,13 +65,17 @@ public class ESensorManager implements InteractionSetup, SensorEventListener {
     private final int rotationLEFT = 30;
     private final int rotationRIGHT = -30;
     private Vector3DFloat rotation;
-        //need a 4x4 rotation matrix
+    //need a 4x4 rotation matrix
     private float[] rotationMatrix = new float[16];
     private float[] orientationVals = new float[3];
 
     //Gravity
     private Sensor gravitySensor;
     private Vector3DDouble gravity;
+
+    //Magnetic Field
+    private Sensor magneticFieldSensor;
+    private Vector3DFloat magneticField;
 
     ////////////////////////////////////////////////////////////////////////////////
     public ESensorManager(Context context){
@@ -76,8 +84,7 @@ public class ESensorManager implements InteractionSetup, SensorEventListener {
         sensorList = new ArrayList<>();
     }
 
-    @Override
-    public void setup() {
+    public void setupSensors() {
         for(ESensor eSensor: eSensorList){
             switch (eSensor){
                 case Gyroscope:
@@ -92,6 +99,9 @@ public class ESensorManager implements InteractionSetup, SensorEventListener {
                 case Gravity:
                     setupGravity();
                     break;
+                case Magnetic_Field:
+                    setupMagneticField();
+                    break;
             }
         }
         InfoLog.getInstance().generateLog(className,InfoLog.getInstance().debug_SetupESensorManager);
@@ -100,7 +110,6 @@ public class ESensorManager implements InteractionSetup, SensorEventListener {
     public void addESensorToList(ESensor eSensor){
         eSensorList.add(eSensor);
     }
-
     ////////////////////////////////////////////////////////////////////////////////
     //Setup
     private void setupGyroscope(){
@@ -125,6 +134,11 @@ public class ESensorManager implements InteractionSetup, SensorEventListener {
         addSensorToList(gravitySensor);
     }
 
+    private void setupMagneticField(){
+        magneticFieldSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        addSensorToList(magneticFieldSensor);
+    }
+
     private void addSensorToList(Sensor sensor){
         if(sensor!=null){
             sensorList.add(sensor);
@@ -137,7 +151,7 @@ public class ESensorManager implements InteractionSetup, SensorEventListener {
 
     ////////////////////////////////////////////////////////////////////////////////
     //Sensor pause/resume
-    public void startSensors(){
+    public void resumeSensors(){
         for(Sensor sensor: sensorList){
             sensorManager.registerListener(this, sensor, sensorDelaySpeed);
         }
@@ -145,7 +159,7 @@ public class ESensorManager implements InteractionSetup, SensorEventListener {
                 InfoLog.getInstance().debug_StartESensorManager);
     }
 
-    public void stopSensors(){
+    public void pauseSensors(){
         sensorManager.unregisterListener(this);
         InfoLog.getInstance().generateLog(className,
                 InfoLog.getInstance().debug_StopESensorManager);
@@ -165,6 +179,8 @@ public class ESensorManager implements InteractionSetup, SensorEventListener {
             updateRotation(event);
         }else if(sensor == gravitySensor){
             updateGravity(event);
+        }else if(sensor == magneticFieldSensor){
+            updateMagneticField(event);
         }
     }
 
@@ -205,6 +221,11 @@ public class ESensorManager implements InteractionSetup, SensorEventListener {
     ////////////////////////////////////////////////////////////////////////////////
     //Gravity
     private void updateGravity(SensorEvent event){
+
+    }
+    ////////////////////////////////////////////////////////////////////////////////
+    //Magnetic Field
+    private void updateMagneticField(SensorEvent event){
 
     }
     ////////////////////////////////////////////////////////////////////////////////

@@ -20,13 +20,12 @@ public class EButtonManager implements InteractionSetup{
         this.context = context;
     }
 
-    @Override
-    public void setup() {
-
-    }
-
     public void createNewEButton(int x, int y, int width, int height){
 
     }
 
+    @Override
+    public void setupInteraction() {
+
+    }
 }

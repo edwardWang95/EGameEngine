@@ -17,11 +17,11 @@ public class ETapManager implements InteractionSetup{
     public ETapManager(Context context, View view){
         this.context = context;
         this.view = view;
-        setup();
+        setupInteraction();
     }
 
     @Override
-    public void setup(){
+    public void setupInteraction(){
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

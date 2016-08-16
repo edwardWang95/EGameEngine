@@ -17,8 +17,8 @@ import edwardwang.bouncingball.PhysicsEngine.Action;
 import edwardwang.bouncingball.PhysicsEngine.Axis;
 import edwardwang.bouncingball.PhysicsEngine.PhysicsEngine;
 import edwardwang.bouncingball.PhysicsEngine.Direction;
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDirection;
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
+import edwardwang.bouncingball.PhysicsEngine.Vector.Vector3DDirection;
+import edwardwang.bouncingball.PhysicsEngine.Vector.Vector3DInt;
 import edwardwang.bouncingball.Sprite.Player1Sprite;
 import edwardwang.bouncingball.Sprite.Sprite;
 import edwardwang.bouncingball.Sprite.SpriteHitBox;
@@ -115,7 +115,7 @@ public class SkyClimberGame extends Game{
 
     @Override
     public void grabGameViewElements(){
-        //Have twice the height to setup a buffer when setting platforms that need to be created
+        //Have twice the height to setupSensors a buffer when setting platforms that need to be created
         eMap = getGameView().getEMap();
         //TODO:Test between queue and arrayList
         //spriteQueue = getGameView().getEMap().getSpriteQueue();
@@ -200,14 +200,6 @@ public class SkyClimberGame extends Game{
         interactionManager.addInteraction(Interaction.SplitScreen);
         interactionManager.initInteractions();
         splitScreenManager = interactionManager.getSplitScreenManager();
-    }
-
-    @Override
-    public void interactionsPause(){
-    }
-
-    @Override
-    public void interactionsResume(){
     }
 
     @Override

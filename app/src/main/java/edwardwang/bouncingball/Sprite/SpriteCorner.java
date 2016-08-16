@@ -1,6 +1,6 @@
 package edwardwang.bouncingball.Sprite;
 
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
+import edwardwang.bouncingball.PhysicsEngine.Vector.Vector3DInt;
 
 /**
  * Created by edwardwang on 8/10/16.

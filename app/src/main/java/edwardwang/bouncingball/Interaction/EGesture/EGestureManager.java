@@ -23,7 +23,7 @@ public class EGestureManager implements InteractionSetup, GestureDetector.OnGest
     }
 
     @Override
-    public void setup() {
+    public void setupInteraction() {
 
     }
 

@@ -1,8 +1,8 @@
 package edwardwang.bouncingball.PhysicsEngine;
 
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDouble;
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDirection;
+import edwardwang.bouncingball.PhysicsEngine.Vector.Vector3DDouble;
+import edwardwang.bouncingball.PhysicsEngine.Vector.Vector3DInt;
+import edwardwang.bouncingball.PhysicsEngine.Vector.Vector3DDirection;
 
 /**
  * Created by edwardwang on 8/2/16.

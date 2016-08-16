@@ -3,19 +3,17 @@ package edwardwang.bouncingball.Interaction.EScreenBlock;
 import android.content.Context;
 import android.view.View;
 
-import java.util.ArrayList;
-
 import edwardwang.bouncingball.Interaction.InteractionSetup;
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
+import edwardwang.bouncingball.PhysicsEngine.Vector.Vector3DInt;
 
 /**
  * Before any further development, find if this would be valuable for devs
  *
- * Set the number of screen blocks before calling setup. By default
+ * Set the number of screen blocks before calling setupSensors. By default
  * there will always be one screen block.
  * Created by edwardwang on 8/8/16.
  */
-public class EScreenBlockManager implements InteractionSetup {
+public class EScreenBlockManager implements InteractionSetup{
 
     private Context context;
     private View view;
@@ -43,9 +41,10 @@ public class EScreenBlockManager implements InteractionSetup {
     }
 
     @Override
-    public void setup() {
+    public void setupInteraction() {
 
     }
+
     //////////////////////////////////////////////////////////////////
     private void calcScreenBlockWidthAndHeight(){
 

@@ -11,6 +11,7 @@ import edwardwang.bouncingball.Activity.GameOverActivity;
 import edwardwang.bouncingball.Activity.GameScreenActivity;
 import edwardwang.bouncingball.Info.InfoLog;
 import edwardwang.bouncingball.Interaction.InteractionManager;
+import edwardwang.bouncingball.Orientation.OrientationManager;
 import edwardwang.bouncingball.PhysicsEngine.PhysicsEngine;
 import edwardwang.bouncingball.R;
 import edwardwang.bouncingball.Sprite.SpriteType;
@@ -25,7 +26,7 @@ import edwardwang.bouncingball.View.GameView;
  * Make serializable so that game object can be passed across intents.
  * Created by edwardwang on 7/25/16.
  */
-public class Game implements Serializable, Runnable{
+public class Game implements GameInterface, Serializable, Runnable{
     private static final String className = GameView.class.getSimpleName();
     public static final String gameIntentPassString = "Game";
     private GameScreenActivity gameScreenActivity;
@@ -33,7 +34,7 @@ public class Game implements Serializable, Runnable{
     private Context context;
 
     private String gameName;
-    //TODO:setup bitmap for background instead of color
+    //TODO:setupSensors bitmap for background instead of color
     private int gameBackground;
 
     //Game View
@@ -75,6 +76,9 @@ public class Game implements Serializable, Runnable{
 
     //InteractionManger
     private InteractionManager interactionManager = new InteractionManager();
+
+    //OrientationManager
+    private OrientationManager orientationManager = new OrientationManager();
 
     @Override
     public void run() {
@@ -128,7 +132,7 @@ public class Game implements Serializable, Runnable{
         isPlaying = false;
         try{
             gameThread.join();
-            interactionsPause();
+            orientationPause();
             InfoLog.getInstance().generateLog(className, InfoLog.getInstance().debug_PauseGameThread);
         }catch (InterruptedException e){
             InfoLog.getInstance().generateLog(className, InfoLog.getInstance().error_PauseGameThread);
@@ -139,7 +143,7 @@ public class Game implements Serializable, Runnable{
         isPlaying = true;
         gameThread = new Thread(this);
         gameThread.start();
-        interactionsResume();
+        orientationResume();
         InfoLog.getInstance().generateLog(className, InfoLog.getInstance().debug_ResumeGameThread);
     }
 
@@ -161,23 +165,19 @@ public class Game implements Serializable, Runnable{
     //Override Methods
 
     public void setupGame() {}
-
     public void grabGameViewElements(){}
-
     public void setupPhysicsEngine(){}
-
     public void setupBackground() {}
-
     public void setupPlayer() {}
-
     public void setupInteractionManager(){}
-
-    public void interactionsPause(){}
-
-    public void interactionsResume(){}
-
+    public void setupOrientationManager(){}
+    public void orientationPause(){
+        orientationManager.pause();
+    }
+    public void orientationResume(){
+        orientationManager.resume();
+    }
     public void updateCurrentScore(){}
-
     public void updateGame() {}
 
     ////////////////////////////////////////////////////////////////////////////

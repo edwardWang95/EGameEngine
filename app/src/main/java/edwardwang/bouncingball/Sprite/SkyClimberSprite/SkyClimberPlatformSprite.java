@@ -5,10 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import edwardwang.bouncingball.Info.InfoLog;
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
+import edwardwang.bouncingball.PhysicsEngine.Vector.Vector3DInt;
 import edwardwang.bouncingball.R;
 import edwardwang.bouncingball.Sprite.Sprite;
-import edwardwang.bouncingball.Sprite.SpriteType;
 
 /**
  * Created by edwardwang on 7/25/16.

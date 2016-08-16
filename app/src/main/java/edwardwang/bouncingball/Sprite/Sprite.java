@@ -4,12 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import java.util.ArrayList;
-
 import edwardwang.bouncingball.Info.PhoneInfo;
 import edwardwang.bouncingball.PhysicsEngine.Axis;
 import edwardwang.bouncingball.PhysicsEngine.RigidBody;
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
+import edwardwang.bouncingball.PhysicsEngine.Vector.Vector3DInt;
 
 /**
  * http://obviam.net/index.php/sprite-animation-with-android/

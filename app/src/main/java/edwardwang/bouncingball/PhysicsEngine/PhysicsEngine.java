@@ -1,9 +1,9 @@
 package edwardwang.bouncingball.PhysicsEngine;
 
 import edwardwang.bouncingball.Map.EMap;
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDirection;
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDouble;
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
+import edwardwang.bouncingball.PhysicsEngine.Vector.Vector3DDirection;
+import edwardwang.bouncingball.PhysicsEngine.Vector.Vector3DDouble;
+import edwardwang.bouncingball.PhysicsEngine.Vector.Vector3DInt;
 import edwardwang.bouncingball.Sprite.Sprite;
 import edwardwang.bouncingball.Sprite.SpriteHitBox;
 
@@ -71,7 +71,7 @@ public class PhysicsEngine {
     public void updateSpriteLocation(Sprite sprite, Axis axis,
                                      float deltaTime, double timeFactor,
                                      float ePixelPerMeter){
-        //setup references
+        //setupSensors references
         RigidBody rigidBody = sprite.getRigidBody();
         Vector3DDouble netAccel = rigidBody.getNetAccel();
         Vector3DDouble velocity = rigidBody.getVelocity();

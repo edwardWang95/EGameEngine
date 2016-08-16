@@ -6,7 +6,6 @@ package edwardwang.bouncingball.Interaction;
  * Created by edwardwang on 8/7/16.
  */
 public enum Interaction {
-    Sensor,
     Gesture,
     ScreenBlocks,
     TapScreen,

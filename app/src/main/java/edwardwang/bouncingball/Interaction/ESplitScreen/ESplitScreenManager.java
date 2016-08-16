@@ -4,12 +4,9 @@ import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 
-import edwardwang.bouncingball.Info.InfoLog;
 import edwardwang.bouncingball.Info.PhoneInfo;
 import edwardwang.bouncingball.Interaction.InteractionSetup;
 import edwardwang.bouncingball.PhysicsEngine.Direction;
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDirection;
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
 
 /**
  * Created by edwardwang on 8/9/16.
@@ -31,7 +28,7 @@ public class ESplitScreenManager implements InteractionSetup{
 
 
     @Override
-    public void setup() {
+    public void setupInteraction() {
         midScreen = PhoneInfo.getInstance().getScreenWidth() / 2;
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override

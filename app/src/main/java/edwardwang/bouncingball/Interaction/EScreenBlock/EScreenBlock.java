@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
+import edwardwang.bouncingball.PhysicsEngine.Vector.Vector3DInt;
 
 /**
  * Create a set place on the screen users can tap when interacting with application.

@@ -1,8 +1,8 @@
 package edwardwang.bouncingball.Interaction;
 
 /**
- * Created by edwardwang on 8/8/16.
+ * Created by edwardwang on 8/16/16.
  */
 public interface InteractionSetup {
-    void setup();
+    void setupInteraction();
 }

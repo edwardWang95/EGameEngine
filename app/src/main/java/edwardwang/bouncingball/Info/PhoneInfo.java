@@ -1,7 +1,6 @@
 package edwardwang.bouncingball.Info;
 
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DDouble;
-import edwardwang.bouncingball.PhysicsEngine.Vector3D.Vector3DInt;
+import edwardwang.bouncingball.PhysicsEngine.Vector.Vector3DInt;
 
 /**
  * Setup a singleton for accessible and static information regarding phone information, i.e.

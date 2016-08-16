@@ -1,4 +1,4 @@
-package edwardwang.bouncingball.PhysicsEngine.Vector3D;
+package edwardwang.bouncingball.PhysicsEngine.Vector;
 
 /**
  * Created by edwardwang on 8/5/16.

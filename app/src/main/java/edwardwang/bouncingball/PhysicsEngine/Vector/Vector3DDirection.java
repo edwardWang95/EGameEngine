@@ -1,4 +1,4 @@
-package edwardwang.bouncingball.PhysicsEngine.Vector3D;
+package edwardwang.bouncingball.PhysicsEngine.Vector;
 
 import edwardwang.bouncingball.PhysicsEngine.Direction;
 

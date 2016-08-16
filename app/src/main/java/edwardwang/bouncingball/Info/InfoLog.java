@@ -53,7 +53,7 @@ public class InfoLog {
     ////////////////////////////////////////////////////////////////////////////////
     //SkyClimberGame
     public final String debug_SkyClimber = "SkyClimber is chosen.";
-    public final String debug_SkyClimberSetup = "SkyClimber game setup.";
+    public final String debug_SkyClimberSetup = "SkyClimber game setupSensors.";
     public final String debug_SkyClimberCreated = "SkyClimber created";
 
     ////////////////////////////////////////////////////////////////////////////////
