@@ -29,6 +29,8 @@ Version 2.0
 []Sprite hitbox emulator on my website    
 []Custom hitbox creation   
 []Further enhanced collision to handle angled hitbox collision   
+[]CODE UPDATE: change variables for certain classes that have extended classes to have protected variables instead of   
+private to redunce redundancy of getting certain variables.  
   
 Version 3.0  
 []Ads  
