@@ -14,7 +14,7 @@ Available Games
 -[]Attraction   
 
 Version 2.0  
-[]Game:  
+[]Game: Virtual Reality Zombie Shooter  
 []Orientation Support  
 -[]Calibrated Gyroscope  
 -[]Sensor Information  
