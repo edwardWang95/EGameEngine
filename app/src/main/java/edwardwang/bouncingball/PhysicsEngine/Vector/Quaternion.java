@@ -15,10 +15,32 @@ import edwardwang.bouncingball.PhysicsEngine.Vector.Vector4DFloat;
  * Created by edwardwang on 8/16/16.
  */
 public class Quaternion extends Vector4DFloat{
+    private boolean isPointsUpdated = false;
+
+    public Quaternion(){
+        super();
+    }
     public Quaternion(float w, float x, float y, float z) {
         super(w, x, y, z);
     }
 
+    /**
+     * Setup an identity matrix/quaternion. Because everything is 0 on creation
+     * only W needs to be set to 1.
+     */
+    private void setupIdentityQuaternion(){
+        setW(1);
+    }
 
+    @Override
+    public Quaternion clone(){
+        Quaternion clone = new Quaternion();
+        clone.copyVector4DFloat(this);
+        return clone;
+    }
 
+    public float[] getArray(){
+        float points[] = {getW(), getX(), getY(), getZ()};
+        return points;
+    }
 }

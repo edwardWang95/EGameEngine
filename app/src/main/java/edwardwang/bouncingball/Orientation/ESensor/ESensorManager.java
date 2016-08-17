@@ -266,6 +266,27 @@ public class ESensorManager implements SensorEventListener {
         return gravity;
     }
 
+    //////////////////////////////////////////
+    public Sensor getGyroscopeSensor() {
+        return gyroscopeSensor;
+    }
+
+    public Sensor getAccelerometerSensor() {
+        return accelerometerSensor;
+    }
+
+    public Sensor getRotationSensor() {
+        return rotationSensor;
+    }
+
+    public Sensor getGravitySensor() {
+        return gravitySensor;
+    }
+
+    public Sensor getMagneticFieldSensor() {
+        return magneticFieldSensor;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////
     //Setter
     public void setSensorDelaySpeed(int sensorDelaySpeed) {

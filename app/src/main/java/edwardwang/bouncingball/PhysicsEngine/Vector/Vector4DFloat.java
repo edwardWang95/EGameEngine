@@ -10,6 +10,8 @@ public class Vector4DFloat {
      */
     private float w = 0f,x = 0f,y = 0f,z = 0f;
 
+    public Vector4DFloat(){}
+
     public Vector4DFloat(float w, float x, float y, float z){
         this.w = w;
         this.x = x;
@@ -18,6 +20,13 @@ public class Vector4DFloat {
     }
 
     public void setVector4DFloat(Vector4DFloat vector4DFloat){
+        this.w = vector4DFloat.getW();
+        this.x = vector4DFloat.getX();
+        this.y = vector4DFloat.getY();
+        this.z = vector4DFloat.getZ();
+    }
+
+    public void copyVector4DFloat(Vector4DFloat vector4DFloat){
         this.w = vector4DFloat.getW();
         this.x = vector4DFloat.getX();
         this.y = vector4DFloat.getY();
@@ -38,22 +47,6 @@ public class Vector4DFloat {
                 (x * vector4DFloat.getX()) +
                 (y * vector4DFloat.getY()) +
                 (z * vector4DFloat.getZ());
-    }
-
-    public float[] matrixMultiplcation(Vector4DFloat vector4DFloat){
-        float[] result = new float[9];
-        result[0] = ;
-        result[1]
-        result[2]
-        result[3]
-        result[4]
-        result[5]
-        result[6]
-        result[7]
-        result[8]
-        result[9]
-
-        return result;
     }
 
     ////////////////////////////////////////////////////////////////////////////////

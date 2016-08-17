@@ -61,11 +61,11 @@ public class RigidBody {
 
     ////////////////////////////////////////////////////////////////////////
     //Getter
-    private double getGravity(){
+    public double getGravity(){
         return mass * PhysicsEngine.GRAVITY;
     }
 
-    private double getNormal(){
+    public double getNormal(){
         return mass * PhysicsEngine.NORMAL;
     }
 
