@@ -24,6 +24,7 @@ public class OrientationManager {
      * Synctoken will be used for syncing reading/writing of sensor data from
      * sensor manager and custom orientation algorithms
      */
+    /*
     private final Object syncToken = new Object();
 
     //Rotation matrix from vector
@@ -31,6 +32,7 @@ public class OrientationManager {
 
     //Custom Orientations
     private CalibratedGyroscope calibratedGyroscope;
+    */
 
     public OrientationManager() {
     }
@@ -46,35 +48,16 @@ public class OrientationManager {
         }
         return sensorManager;
     }
+    /*
 
     //Calibrate Gyroscope
     public CalibratedGyroscope getCalibratedGyroscope() {
         if(calibratedGyroscope == null){
-            calibratedGyroscope = new CalibratedGyroscope(context, syncToken);
+            calibratedGyroscope = new CalibratedGyroscope(context, syncToken, currentOrientationRotationVector);
         }
         return calibratedGyroscope;
     }
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * MIGHT delete
-     * TODO:I don't necessarily like this system, I would rather be more flexible and
-     * allow dev's to use get the custom calibration providers without setting anything
-     * @param orientation
-     */
-    public void setOrientation(Orientation orientation){
-        this.orientation = orientation;
-    }
-
-    public void setupCustomOrientation(){
-        switch (orientation){
-            case CalibratedGyroscope:
-                calibratedGyroscope = new CalibratedGyroscope(context, syncToken);
-                break;
-        }
-    }
-
+    */
     ////////////////////////////////////////////////////////////////////////////////
     /**
      * In the case that dev doesn't want to use orientation, catch for null reference

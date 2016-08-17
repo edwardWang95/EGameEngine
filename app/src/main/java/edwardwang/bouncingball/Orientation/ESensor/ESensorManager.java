@@ -54,27 +54,27 @@ public class ESensorManager implements SensorEventListener {
     ////////////////////////////////////////////////////////////////////////////////
     //Gyroscope
     private Sensor gyroscopeSensor;
-    private Vector3DInt gyroscope;
+    private EGyroscope eGyroscope;
+    private Vector3DFloat gyroscope;
 
     //Accelerometer
     private Sensor accelerometerSensor;
-    private Vector3DDouble accelerometer;
+    private EAccelerometer eAccelerometer;
+    private Vector3DFloat accelerometer;
 
     //Rotation - measures orientation of device
     private Sensor rotationSensor;
-    private final int rotationLEFT = 30;
-    private final int rotationRIGHT = -30;
+    private ERotation eRotation;
     private Vector3DFloat rotation;
-    //need a 4x4 rotation matrix
-    private float[] rotationMatrix = new float[16];
-    private float[] orientationVals = new float[3];
 
     //Gravity
     private Sensor gravitySensor;
-    private Vector3DDouble gravity;
+    private EGravity eGravity;
+    private Vector3DFloat gravity;
 
     //Magnetic Field
     private Sensor magneticFieldSensor;
+    private EMagneticField eMagneticField;
     private Vector3DFloat magneticField;
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -115,28 +115,35 @@ public class ESensorManager implements SensorEventListener {
     private void setupGyroscope(){
         gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         addSensorToList(gyroscopeSensor);
+        gyroscope = new Vector3DFloat();
+        eGyroscope = new EGyroscope(gyroscope);
+
     }
     private void setupAccelerometer(){
         accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         addSensorToList(accelerometerSensor);
+        accelerometer = new Vector3DFloat();
+        eAccelerometer = new EAccelerometer(accelerometer);
     }
     private void setupRotation(){
         rotationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
-        rotation = new Vector3DFloat();
         addSensorToList(rotationSensor);
-        rotationMatrix[0] = 1;
-        rotationMatrix[4] = 1;
-        rotationMatrix[8] = 1;
-        rotationMatrix[12] = 1;
+        rotation = new Vector3DFloat();
+        eRotation = new ERotation(rotation);
     }
     private void setupGravity(){
         gravitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
         addSensorToList(gravitySensor);
+        gravity = new Vector3DFloat();
+        eGravity = new EGravity(gravity);
+
     }
 
     private void setupMagneticField(){
         magneticFieldSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         addSensorToList(magneticFieldSensor);
+        magneticField = new Vector3DFloat();
+        eMagneticField = new EMagneticField(magneticField);
     }
 
     private void addSensorToList(Sensor sensor){
@@ -172,60 +179,20 @@ public class ESensorManager implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
         Sensor sensor = event.sensor;
         if(sensor == gyroscopeSensor){
-            updateGyroscope(event);
+            //updateGyroscope(event);
         }else if(sensor == accelerometerSensor){
-            updateAccelerometer(event);
+            //updateAccelerometer(event);
         }else if(sensor == rotationSensor){
-            updateRotation(event);
+            eRotation.updateSensor(event);
         }else if(sensor == gravitySensor){
-            updateGravity(event);
+            //updateGravity(event);
         }else if(sensor == magneticFieldSensor){
-            updateMagneticField(event);
+            //updateMagneticField(event);
         }
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //Gyroscope
-    private void updateGyroscope(SensorEvent event){
-
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //Accelerometer
-    private void updateAccelerometer(SensorEvent event){
-
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //Rotation
-    private void updateRotation(SensorEvent event){
-        //convert rotation vector into 4x4 matrix
-        SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values);
-        SensorManager.remapCoordinateSystem(rotationMatrix, SensorManager.AXIS_X,
-                SensorManager.AXIS_Z, rotationMatrix);
-        SensorManager.getOrientation(rotationMatrix, orientationVals);
-        //convert orientation from radians to degrees
-        rotation.setX(convertRadiansToDegrees(orientationVals[0]));
-        rotation.setY(convertRadiansToDegrees(orientationVals[1]));
-        rotation.setZ(convertRadiansToDegrees(orientationVals[2]));
-    }
-
-    private float convertRadiansToDegrees(float radians){
-        return (float)Math.toDegrees(radians);
-    }
-    ////////////////////////////////////////////////////////////////////////////////
-    //Gravity
-    private void updateGravity(SensorEvent event){
-
-    }
-    ////////////////////////////////////////////////////////////////////////////////
-    //Magnetic Field
-    private void updateMagneticField(SensorEvent event){
 
     }
     ////////////////////////////////////////////////////////////////////////////////
@@ -239,12 +206,12 @@ public class ESensorManager implements SensorEventListener {
     }
 
     //Gyroscope
-    public Vector3DInt getGryoscope() {
+    public Vector3DFloat getGryoscope() {
         return gyroscope;
     }
 
     //Accelerometer
-    public Vector3DDouble getAccelerometer() {
+    public Vector3DFloat getAccelerometer() {
         return accelerometer;
     }
 
@@ -253,16 +220,8 @@ public class ESensorManager implements SensorEventListener {
         return rotation;
     }
 
-    public int getRotationLEFT() {
-        return rotationLEFT;
-    }
-
-    public int getRotationRIGHT() {
-        return rotationRIGHT;
-    }
-
     //Gravity
-    public Vector3DDouble getGravity() {
+    public Vector3DFloat getGravity() {
         return gravity;
     }
 
