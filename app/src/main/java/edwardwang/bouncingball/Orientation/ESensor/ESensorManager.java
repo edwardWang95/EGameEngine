@@ -55,7 +55,6 @@ public class ESensorManager implements SensorEventListener {
     //Gyroscope
     private Sensor gyroscopeSensor;
     private EGyroscope eGyroscope;
-    private Vector3DFloat gyroscope;
 
     //Accelerometer
     private Sensor accelerometerSensor;
@@ -115,8 +114,7 @@ public class ESensorManager implements SensorEventListener {
     private void setupGyroscope(){
         gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         addSensorToList(gyroscopeSensor);
-        gyroscope = new Vector3DFloat();
-        eGyroscope = new EGyroscope(gyroscope);
+        eGyroscope = new EGyroscope();
 
     }
     private void setupAccelerometer(){
@@ -179,15 +177,15 @@ public class ESensorManager implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
         Sensor sensor = event.sensor;
         if(sensor == gyroscopeSensor){
-            //updateGyroscope(event);
+            eGyroscope.updateSensor(event);
         }else if(sensor == accelerometerSensor){
-            //updateAccelerometer(event);
+            eAccelerometer.updateSensor(event);
         }else if(sensor == rotationSensor){
             eRotation.updateSensor(event);
         }else if(sensor == gravitySensor){
-            //updateGravity(event);
+            eGravity.updateSensor(event);
         }else if(sensor == magneticFieldSensor){
-            //updateMagneticField(event);
+            eMagneticField.updateSensor(event);
         }
     }
 
@@ -203,11 +201,6 @@ public class ESensorManager implements SensorEventListener {
 
     public int getSensorDelaySpeed() {
         return sensorDelaySpeed;
-    }
-
-    //Gyroscope
-    public Vector3DFloat getGryoscope() {
-        return gyroscope;
     }
 
     //Accelerometer
@@ -254,11 +247,13 @@ public class ESensorManager implements SensorEventListener {
 
     ////////////////////////////////////////////////////////////////////////////////
     //Info Log - debug sensor information is being updated
+    /*
     private void debugGyroscope(){
         InfoLog.getInstance().debugValue(className, "GyroscopeX: "+gyroscope.getX());
         InfoLog.getInstance().debugValue(className, "GyroscopeY: "+gyroscope.getY());
         InfoLog.getInstance().debugValue(className, "GyroscopeZ: "+gyroscope.getZ());
     }
+    */
     private void debugAccelerometer(){
         InfoLog.getInstance().debugValue(className, "AccelerometerX: "+accelerometer.getX());
         InfoLog.getInstance().debugValue(className, "AccelerometerY: "+accelerometer.getY());

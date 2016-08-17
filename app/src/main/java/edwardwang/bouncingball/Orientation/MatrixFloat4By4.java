@@ -10,7 +10,7 @@ public class MatrixFloat4By4 {
         matrix = new float[16];
     }
 
-    public float[] getArray(){
+    public float[] getMatrix(){
         return matrix;
     }
 }
